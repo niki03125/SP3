@@ -1,6 +1,6 @@
 @startuml
 
-class Chill{
+class StreamingPlatform{
 - String appName
 - ArrayList<User> users
 - ArrayList<Media> medias
@@ -9,6 +9,9 @@ class Chill{
 
 + getters/setter()
 + login(String userName, String password)
++ loadUsers()
++ loadMedias()
++ interfaceLoop
 + static void main(String[] args)
 }
 
