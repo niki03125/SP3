@@ -7,7 +7,7 @@ object SeeLater
 object Seen
 object Media
 object Movie
-object Show
+object Series
 object Season
 object Episode
 
@@ -17,8 +17,8 @@ User *-- Seen
 User *-- Media
 
 Media <|-- Movie
-Media <|-- Show
-Show *-- Season
+Media <|-- Series
+Series *-- Season
 Season *-- Episode
 
 Chill *-- User
