@@ -1,0 +1,33 @@
+@startuml
+
+class Chill{
+- String name
+- ArrayList<User> users
+- ArrayList<Media> medias
++ Chill(String name)
+
++ getters/setter()
+
++ static void main(String[] args)
+}
+
+class User{
+- username
+- password
+- email
+- birthday
+- gender
+- ArrayList<Media> seen
+- ArrayList<Media> saved
+- id
+- static count
+
++ User(String username, String password, String email, String birthday/year, String gender)
++ getters/setter()
+
+
+
+
+
+}
+@enduml

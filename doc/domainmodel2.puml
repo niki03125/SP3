@@ -24,7 +24,7 @@ Media <|-- Show
 Show *-- Season
 Season *-- Episode
 
-Chill *-- Search
-Chill *-- User
+User *-- Search
+Login *-- User
 
 @enduml

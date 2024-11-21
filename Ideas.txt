@@ -16,5 +16,8 @@ New medias
     - Audiobook
     - Games
     - Music
+Payment information
 
 Ekstra ekstra
+subscription
+    - free, gold, diamond
