@@ -78,11 +78,11 @@ class Episode extends Media{
 + Episode(super)
 }
 
-Chill *-- Media
+StreamingPlatform *-- Media
 
 User *-- Media
 
-Chill *-- User
+StreamingPlatform *-- User
 
 Series *-- Season
 
