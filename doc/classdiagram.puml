@@ -1,33 +1,89 @@
 @startuml
 
 class Chill{
-- String name
+- String appName
 - ArrayList<User> users
 - ArrayList<Media> medias
-+ Chill(String name)
++ Chill(String appName)
+
 
 + getters/setter()
-
++ login(String userName, String password)
 + static void main(String[] args)
 }
 
 class User{
-- username
-- password
-- email
-- birthday
-- gender
-- ArrayList<Media> seen
-- ArrayList<Media> saved
-- id
-- static count
+- String username
+- String password
+- int birthday
+- String gender
+- HashMap<String,Media> seen
+- HashMap<String,Media> saved
+- int id
+- static int idCount
 
-+ User(String username, String password, String email, String birthday/year, String gender)
++ User(String username, String password, String birthday/year, String gender)
 + getters/setter()
 
+}
 
+package "util"{
 
+class TextUI{
+- Scanner scan
 
++ void displayMSG(String e)
++ String promptText (String msg)
++ int promptNumeric (String msg))
+}
+
+class FileIO{
++ ArrayList<String> readUserData(String path)
++ void saveData(ArrayList<User> users, String path)
++ String[] readMediaData(String path, int length)
+}
 
 }
+
+abstract class Media{
+- String mediaName
+- int releaseYear
+- String genre
+- float IMDBScore
+
++ Media( String mediaName, int releaseYear, String genre, float IMDBScore)
++ playMedia(String mediaName)
++ addMediaToList()
++ removeMediaFromList()
+}
+
+class Movie extends Media{
++ Movie(super)
+}
+
+abstract class Series extends Media{
++ Series(super)
+}
+
+class Season{
+- int seasonID
++ season(super)
+}
+
+class Episode extends Media{
+-int episodeID
++ Episode(super)
+}
+
+Chill *-- Media
+
+User *-- Media
+
+Chill *-- User
+
+Series *-- Season
+
+Season *-- Episode
+
+
 @enduml
