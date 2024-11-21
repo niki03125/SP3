@@ -10,21 +10,18 @@ object Movie
 object Show
 object Season
 object Episode
-object Search
-object Login
-
-Chill *-- Login
 
 Chill *-- Media
 User *-- SeeLater
 User *-- Seen
+User *-- Media
 
 Media <|-- Movie
 Media <|-- Show
 Show *-- Season
 Season *-- Episode
 
-Chill *-- Search
 Chill *-- User
+
 
 @enduml
