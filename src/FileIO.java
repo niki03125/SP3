@@ -6,17 +6,16 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileIO {
-    public static HashMap<String, User> readUserData(String path) {
-        HashMap<String, User> data = new HashMap<>();
+    public static ArrayList<String> readData(String path) {
+        ArrayList<String> data = new ArrayList<>();
         File file = new File(path);
         try{
             Scanner scan = new Scanner(file);
 
             while (scan.hasNextLine())  {
                 String line = scan.nextLine();
-                Object[] tmp = line.split(";");
-                System.out.println(tmp[0]);
-                data.put((String) tmp[0], new User((String) tmp[0], (String) tmp[1], (Integer) tmp[2], (String) tmp[3]));
+                data.add(line);
+
             }
         } catch (FileNotFoundException e){
             System.out.println("File was not found");
