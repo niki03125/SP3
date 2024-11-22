@@ -62,8 +62,10 @@ private int minAge;
         this.minAge = minAge;
     }
 
+    /*
     public void playMedia(String mediaName){
         TextUI.displayMSG("Playing: " + this.mediaName);
         this.user.addToSeen().add(mediaName);
     }
+     */
 }

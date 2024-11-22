@@ -2,21 +2,27 @@ package src;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileIO {
-    public static ArrayList<String> readUserData(String path) {
-        ArrayList<String> data = new ArrayList<>();
+    public static HashMap<String, User> readUserData(String path) {
+        HashMap<String, User> data = new HashMap<>();
         File file = new File(path);
         try{
             Scanner scan = new Scanner(file);
 
             while (scan.hasNextLine())  {
                 String line = scan.nextLine();
-                data.add(line);
+                Object[] tmp = line.split(";");
+                System.out.println(tmp[0]);
+                data.put((String) tmp[0], new User((String) tmp[0], (String) tmp[1], (Integer) tmp[2], (String) tmp[3]));
             }
         } catch (FileNotFoundException e){
             System.out.println("File was not found");
+        }
+        for (String i : data.keySet()){
+            System.out.println(i);
         }
         return data;
     }
