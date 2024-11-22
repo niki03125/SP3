@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileIO {
-    public static ArrayList<String> readPlayerData(String path) {
+    public static ArrayList<String> readUserData(String path) {
         ArrayList<String> data = new ArrayList<>();
         File file = new File(path);
         try{
             Scanner scan = new Scanner(file);
-            scan.nextLine(); //skip header (tjek om vi overhovede har brug for denne linje)
 
             while (scan.hasNextLine())  {
                 String line = scan.nextLine();
