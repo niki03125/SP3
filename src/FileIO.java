@@ -2,7 +2,6 @@ package src;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileIO {
@@ -19,9 +18,6 @@ public class FileIO {
             }
         } catch (FileNotFoundException e){
             System.out.println("File was not found");
-        }
-        for (String i : data.keySet()){
-            System.out.println(i);
         }
         return data;
     }
