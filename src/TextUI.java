@@ -28,4 +28,14 @@ public class TextUI {
         return number;
 
     }
+
+    public static boolean promptBinary(String msg){
+        String input = promptText(msg);
+        if(input.equalsIgnoreCase("l")){
+            return true;
+        }else if(input.equalsIgnoreCase("r")){
+            return false;
+        }
+        return promptBinary(msg);
+    }
 }

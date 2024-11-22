@@ -1,28 +1,32 @@
 @startuml
 
-class Chill{
+class StreamingPlatform{
 - String appName
 - ArrayList<User> users
+
 - ArrayList<Media> medias
-+ Chill(String appName)
++ StreamingPlatform(String appName)
 
 
 + getters/setter()
 + login(String userName, String password)
++ loadUsers()
++ loadMedias()
++ interfaceLoop
 + static void main(String[] args)
 }
 
 class User{
 - String username
 - String password
-- int birthday
+- int birthdayYear
 - String gender
-- HashMap<String,Media> seen
-- HashMap<String,Media> saved
+- ArrayList<Media> seen
+- ArrayList<Media> saved
 - int id
 - static int idCount
 
-+ User(String username, String password, String birthday/year, String gender)
++ User(String username, String password, String birthdayYear, String gender)
 + getters/setter()
 
 }
@@ -32,15 +36,15 @@ package "util"{
 class TextUI{
 - Scanner scan
 
-+ void displayMSG(String e)
++ void displayMSG(String msg)
 + String promptText (String msg)
 + int promptNumeric (String msg))
 }
 
 class FileIO{
-+ ArrayList<String> readUserData(String path)
++ HashMap<User> readUserData(String path)
 + void saveData(ArrayList<User> users, String path)
-+ String[] readMediaData(String path, int length)
++ HashMap<Media> readMediaData(String path)
 }
 
 }
@@ -61,25 +65,32 @@ class Movie extends Media{
 + Movie(super)
 }
 
-abstract class Series extends Media{
+class Series extends Media{
+- ArrayList<Season> seasons
 + Series(super)
++ addSeason()
++ removeSeason()
 }
 
 class Season{
 - int seasonID
-+ season(super)
+- ArrayList<Episode> episodes
++ addEpisode()
++ removeEpisode()
 }
 
-class Episode extends Media{
--int episodeID
-+ Episode(super)
+class Episode{
+- String title
+- int episodeID
+- int duration
++ getters/setters()
 }
 
-Chill *-- Media
+StreamingPlatform *-- Media
 
 User *-- Media
 
-Chill *-- User
+StreamingPlatform *-- User
 
 Series *-- Season
 

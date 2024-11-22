@@ -45,15 +45,67 @@ public class StreamingPlatform {
         medias.remove(media);
     }
 
+    public void userRegister() {
+        String username = TextUI.promptText("Please enter username: ");
+        if (users.contains(username)) {
+            TextUI.promptText("The username is already taken, please chose another one: ");
+        }
+        String password = TextUI.promptText("Please enter password: ");
+        int birthdayYear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
+        if (birthdayYear < 1900 || birthdayYear > java.time.Year.now().getValue()) {
+            throw new IllegalArgumentException("Birthday year must be realistic. ");
+        }
+        String genderAnswer = TextUI.promptText("Please enter gender: \n " +
+                "You have 5 choices " +
+                "Woman (W), Male(M), Other(O), Chair (C), Kitten(K)");
+        String gender = TextUI.promptText("Woman (W), Male(M), Other(O), Chair (C), Kitten(K)").toLowerCase();
+
+        switch (gender) {
+            case "W":
+                gender = "Woman";
+                break;
+            case "M":
+                gender = "Male";
+                break;
+            case "O":
+                gender = "Other";
+                break;
+            case "C":
+                gender = "Chair";
+                break;
+            case "K":
+                gender = "Kitten";
+                break;
+            default:
+                gender = "Other";
+        }
+
+        User user = new User(username, password, birthdayYear, gender);
+        users.add(user);
+    }
+
+
+    public void userLoginOrRegister(){
+        TextUI.displayMSG("Welcome to our WBBTServices \n" +
+                "Login = l \n" +
+                "Register = r");
+
+        if(TextUI.promptBinary("you have chosen to login")==true){
+           // userLogin();
+        }else if(TextUI.promptBinary("you have chosen to register)")==false){
+            userRegister();
+        }
 
 
 
 
+       // public void end(){
+         //   ArrayList<String> playersAsText = new ArrayList<>();
+          //  for (User u: users) {
+             //   playersAsText.add(u.toString());
+          //  }
+        //}
 
-
-    public static void main(String[] args){
-        StreamingPlatform sp1 = new StreamingPlatform("WBMM");
-        System.out.println("Hello");
     }
 
 }
