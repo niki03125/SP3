@@ -77,7 +77,7 @@ public class StreamingPlatform {
                 gender = "Kitten";
                 break;
             default:
-                gender = "Other";
+                gender = "Other ";
         }
 
         User user = new User(username, password, birthdayYear, gender);
