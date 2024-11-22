@@ -4,7 +4,7 @@ class StreamingPlatform{
 - String appName
 - ArrayList<User> users
 - ArrayList<Media> medias
-+ Chill(String appName)
++ StreamingPlatform(String appName)
 
 
 + getters/setter()
@@ -41,9 +41,9 @@ class TextUI{
 }
 
 class FileIO{
-+ ArrayList<String> readUserData(String path)
++ HashMap<User> readUserData(String path)
 + void saveData(ArrayList<User> users, String path)
-+ String[] readMediaData(String path, int length)
++ HashMap<Media> readMediaData(String path)
 }
 
 }
@@ -65,17 +65,24 @@ class Movie extends Media{
 }
 
 class Series extends Media{
+- ArrayList<Season> seasons
 + Series(super)
++ addSeason()
++ removeSeason()
 }
 
 class Season{
 - int seasonID
-+ Season(super)
+- ArrayList<Episode> episodes
++ addEpisode()
++ removeEpisode()
 }
 
-class Episode extends Media{
--int episodeID
-+ Episode(super)
+class Episode{
+- String title
+- int episodeID
+- int duration
++ getters/setters()
 }
 
 StreamingPlatform *-- Media
