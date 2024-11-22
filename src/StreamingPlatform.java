@@ -45,6 +45,20 @@ public class StreamingPlatform {
         medias.remove(media);
     }
 
+    public void setup(){
+        loadUsers();
+    }
+
+    public void loadUsers(){
+        ArrayList<String> data = FileIO.readData("data/userdata.csv");
+        for (String s : data){
+            String[] values = s.split(";");
+            users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
+        }
+
+
+    }
+
 
 
 
@@ -53,7 +67,10 @@ public class StreamingPlatform {
 
     public static void main(String[] args){
         StreamingPlatform sp1 = new StreamingPlatform("WBMM");
-        System.out.println("Hello");
+        sp1.loadUsers();
+        for (User u : sp1.users){
+            System.out.println(u);
+        }
     }
 
 }
