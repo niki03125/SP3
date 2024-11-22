@@ -3,6 +3,7 @@
 class StreamingPlatform{
 - String appName
 - ArrayList<User> users
+
 - ArrayList<Media> medias
 + StreamingPlatform(String appName)
 
