@@ -92,6 +92,7 @@ public class StreamingPlatform {
 =======
     public void setup(){
         loadUsers();
+        loadMovies();
     }
 
     public void loadUsers(){
@@ -100,8 +101,14 @@ public class StreamingPlatform {
             String[] values = s.split(";");
             users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
         }
+    }
 
-
+    public void loadMovies(){
+        ArrayList<String> data = FileIO.readData("data/movie.csv");
+        for (String s : data){
+            String[] values = s.split(";");
+            medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
+        }
     }
 
         if(TextUI.promptBinary("you have chosen to login")==true){
