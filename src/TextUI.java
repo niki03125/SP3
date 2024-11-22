@@ -1,0 +1,31 @@
+package src;
+
+import java.util.Scanner;
+
+public class TextUI {
+    private static Scanner scan = new Scanner(System.in);
+
+    public static void displayMSG(String msg){
+        System.out.println(msg);
+    }
+
+    public static String promptText(String msg){
+        System.out.println(msg); //Stil brugeren et spørgsmål
+        String input = scan.nextLine();
+        return input;
+    }
+
+    public static int promptNumeric(String msg){
+        System.out.println(msg); //Stil brugeren et spørgsmål
+        String input = scan.nextLine();
+        int number;
+        try {
+            number = Integer.parseInt(input);
+        } catch (NumberFormatException e){
+            displayMSG("Please type a number");
+            number = promptNumeric(msg);
+        }
+        return number;
+
+    }
+}
