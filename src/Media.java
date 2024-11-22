@@ -1,3 +1,5 @@
+package src;
+
 public abstract class Media {
 private String mediaName;
 private int releaseYear;

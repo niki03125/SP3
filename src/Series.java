@@ -1,6 +1,8 @@
+package src;
+
 import java.util.ArrayList;
 
-public class Series extends Media{
+public class Series extends Media {
     private ArrayList<Season> seasons;
 
     public Series(String mediaName, int releaseYear, String genre, float IMDBScore) {

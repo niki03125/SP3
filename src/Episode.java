@@ -1,3 +1,5 @@
+package src;
+
 public class Episode {
     private String title;
     private int episodeID;

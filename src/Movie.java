@@ -1,4 +1,6 @@
-public class Movie extends Media{
+package src;
+
+public class Movie extends Media {
     private int duration;
     public Movie(String mediaName, int releaseYear, String genre, float IMDBScore) {
         super(mediaName, releaseYear, genre, IMDBScore);
