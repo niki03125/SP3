@@ -2,10 +2,11 @@ package src;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileIO {
-    public static ArrayList<String> readUserData(String path) {
+    public static ArrayList<String> readData(String path) {
         ArrayList<String> data = new ArrayList<>();
         File file = new File(path);
         try{
@@ -14,9 +15,13 @@ public class FileIO {
             while (scan.hasNextLine())  {
                 String line = scan.nextLine();
                 data.add(line);
+
             }
         } catch (FileNotFoundException e){
             System.out.println("File was not found");
+        }
+        for (String i : data.keySet()){
+            System.out.println(i);
         }
         return data;
     }
