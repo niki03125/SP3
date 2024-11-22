@@ -15,14 +15,14 @@ class Chill{
 class User{
 - String username
 - String password
-- int birthday
+- int birthdayYear
 - String gender
-- HashMap<String,Media> seen
-- HashMap<String,Media> saved
+- ArrayList<Media> seen
+- ArrayList<Media> saved
 - int id
 - static int idCount
 
-+ User(String username, String password, String birthday/year, String gender)
++ User(String username, String password, String birthdayYear, String gender)
 + getters/setter()
 
 }
@@ -32,7 +32,7 @@ package "util"{
 class TextUI{
 - Scanner scan
 
-+ void displayMSG(String e)
++ void displayMSG(String msg)
 + String promptText (String msg)
 + int promptNumeric (String msg))
 }
@@ -61,13 +61,13 @@ class Movie extends Media{
 + Movie(super)
 }
 
-abstract class Series extends Media{
+class Series extends Media{
 + Series(super)
 }
 
 class Season{
 - int seasonID
-+ season(super)
++ Season(super)
 }
 
 class Episode extends Media{
