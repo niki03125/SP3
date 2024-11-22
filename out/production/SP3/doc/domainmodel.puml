@@ -1,0 +1,27 @@
+@startuml
+!pragma layout smetana
+
+object Chill
+object User
+object SeeLater
+object Seen
+object Media
+object Movie
+object Series
+object Season
+object Episode
+
+Chill *-- Media
+User *-- SeeLater
+User *-- Seen
+User *-- Media
+
+Media <|-- Movie
+Media <|-- Series
+Series *-- Season
+Season *-- Episode
+
+Chill *-- User
+
+
+@enduml

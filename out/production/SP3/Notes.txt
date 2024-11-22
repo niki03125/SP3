@@ -1,0 +1,1 @@
+Kender vi altid længden af filer der skal indlæses i FileIO.readMediaData()?
