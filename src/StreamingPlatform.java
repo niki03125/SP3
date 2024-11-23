@@ -85,11 +85,12 @@ public class StreamingPlatform {
     }
 
 
-    public void userLoginOrRegister(){
+    public void userLoginOrRegister() {
         TextUI.displayMSG("Welcome to our WBBTServices \n" +
                 "Login = l \n" +
                 "Register = r");
-=======
+    }
+
     public void setup(){
         loadUsers();
         loadMovies();
@@ -103,19 +104,20 @@ public class StreamingPlatform {
         }
     }
 
-    public void loadMovies(){
+    public void loadMovies() {
         ArrayList<String> data = FileIO.readData("data/movie.csv");
-        for (String s : data){
+        for (String s : data) {
             String[] values = s.split(";");
             medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
         }
-    }
 
-        if(TextUI.promptBinary("you have chosen to login")==true){
-           // userLogin();
-        }else if(TextUI.promptBinary("you have chosen to register)")==false){
+
+        if (TextUI.promptBinary("you have chosen to login") == true) {
+            // userLogin();
+        } else if (TextUI.promptBinary("you have chosen to register)") == false) {
             userRegister();
         }
+    }
 
        // public void end(){
          //   ArrayList<String> playersAsText = new ArrayList<>();
@@ -127,4 +129,4 @@ public class StreamingPlatform {
 
     }
 
-}
+
