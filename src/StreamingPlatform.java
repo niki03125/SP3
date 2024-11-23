@@ -106,16 +106,19 @@ public class StreamingPlatform {
                 "Login = l \n" +
                 "Register = r");
 
+
         if (TextUI.promptBinary("you have chosen to login") == true) {
             // userLogin();
         } else if (TextUI.promptBinary("you have chosen to register, please press r again if you want to continue with register") == false) {
             userRegister();
         }
         // skal laves så den går til en meny med om man vil se hvilke film der er, hvilke film man har set, eller hvilke fik man har gemt
+
     }
 
     public void setup(){
         loadUsers();
+        loadMovies();
     }
 
     public void loadUsers(){
@@ -124,11 +127,15 @@ public class StreamingPlatform {
             String[] values = s.split(";");
             users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
         }
-
-
     }
 
-
+    public void loadMovies() {
+        ArrayList<String> data = FileIO.readData("data/movie.csv");
+        for (String s : data) {
+            String[] values = s.split(";");
+            medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
+        }
+    }
 
        // public void end(){
          //   ArrayList<String> playersAsText = new ArrayList<>();
@@ -137,5 +144,4 @@ public class StreamingPlatform {
           //  }
         //}
 
-
-}
+    }
