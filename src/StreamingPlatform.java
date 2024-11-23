@@ -151,6 +151,7 @@ public class StreamingPlatform {
 
             String seasonsAndEpisodes = values[4];
             getSeasonsAndEpisodes(values[4]);
+            System.out.println(s);
 
 
 
@@ -164,8 +165,16 @@ public class StreamingPlatform {
     private void getSeasonsAndEpisodes(String value){
         System.out.println(value);
         String[] tmp = value.split(",");
+
+
+
+
         for (String s : tmp){
             System.out.println(s);
+            String[] tmp2 = s.split("-");
+            String season = tmp2[0];
+            int episodes = Integer.parseInt(tmp2[1]);
+
         }
     }
 
