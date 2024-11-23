@@ -119,8 +119,7 @@ public class StreamingPlatform {
     public void setup(){
         loadUsers();
         loadMovies();
-        System.out.println(medias);
-        //loadSeries();
+        loadSeries();
     }
 
     public void loadUsers(){
@@ -132,7 +131,7 @@ public class StreamingPlatform {
     }
 
     public void loadMovies() {
-        ArrayList<String> data = FileIO.readData("data/movie.csv");
+        ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.split(";");
             medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
@@ -140,7 +139,7 @@ public class StreamingPlatform {
     }
 
     public void loadSeries(){
-        ArrayList<String> data = FileIO.readData("data/series.csv");
+        ArrayList<String> data = FileIO.readData("data/series.txt");
         for  (String s : data){
             String[] values = s.split(";");
             String seriesName = values[0];
@@ -150,7 +149,7 @@ public class StreamingPlatform {
             if (!runYears[1].isEmpty()){
                 int endYear = Integer.parseInt(runYears[1]);
             } else {
-//                int endYear = Year;
+                int endYear = Year.now().getValue();
             }
 
 
