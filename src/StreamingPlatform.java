@@ -119,6 +119,7 @@ public class StreamingPlatform {
     public void setup(){
         loadUsers();
         loadMovies();
+        System.out.println(medias);
         //loadSeries();
     }
 
@@ -131,7 +132,7 @@ public class StreamingPlatform {
     }
 
     public void loadMovies() {
-        ArrayList<String> data = FileIO.readData("data/movie.txt");
+        ArrayList<String> data = FileIO.readData("data/movie.csv");
         for (String s : data) {
             String[] values = s.split(";");
             medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
@@ -139,28 +140,28 @@ public class StreamingPlatform {
     }
 
     public void loadSeries(){
-        ArrayList<String> data = FileIO.readData("data/series.txt");
-//        for  (String s : data){
-//            String[] values = s.split(";");
-//            String seriesName = values[0];
+        ArrayList<String> data = FileIO.readData("data/series.csv");
+        for  (String s : data){
+            String[] values = s.split(";");
+            String seriesName = values[0];
 
-//            String[] runYears = values[1].split("-");
-//            int startYear = Integer.parseInt(runYears[0]);
-//            if (!runYears[1].isEmpty()){
-//                int endYear = Integer.parseInt(runYears[1]);
-//            } else {
-//                //int endYear = Year;
-//            }
-
-
+            String[] runYears = values[1].split("-");
+            int startYear = Integer.parseInt(runYears[0]);
+            if (!runYears[1].isEmpty()){
+                int endYear = Integer.parseInt(runYears[1]);
+            } else {
+//                int endYear = Year;
+            }
 
 
-//            String genres = values[2];
-//            float IMDBScore = Float.parseFloat(values[3]);
-//            String seasonsAndEpisodes = values[4];
+
+
+            String genres = values[2];
+            float IMDBScore = Float.parseFloat(values[3]);
+            String seasonsAndEpisodes = values[4];
 
 //            medias.add(new Series());
-//        }
+        }
     }
 
        // public void end(){
