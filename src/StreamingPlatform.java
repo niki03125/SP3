@@ -134,7 +134,7 @@ public class StreamingPlatform {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.split(";");
-            medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
+            medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].replace(",", ".").trim())));
         }
     }
 
