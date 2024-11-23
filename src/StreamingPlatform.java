@@ -118,6 +118,7 @@ public class StreamingPlatform {
     public void setup(){
         loadUsers();
         loadMovies();
+        loadSeries();
     }
 
     public void loadUsers(){
@@ -129,11 +130,15 @@ public class StreamingPlatform {
     }
 
     public void loadMovies() {
-        ArrayList<String> data = FileIO.readData("data/movie.csv");
+        ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.split(";");
             medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].trim())));
         }
+    }
+
+    public void loadSeries(){
+        ArrayList<String> data = FileIO.readData("data/series.txt");
     }
 
        // public void end(){

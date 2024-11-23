@@ -1,7 +1,7 @@
 @startuml
 !pragma layout smetana
 
-object Chill
+object StreamingPlatform
 object User
 object SeeLater
 object Seen
@@ -11,7 +11,7 @@ object Series
 object Season
 object Episode
 
-Chill *-- Media
+StreamingPlatform *-- Media
 User *-- SeeLater
 User *-- Seen
 User *-- Media
@@ -21,7 +21,7 @@ Media <|-- Series
 Series *-- Season
 Season *-- Episode
 
-Chill *-- User
+StreamingPlatform *-- User
 
 
 @enduml
