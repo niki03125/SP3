@@ -82,7 +82,6 @@ public class StreamingPlatform {
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);// addder ikke til userdata informationen
-        System.out.println();
         TextUI.displayMSG("You have now been registeret");
     }
 
