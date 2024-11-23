@@ -5,6 +5,10 @@ public class Episode {
     private int episodeID;
     private int duration;
 
+    public Episode(int episodeID) {
+        this.episodeID = episodeID;
+    }
+
     public Episode(String title, int episodeID) {
         this.title = title;
         this.episodeID = episodeID;

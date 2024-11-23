@@ -2,6 +2,7 @@ package src;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StreamingPlatform {
     private String appName;
@@ -53,7 +54,7 @@ public class StreamingPlatform {
         }
         String password = TextUI.promptText("Please enter password: ");
         int birthdayYear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
-        if (birthdayYear < 1900 || birthdayYear > java.time.Year.now().getValue()) {
+        if (birthdayYear < 1900 || birthdayYear > Year.now().getValue()) {
             throw new IllegalArgumentException("Birthday year must be realistic. ");
         }
         String genderAnswer = TextUI.promptText("Please enter gender: \n " +
@@ -117,8 +118,8 @@ public class StreamingPlatform {
     }
 
     public void setup(){
-        loadUsers();
-        loadMovies();
+//        loadUsers();
+//        loadMovies();
         loadSeries();
     }
 
@@ -133,34 +134,57 @@ public class StreamingPlatform {
     public void loadMovies() {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
-            String[] values = s.split(";");
-            medias.add(new Movie(values[0].trim(), Integer.parseInt(values[1].trim()), values[2].trim(), Float.parseFloat(values[3].replace(",", ".").trim())));
+            String[] values = s.replace(" ", "").split(";");
+            medias.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
         }
     }
 
     public void loadSeries(){
-        ArrayList<String> data = FileIO.readData("data/series.txt");
+        ArrayList<String> data = FileIO.readData("data/seriesDummy.txt");
         for  (String s : data){
-            String[] values = s.split(";");
+            String[] values = s.replace(" ", "").split(";");
             String seriesName = values[0];
-
-            String[] runYears = values[1].split("-");
-            int startYear = Integer.parseInt(runYears[0]);
-            if (!runYears[1].isEmpty()){
-                int endYear = Integer.parseInt(runYears[1]);
-            } else {
-                int endYear = Year.now().getValue();
-            }
+            ArrayList<Integer> runYears = getStartAndEndYear(values[1]);
+            ArrayList<String> genres = getGenres(values[2]);
+            float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
 
 
-
-
-            String genres = values[2];
-            float IMDBScore = Float.parseFloat(values[3]);
             String seasonsAndEpisodes = values[4];
 
-//            medias.add(new Series());
+
+
+
+
+
+            medias.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore));
         }
+    }
+
+    private ArrayList<String> getGenres(String value){
+        ArrayList<String> res = new ArrayList<>();
+        String[] tmp = value.split(",");
+        for (String s : tmp){
+            res.add(s);
+        }
+        return res;
+    }
+
+    private ArrayList<Integer> getStartAndEndYear(String value){
+        ArrayList<Integer> res = new ArrayList<>();
+        if (value.contains("-")){
+            String[] tmp = value.split("-");
+            if (!tmp[1].isEmpty()){
+                res.add(Integer.parseInt(tmp[0]));
+                res.add(Integer.parseInt(tmp[1]));
+            } else {
+                res.add(Integer.parseInt(tmp[0]));
+                res.add(Year.now().getValue());
+            }
+        } else {            //Start and end year is the same
+            res.add(Integer.parseInt(value));
+            res.add(Integer.parseInt(value));
+        }
+        return res;
     }
 
        // public void end(){
