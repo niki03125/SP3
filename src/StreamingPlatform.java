@@ -150,6 +150,7 @@ public class StreamingPlatform {
 
 
             String seasonsAndEpisodes = values[4];
+            getSeasonsAndEpisodes(values[4]);
 
 
 
@@ -157,6 +158,14 @@ public class StreamingPlatform {
 
 
             medias.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore));
+        }
+    }
+
+    private void getSeasonsAndEpisodes(String value){
+        System.out.println(value);
+        String[] tmp = value.split(",");
+        for (String s : tmp){
+            System.out.println(s);
         }
     }
 
