@@ -48,7 +48,7 @@ public class StreamingPlatform {
     public void userRegister() {
         String username = TextUI.promptText("Please enter username: ");
         if (users.contains(username)) {
-            TextUI.promptText("The username is already taken, please chose another one: ");
+            TextUI.promptText("The username is already taken, please chose another one: ");//Dosent work properly.
         }
         String password = TextUI.promptText("Please enter password: ");
         int birthdayYear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
@@ -81,15 +81,39 @@ public class StreamingPlatform {
         }
 
         User user = new User(username, password, birthdayYear, gender);
-        users.add(user);
+        users.add(user);// addder ikke til userdata informationen
+        System.out.println();
+        TextUI.displayMSG("You have now been registeret");
+    }
+
+    public void userLogin(){
+        TextUI.displayMSG("You have chosen to login");
+        String username = TextUI.promptText("Please enter your username");
+        if(!users.contains(username)){ //the code is cheking if the username is in the file, if not its giving back this messages.
+            TextUI.promptText("There are no profile with that username, please try again");
+        }
+        String password = TextUI.promptText("Please enter your password");
+        //when the username is checked and correct, it has to check if the password is correct.
+        if(!users.contains(password)){
+            TextUI.promptText("The password is not correct");
+        }
+        // if username and password is both correct, login the user
     }
 
 
-    public void userLoginOrRegister(){
+    public void userLoginOrRegister() {
         TextUI.displayMSG("Welcome to our WBBTServices \n" +
                 "Login = l \n" +
                 "Register = r");
-=======
+
+        if (TextUI.promptBinary("you have chosen to login") == true) {
+            // userLogin();
+        } else if (TextUI.promptBinary("you have chosen to register, please press r again if you want to continue with register") == false) {
+            userRegister();
+        }
+        // skal laves så den går til en meny med om man vil se hvilke film der er, hvilke film man har set, eller hvilke fik man har gemt
+    }
+
     public void setup(){
         loadUsers();
     }
@@ -104,11 +128,7 @@ public class StreamingPlatform {
 
     }
 
-        if(TextUI.promptBinary("you have chosen to login")==true){
-           // userLogin();
-        }else if(TextUI.promptBinary("you have chosen to register)")==false){
-            userRegister();
-        }
+
 
        // public void end(){
          //   ArrayList<String> playersAsText = new ArrayList<>();
@@ -117,7 +137,5 @@ public class StreamingPlatform {
           //  }
         //}
 
-
-    }
 
 }
