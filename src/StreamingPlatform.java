@@ -1,5 +1,6 @@
 package src;
 
+import java.time.Year;
 import java.util.ArrayList;
 
 public class StreamingPlatform {
@@ -118,7 +119,7 @@ public class StreamingPlatform {
     public void setup(){
         loadUsers();
         loadMovies();
-        loadSeries();
+        //loadSeries();
     }
 
     public void loadUsers(){
@@ -139,6 +140,27 @@ public class StreamingPlatform {
 
     public void loadSeries(){
         ArrayList<String> data = FileIO.readData("data/series.txt");
+//        for  (String s : data){
+//            String[] values = s.split(";");
+//            String seriesName = values[0];
+
+//            String[] runYears = values[1].split("-");
+//            int startYear = Integer.parseInt(runYears[0]);
+//            if (!runYears[1].isEmpty()){
+//                int endYear = Integer.parseInt(runYears[1]);
+//            } else {
+//                //int endYear = Year;
+//            }
+
+
+
+
+//            String genres = values[2];
+//            float IMDBScore = Float.parseFloat(values[3]);
+//            String seasonsAndEpisodes = values[4];
+
+//            medias.add(new Series());
+//        }
     }
 
        // public void end(){
