@@ -244,17 +244,16 @@ public class StreamingPlatform {
 
     public String menu(){
         ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Search(F)", "Logout(L)"));
-        TextUI.displayMSG("You have the following options:");
-        for (String s : menu){
-            TextUI.displayMSG(s);
-        }
-        return TextUI.promptText("Please enter a option: ");
+        TextUI.displayMSG("=====MENU=====");
+        TextUI.displayMSG(String.valueOf(menu));
+        return TextUI.promptText("Please enter what you want to do: ");
     }
 
     public void runLoop(){
         boolean on = true;
         while (on){
-            menu();
+            String menuChoice = menu();
+
         }
     }
 
