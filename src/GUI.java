@@ -15,14 +15,14 @@ public class GUI extends JFrame implements ActionListener {
     public GUI() {
         //Start site buttons
         loginButton = new JButton("Login");
-        loginButton.setBounds(200, 300, 150, 50);
+        loginButton.setBounds(100, 250, 150, 50);
 //        loginButton.set
         loginButton.addActionListener(this);
 
 
 
         createButton = new JButton("Create user");
-        createButton.setBounds(400, 300, 150, 50);
+        createButton.setBounds(350, 250, 150, 50);
         createButton.addActionListener(this);
 
 
