@@ -75,10 +75,10 @@ public class User {
     @Override
     public String toString(){
        return "User: " + "username: " + username
-               + ", password =" + password
-               + ", birthday=" + birthdayYear
-               + ", gender=" + gender
-               + ", id=" + id;
+               + ", password: " + password
+               + ", birthday: " + birthdayYear
+               + ", gender: " + gender
+               + ", id: " + id;
 
     }
 }

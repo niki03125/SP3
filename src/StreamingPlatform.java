@@ -46,9 +46,19 @@ public class StreamingPlatform {
         medias.remove(media);
     }
 
+    private boolean checkForDuplicateUser(String username){
+        boolean isDuplicate = false;
+        for (User u : users){
+            if (u.getUsername().equalsIgnoreCase(username)){
+                isDuplicate = true;
+            }
+        }
+        return isDuplicate;
+    }
+
     public void userRegister() {
         String username = TextUI.promptText("Please enter username: ");
-        if (users.contains(username)) {
+        if (checkForDuplicateUser(username)) {
             TextUI.promptText("The username is already taken, please chose another one: ");//Dosent work properly.
         }
         String password = TextUI.promptText("Please enter password: ");
@@ -82,7 +92,7 @@ public class StreamingPlatform {
         }
 
         User user = new User(username, password, birthdayYear, gender);
-        users.add(user);// addder ikke til userdata informationen
+        users.add(user);
         TextUI.displayMSG("You have now been registered");
     }
 
@@ -105,7 +115,7 @@ public class StreamingPlatform {
 
         for (User user : users) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
-                System.out.println(user.getUsername() + " is logged in");
+                System.out.println(user.getUsername() + " has logged in");
                 return;
             }
         }
