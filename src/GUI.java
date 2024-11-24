@@ -16,6 +16,7 @@ public class GUI extends JFrame implements ActionListener {
         //Start site buttons
         loginButton = new JButton("Login");
         loginButton.setBounds(200, 300, 150, 50);
+//        loginButton.set
         loginButton.addActionListener(this);
 
 
