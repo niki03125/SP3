@@ -9,20 +9,26 @@ import java.io.File;
 import java.io.IOException;
 
 public class GUI extends JFrame implements ActionListener {
+    StreamingPlatform streamingPlatform;
     JButton loginButton;
     JButton createButton;
 
-    public GUI() {
+    public GUI(StreamingPlatform streamingPlatform) {
+        this.streamingPlatform = streamingPlatform;
+        startGUI();
+    }
+    public void startGUI(){
         //Start site buttons
         loginButton = new JButton("Login");
         loginButton.setBounds(100, 250, 150, 50);
-//        loginButton.set
+        loginButton.setFocusable(false);
         loginButton.addActionListener(this);
 
 
 
         createButton = new JButton("Create user");
         createButton.setBounds(350, 250, 150, 50);
+        createButton.setFocusable(false);
         createButton.addActionListener(this);
 
 
@@ -39,6 +45,11 @@ public class GUI extends JFrame implements ActionListener {
 
         this.add(loginButton);
         this.add(createButton);
+
+    }
+
+    public void userLogin(String username, String password){
+        streamingPlatform.userLogin();
     }
 
 
@@ -46,9 +57,9 @@ public class GUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==loginButton){
-            System.out.println("Login");
+            streamingPlatform.userLogin();
         } else if (e.getSource()==createButton) {
-            System.out.println("Create new user");
+            streamingPlatform.userRegister();
         }
     }
 }
