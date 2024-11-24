@@ -5,6 +5,10 @@ public class Episode {
     private int episodeID;
     private int duration;
 
+    public Episode(int episodeID) {
+        this.episodeID = episodeID;
+    }
+
     public Episode(String title, int episodeID) {
         this.title = title;
         this.episodeID = episodeID;
@@ -38,5 +42,13 @@ public class Episode {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public String
+    toString() {
+        return "Episode{" +
+                "episodeID=" + episodeID +
+                '}';
     }
 }

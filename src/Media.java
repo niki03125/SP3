@@ -1,20 +1,22 @@
 package src;
 
+import java.util.ArrayList;
+
 public abstract class Media {
 private String mediaName;
 private int releaseYear;
-private String genre;
+private ArrayList<String> genre;
 private float IMDBScore;
 private int minAge;
 
-    public Media(String mediaName, int releaseYear, String genre, float IMDBScore) {
+    public Media(String mediaName, int releaseYear, ArrayList<String> genre, float IMDBScore) {
         this.mediaName = mediaName;
         this.releaseYear = releaseYear;
         this.genre = genre;
         this.IMDBScore = IMDBScore;
     }
 
-    public Media(String mediaName, int releaseYear, String genre, float IMDBScore, int minAge) {
+    public Media(String mediaName, int releaseYear, ArrayList<String> genre, float IMDBScore, int minAge) {
         this.mediaName = mediaName;
         this.releaseYear = releaseYear;
         this.genre = genre;
@@ -38,12 +40,8 @@ private int minAge;
         this.releaseYear = releaseYear;
     }
 
-    public String getGenre() {
+    public ArrayList<String> getGenre() {
         return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public float getIMDBScore() {
@@ -62,4 +60,13 @@ private int minAge;
         this.minAge = minAge;
     }
 
+
+    @Override
+    public String toString() {
+        return "Media{" +
+                "mediaName='" + mediaName + '\'' +
+                ", genre=" + genre +
+                ", IMDBScore=" + IMDBScore +
+                '}';
+    }
 }

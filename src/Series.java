@@ -3,16 +3,13 @@ package src;
 import java.util.ArrayList;
 
 public class Series extends Media {
+    private int endYear;
     private ArrayList<Season> seasons;
 
-    public Series(String mediaName, int releaseYear, String genre, float IMDBScore) {
+    public Series(String mediaName, int releaseYear, int endYear, ArrayList<String> genre, float IMDBScore, ArrayList<Season> seasons) {
         super(mediaName, releaseYear, genre, IMDBScore);
-        this.seasons = new ArrayList<>();
-    }
-
-    public Series(String mediaName, int releaseYear, String genre, float IMDBScore, int minAge) {
-        super(mediaName, releaseYear, genre, IMDBScore, minAge);
-        this.seasons = new ArrayList<>();
+        this.endYear = endYear;
+        this.seasons = seasons;
     }
 
     public void addSeason(Season season){
@@ -21,5 +18,14 @@ public class Series extends Media {
 
     public void removeSeason(Season season){
         seasons.remove(season);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "Season{" +
+                "seasons=" + seasons.size() + "\n" +
+                seasons.toString() +
+                '}';
     }
 }
