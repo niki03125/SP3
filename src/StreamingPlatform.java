@@ -54,7 +54,8 @@ public class StreamingPlatform {
         String password = TextUI.promptText("Please enter password: ");
         int birthdayYear = birthyear();
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
-                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)").toUpperCase();
+                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
+                "\nGender: ").toUpperCase();
 
 
         switch (gender) {
@@ -99,8 +100,8 @@ public class StreamingPlatform {
 
     public void userLogin() {
         TextUI.displayMSG("You have chosen to login");
-        String username = TextUI.promptText("Please enter your username");
-        String password = TextUI.promptText("Please enter your password");
+        String username = TextUI.promptText("Please enter your username: ");
+        String password = TextUI.promptText("Please enter your password: ");
 
         for (User user : users) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
@@ -109,7 +110,7 @@ public class StreamingPlatform {
             }
         }
         System.out.println("Login has failed. Username or password is incorrect");
-        TextUI.promptBinary("Do you want to register?");
+        TextUI.promptBinary("Do you want to register? ");
     }
 
 
@@ -118,7 +119,7 @@ public class StreamingPlatform {
                 "Login = l \n" +
                 "Register = r");
 
-        boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account?");
+        boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account? ");
         if (choice) {
             userLogin();
         } else if (!choice) {

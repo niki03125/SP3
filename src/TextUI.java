@@ -10,19 +10,19 @@ public class TextUI {
     }
 
     public static String promptText(String msg){
-        System.out.println(msg); //Stil brugeren et spørgsmål
+        System.out.print(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         return input;
     }
 
     public static int promptNumeric(String msg){
-        System.out.println(msg); //Stil brugeren et spørgsmål
+        System.out.print(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         int number;
         try {
             number = Integer.parseInt(input);
         } catch (NumberFormatException e){
-            displayMSG("Please type a number");
+            displayMSG("Please type a number: ");
             number = promptNumeric(msg);
         }
         return number;
