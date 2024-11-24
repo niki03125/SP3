@@ -2,13 +2,14 @@ package src;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StreamingPlatform {
     private String appName;
     private ArrayList<User> users;
     private ArrayList<Media> medias;
 
-    public StreamingPlatform(String appName){
+    public StreamingPlatform(String appName) {
         this.appName = appName;
         this.users = new ArrayList<User>();
         this.medias = new ArrayList<Media>();
@@ -30,19 +31,19 @@ public class StreamingPlatform {
         return medias;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user) {
         users.remove(user);
     }
 
-    public void addMedia(Media media){
+    public void addMedia(Media media) {
         medias.add(media);
     }
 
-    public void removeMedia(Media media){
+    public void removeMedia(Media media) {
         medias.remove(media);
     }
 
@@ -55,9 +56,10 @@ public class StreamingPlatform {
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
         TextUI.displayMSG("You have now been registered");
+        end();
     }
 
-    private String gender(){
+    private String gender() {
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
                 "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
                 "\nGender: ").toUpperCase();
@@ -86,13 +88,13 @@ public class StreamingPlatform {
         return gender;
     }
 
-    private String password(){
+    private String password() {
         String password = TextUI.promptText("Please enter password: ");
         //Later logic to make "Strong" password can be added.
         return password;
     }
 
-    private String username(){
+    private String username() {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
@@ -101,19 +103,19 @@ public class StreamingPlatform {
         return username;
     }
 
-    private boolean checkForDuplicateUser(String username){
+    private boolean checkForDuplicateUser(String username) {
         boolean isDuplicate = false;
-        for (User u : users){
-            if (u.getUsername().equalsIgnoreCase(username)){
+        for (User u : users) {
+            if (u.getUsername().equalsIgnoreCase(username)) {
                 isDuplicate = true;
             }
         }
         return isDuplicate;
     }
 
-    private int birthyear(){
-        int birthyear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
-        if (birthyear < Year.now().getValue()-125) {
+    private int birthyear() {
+        int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
+        if (birthyear < Year.now().getValue() - 125) {
             TextUI.displayMSG("Birth year must be realistic.");
             birthyear();
         } else if (birthyear > Year.now().getValue()) {
@@ -136,7 +138,7 @@ public class StreamingPlatform {
         }
         TextUI.displayMSG("Login has failed. Username or password is incorrect");
         String flag = TextUI.promptText("Do you want to login(L), register(R) or cancel(C)? ");
-        if (flag.equalsIgnoreCase("L")){
+        if (flag.equalsIgnoreCase("L")) {
             userLogin();
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
@@ -160,15 +162,15 @@ public class StreamingPlatform {
 
     }
 
-    public void setup(){
+    public void setup() {
         loadUsers();
         loadMovies();
         loadSeries();
     }
 
-    public void loadUsers(){
+    public void loadUsers() {
         ArrayList<String> data = FileIO.readData("data/userdata.csv");
-        for (String s : data){
+        for (String s : data) {
             String[] values = s.split(";");
             users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
         }
@@ -182,9 +184,9 @@ public class StreamingPlatform {
         }
     }
 
-    public void loadSeries(){
+    public void loadSeries() {
         ArrayList<String> data = FileIO.readData("data/series.txt");
-        for  (String s : data){
+        for (String s : data) {
             String[] values = s.replace(" ", "").split(";");
             String seriesName = values[0];
             ArrayList<Integer> runYears = getStartAndEndYear(values[1]);
@@ -195,38 +197,38 @@ public class StreamingPlatform {
         }
     }
 
-    private ArrayList<Season> getSeasons(String value){
+    private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
         String[] tmp = value.split(",");
-        for (int i = 0; i < tmp.length; i++){
+        for (int i = 0; i < tmp.length; i++) {
             String[] s = tmp[i].split("-");
-            seasons.add(new Season(i+1, getEpisodes(Integer.parseInt(s[1]))));
+            seasons.add(new Season(i + 1, getEpisodes(Integer.parseInt(s[1]))));
         }
         return seasons;
     }
 
-    private ArrayList<Episode> getEpisodes(int value){
+    private ArrayList<Episode> getEpisodes(int value) {
         ArrayList<Episode> episodes = new ArrayList<>();
-        for (int i = 0; i < value; i++){
-            episodes.add(new Episode(i+1));
+        for (int i = 0; i < value; i++) {
+            episodes.add(new Episode(i + 1));
         }
         return episodes;
     }
 
-    private ArrayList<String> getGenres(String value){
+    private ArrayList<String> getGenres(String value) {
         ArrayList<String> res = new ArrayList<>();
         String[] tmp = value.split(",");
-        for (String s : tmp){
+        for (String s : tmp) {
             res.add(s);
         }
         return res;
     }
 
-    private ArrayList<Integer> getStartAndEndYear(String value){
+    private ArrayList<Integer> getStartAndEndYear(String value) {
         ArrayList<Integer> res = new ArrayList<>();
-        if (value.contains("-")){
+        if (value.contains("-")) {
             String[] tmp = value.split("-");
-            if (tmp.equals(1)){
+            if (tmp.equals(1)) {
                 res.add(Integer.parseInt(tmp[0]));
                 res.add(Integer.parseInt(tmp[1]));
             } else {
@@ -240,10 +242,41 @@ public class StreamingPlatform {
         return res;
     }
 
-        public void end(){
-            ArrayList<String> playersAsText = new ArrayList<>();
-            for (User u: users) {
-                playersAsText.add(u.toString());
+    public String menu(){
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Search(F)", "Logout(L)"));
+        TextUI.displayMSG("=====MENU=====");
+        TextUI.displayMSG(String.valueOf(menu));
+        return TextUI.promptText("Please enter what you want to do: ");
+    }
+
+    private void search(){
+        //Daniel
+    }
+
+    public void runLoop(){
+        boolean on = true;
+        while (on){
+            String menuChoice = menu();
+            if (menuChoice.equalsIgnoreCase("M")){
+                TextUI.displayMSG("Movies - to be done");
+            } else if (menuChoice.equalsIgnoreCase("S")) {
+                TextUI.displayMSG("Series - to be done");
+            } else if (menuChoice.equalsIgnoreCase("F")) {
+                TextUI.displayMSG("Search - to be done. Looking for method called search();");
+                search();
+            } else if (menuChoice.equalsIgnoreCase("L")) {
+                TextUI.displayMSG("Thank you for watching today.");
+                end();
+                on = false;
             }
         }
     }
+
+    public void end() {
+        ArrayList<String> playersAsText = new ArrayList<>();
+        for (User u : users) {
+            playersAsText.add(u.toString());
+        }
+        FileIO.saveData(playersAsText, "data/userdata.csv");
+    }
+}

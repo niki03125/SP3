@@ -23,16 +23,15 @@ public class FileIO {
         return data;
     }
 
-    public static void saveData(ArrayList <User> users, String path, String header) {
+    public static void saveData(ArrayList<String> users, String path) {
         try {
             FileWriter writer = new FileWriter(path);
-            writer.write(header + "\n");
-            for (User u : users)  {
-                writer.write(u + "\n");
+            for (String user : users)  {
+                writer.write(user + "\n");
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println("something went wrong when writing to file");
+            System.out.println("Something went wrong when writing to file");
         }
 
     }
