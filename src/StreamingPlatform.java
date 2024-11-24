@@ -130,11 +130,11 @@ public class StreamingPlatform {
 
         for (User user : users) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
-                System.out.println(user.getUsername() + " has logged in");
+                TextUI.displayMSG(user.getUsername() + " has logged in");
                 return;
             }
         }
-        System.out.println("Login has failed. Username or password is incorrect");
+        TextUI.displayMSG("Login has failed. Username or password is incorrect");
         TextUI.promptBinary("Do you want to register? ");
     }
 
