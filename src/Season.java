@@ -6,7 +6,7 @@ public class Season{
     private int seasonID;
     private ArrayList<Episode> episodes;
 
-    public Season(int seasonID) {
+    public Season(int seasonID, ArrayList<Episode> episodes) {
         this.seasonID = seasonID;
         this.episodes = episodes;
     }
@@ -26,4 +26,5 @@ public class Season{
     public void removeEpisode(Episode episode){
         episodes.remove(episode);
     }
+
 }

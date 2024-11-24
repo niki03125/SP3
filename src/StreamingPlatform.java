@@ -2,7 +2,6 @@ package src;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class StreamingPlatform {
     private String appName;
@@ -147,35 +146,27 @@ public class StreamingPlatform {
             ArrayList<Integer> runYears = getStartAndEndYear(values[1]);
             ArrayList<String> genres = getGenres(values[2]);
             float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
-
-
-            String seasonsAndEpisodes = values[4];
-            getSeasonsAndEpisodes(values[4]);
-            System.out.println(s);
-
-
-
-
-
-
-            medias.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore));
+            ArrayList<Season> seasons = getSeasons(values[4]);
+            medias.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
         }
     }
 
-    private void getSeasonsAndEpisodes(String value){
-        System.out.println(value);
+    private ArrayList<Season> getSeasons(String value){
+        ArrayList<Season> seasons = new ArrayList<>();
         String[] tmp = value.split(",");
-
-
-
-
-        for (String s : tmp){
-            System.out.println(s);
-            String[] tmp2 = s.split("-");
-            String season = tmp2[0];
-            int episodes = Integer.parseInt(tmp2[1]);
-
+        for (int i = 0; i < tmp.length; i++){
+            String[] s = tmp[i].split("-");
+            seasons.add(new Season(i+1, getEpisodes(Integer.parseInt(s[1]))));
         }
+        return seasons;
+    }
+
+    private ArrayList<Episode> getEpisodes(int value){
+        ArrayList<Episode> episodes = new ArrayList<>();
+        for (int i = 0; i < value; i++){
+            episodes.add(new Episode(i+1));
+        }
+        return episodes;
     }
 
     private ArrayList<String> getGenres(String value){

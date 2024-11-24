@@ -60,4 +60,12 @@ private int minAge;
         this.minAge = minAge;
     }
 
+    @Override
+    public String toString() {
+        return "Media{" +
+                "mediaName='" + mediaName + '\'' +
+                ", genre=" + genre +
+                ", IMDBScore=" + IMDBScore +
+                "}\n";
+    }
 }

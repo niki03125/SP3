@@ -43,4 +43,5 @@ public class Episode {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
 }
