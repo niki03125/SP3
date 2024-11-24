@@ -85,18 +85,19 @@ public class StreamingPlatform {
         TextUI.displayMSG("You have now been registeret");
     }
 
-    public void userLogin(){
+    public void userLogin() {
         TextUI.displayMSG("You have chosen to login");
         String username = TextUI.promptText("Please enter your username");
-        if(!users.contains(username)){ //the code is cheking if the username is in the file, if not its giving back this messages.
-            TextUI.promptText("There are no profile with that username, please try again");
-        }
         String password = TextUI.promptText("Please enter your password");
-        //when the username is checked and correct, it has to check if the password is correct.
-        if(!users.contains(password)){
-            TextUI.promptText("The password is not correct");
+
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
+                System.out.println(username + " is logged in");
+                return;
+            }
         }
-        // if username and password is both correct, login the user
+        System.out.println("Login has failed. Username og password is incorrect");
+        TextUI.promptBinary("Do you want to register?");
     }
 
 
@@ -105,9 +106,8 @@ public class StreamingPlatform {
                 "Login = l \n" +
                 "Register = r");
 
-
         if (TextUI.promptBinary("you have chosen to login") == true) {
-            // userLogin();
+            userLogin();
         } else if (TextUI.promptBinary("you have chosen to register, please press r again if you want to continue with register") == false) {
             userRegister();
         }
