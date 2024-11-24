@@ -9,13 +9,20 @@ import java.io.File;
 import java.io.IOException;
 
 public class GUI extends JFrame implements ActionListener {
+    JButton loginButton;
+    JButton createButton;
+
     public GUI() {
         //Start site buttons
-        JButton loginButton = new JButton("Login");
+        loginButton = new JButton("Login");
         loginButton.setBounds(200, 300, 150, 50);
+        loginButton.addActionListener(this);
 
-        JButton createButton = new JButton("Create user");
+
+
+        createButton = new JButton("Create user");
         createButton.setBounds(400, 300, 150, 50);
+        createButton.addActionListener(this);
 
 
         this.setTitle("WBBT - Streaming services");
@@ -32,8 +39,15 @@ public class GUI extends JFrame implements ActionListener {
         this.add(loginButton);
         this.add(createButton);
     }
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource()==loginButton){
+            System.out.println("Login");
+        } else if (e.getSource()==createButton) {
+            System.out.println("Create new user");
+        }
     }
 }
