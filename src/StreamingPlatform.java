@@ -52,11 +52,7 @@ public class StreamingPlatform {
             TextUI.promptText("The username is already taken, please chose another one: ");//Dosent work properly.
         }
         String password = TextUI.promptText("Please enter password: ");
-        int birthdayYear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
-        if (birthdayYear < 1900 || birthdayYear > Year.now().getValue()) {
-            throw new IllegalArgumentException("Birthday year must be realistic.");
-
-        }
+        int birthdayYear = birthyear();
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
                 "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)").toUpperCase();
 
