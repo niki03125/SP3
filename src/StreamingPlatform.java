@@ -249,11 +249,26 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
+    private void search(){
+        //Daniel
+    }
+
     public void runLoop(){
         boolean on = true;
         while (on){
             String menuChoice = menu();
-
+            if (menuChoice.equalsIgnoreCase("M")){
+                TextUI.displayMSG("Movies - to be done");
+            } else if (menuChoice.equalsIgnoreCase("S")) {
+                TextUI.displayMSG("Series - to be done");
+            } else if (menuChoice.equalsIgnoreCase("F")) {
+                TextUI.displayMSG("Search - to be done. Looking for method called search();");
+                search();
+            } else if (menuChoice.equalsIgnoreCase("L")) {
+                TextUI.displayMSG("Thank you for watching today.");
+                end();
+                on = false;
+            }
         }
     }
 
@@ -265,4 +280,6 @@ public class StreamingPlatform {
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
+
+
 }
