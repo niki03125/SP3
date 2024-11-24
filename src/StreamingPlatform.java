@@ -279,6 +279,4 @@ public class StreamingPlatform {
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
-
-
 }
