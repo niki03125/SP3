@@ -1,7 +1,6 @@
 package src;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User {
     private String username;
@@ -11,7 +10,7 @@ public class User {
     private ArrayList<Media> seen;
     private ArrayList<Media> saved;
     private int id;
-    private static int idCount = 0;
+    private static int idCount = 1;
 
    public User (String username, String password, int birthdayYear, String gender){
         this.username = username;
@@ -70,15 +69,11 @@ public class User {
         this.gender = gender;
     }
 
-
-
     @Override
     public String toString(){
-       return "User: " + "username: " + username
-               + ", password: " + password
-               + ", birthday: " + birthdayYear
-               + ", gender: " + gender
-               + ", id: " + id;
-
+       return username
+               + "; " + password
+               + "; " + birthdayYear
+               + "; " + gender;
     }
 }
