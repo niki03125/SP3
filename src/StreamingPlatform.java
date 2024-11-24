@@ -46,28 +46,21 @@ public class StreamingPlatform {
         medias.remove(media);
     }
 
-    private boolean checkForDuplicateUser(String username){
-        boolean isDuplicate = false;
-        for (User u : users){
-            if (u.getUsername().equalsIgnoreCase(username)){
-                isDuplicate = true;
-            }
-        }
-        return isDuplicate;
+    public void userRegister() {
+        String username = username();
+        String password = password();
+        int birthdayYear = birthyear();
+        String gender = gender();
+
+        User user = new User(username, password, birthdayYear, gender);
+        users.add(user);
+        TextUI.displayMSG("You have now been registered");
     }
 
-    public void userRegister() {
-        String username = TextUI.promptText("Please enter username: ");
-        if (checkForDuplicateUser(username)) {
-            TextUI.promptText("The username is already taken, please chose another one: ");//Dosent work properly.
-        }
-        String password = TextUI.promptText("Please enter password: ");
-        int birthdayYear = birthyear();
+    private String gender(){
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
                 "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
                 "\nGender: ").toUpperCase();
-
-
         switch (gender) {
             case "F":
                 gender = "Female";
@@ -90,10 +83,32 @@ public class StreamingPlatform {
             default:
                 gender = null;
         }
+        return gender;
+    }
 
-        User user = new User(username, password, birthdayYear, gender);
-        users.add(user);
-        TextUI.displayMSG("You have now been registered");
+    private String password(){
+        String password = TextUI.promptText("Please enter password: ");
+        //Later logic to make "Strong" password can be added.
+        return password;
+    }
+
+    private String username(){
+        String username = TextUI.promptText("Please enter username: ");
+        if (checkForDuplicateUser(username)) {
+            TextUI.displayMSG("The username is already taken, please chose another one.");
+            username();
+        }
+        return username;
+    }
+
+    private boolean checkForDuplicateUser(String username){
+        boolean isDuplicate = false;
+        for (User u : users){
+            if (u.getUsername().equalsIgnoreCase(username)){
+                isDuplicate = true;
+            }
+        }
+        return isDuplicate;
     }
 
     private int birthyear(){
