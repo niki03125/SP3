@@ -124,7 +124,7 @@ public class StreamingPlatform {
     }
 
     public void userLogin() {
-        TextUI.displayMSG("You have chosen to login");
+        TextUI.displayMSG("You have chosen to login\n");
         String username = TextUI.promptText("Please enter your username: ");
         String password = TextUI.promptText("Please enter your password: ");
 
