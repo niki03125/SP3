@@ -1,5 +1,3 @@
-Kender vi altid længden af filer der skal indlæses i FileIO.readMediaData()?
-
 fejl i koden:
 StreamingPlatform:
 linje 51, den stopper ikke hvis navnet allerede er taget
