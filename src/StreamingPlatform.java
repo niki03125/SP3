@@ -135,14 +135,20 @@ public class StreamingPlatform {
             }
         }
         TextUI.displayMSG("Login has failed. Username or password is incorrect");
-        TextUI.promptBinary("Do you want to register? ");
+        String flag = TextUI.promptText("Do you want to login(L), register(R) or cancel(C)? ");
+        if (flag.equalsIgnoreCase("L")){
+            userLogin();
+        } else if (flag.equalsIgnoreCase("R")) {
+            userRegister();
+        } else if (flag.equalsIgnoreCase("C")) {
+            end();
+        }
     }
-
 
     public void userLoginOrRegister() {
         TextUI.displayMSG("Welcome to our WBBTServices \n" +
                 "Login = l \n" +
-                "Register = r");
+                "Register = r\n");
 
         boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account? ");
         if (choice) {
@@ -234,11 +240,10 @@ public class StreamingPlatform {
         return res;
     }
 
-       // public void end(){
-         //   ArrayList<String> playersAsText = new ArrayList<>();
-          //  for (User u: users) {
-             //   playersAsText.add(u.toString());
-          //  }
-        //}
-
+        public void end(){
+            ArrayList<String> playersAsText = new ArrayList<>();
+            for (User u: users) {
+                playersAsText.add(u.toString());
+            }
+        }
     }

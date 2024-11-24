@@ -6,17 +6,17 @@ public class TextUI {
     private static Scanner scan = new Scanner(System.in);
 
     public static void displayMSG(String msg){
-        System.out.println(msg);
+        System.out.print(msg);
     }
 
     public static String promptText(String msg){
-        System.out.print(msg); //Stil brugeren et spørgsmål
+        displayMSG(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         return input;
     }
 
     public static int promptNumeric(String msg){
-        System.out.print(msg); //Stil brugeren et spørgsmål
+        displayMSG(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         int number;
         try {
@@ -35,7 +35,8 @@ public class TextUI {
             return true;
         }else if(input.equalsIgnoreCase("r")){
             return false;
+        } else {
+            return promptBinary(msg);
         }
-        return promptBinary(msg);
     }
 }
