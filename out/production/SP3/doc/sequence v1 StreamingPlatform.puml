@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+StreamingPlatform -> FileIO
+
+loop for each u in data
+'indsæt hvad der sker i loopet
+StreamingPlatform -> User: new (username, password)
+ArrayList-> FileIO
+end
+alt login
+else
+StreamingPlatform -> User: register new user
+User -> ArrayList
+end
+@enduml
