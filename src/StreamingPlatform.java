@@ -117,8 +117,8 @@ public class StreamingPlatform {
     }
 
     public void setup(){
-//        loadUsers();
-//        loadMovies();
+        loadUsers();
+        loadMovies();
         loadSeries();
     }
 
