@@ -139,7 +139,7 @@ public class StreamingPlatform {
     }
 
     public void loadSeries(){
-        ArrayList<String> data = FileIO.readData("data/seriesDummy.txt");
+        ArrayList<String> data = FileIO.readData("data/series.txt");
         for  (String s : data){
             String[] values = s.replace(" ", "").split(";");
             String seriesName = values[0];
@@ -182,7 +182,7 @@ public class StreamingPlatform {
         ArrayList<Integer> res = new ArrayList<>();
         if (value.contains("-")){
             String[] tmp = value.split("-");
-            if (!tmp[1].isEmpty()){
+            if (tmp.equals(1)){
                 res.add(Integer.parseInt(tmp[0]));
                 res.add(Integer.parseInt(tmp[1]));
             } else {

@@ -9,6 +9,5 @@ public class Main {
         StreamingPlatform sp1 = new StreamingPlatform("WBBT");
         sp1.setup();
         //sp1.userLoginOrRegister();
-        System.out.println(sp1.getMedias());
     }
 }
