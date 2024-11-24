@@ -124,7 +124,7 @@ public class StreamingPlatform {
     }
 
     public void userLogin() {
-        TextUI.displayMSG("You have chosen to login\n");
+        TextUI.displayMSG("You have chosen to login");
         String username = TextUI.promptText("Please enter your username: ");
         String password = TextUI.promptText("Please enter your password: ");
 
@@ -148,7 +148,7 @@ public class StreamingPlatform {
     public void userLoginOrRegister() {
         TextUI.displayMSG("Welcome to our WBBTServices \n" +
                 "Login = l \n" +
-                "Register = r\n");
+                "Register = r");
 
         boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account? ");
         if (choice) {

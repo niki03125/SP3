@@ -6,23 +6,23 @@ public class TextUI {
     private static Scanner scan = new Scanner(System.in);
 
     public static void displayMSG(String msg){
-        System.out.print(msg);
+        System.out.println(msg);
     }
 
     public static String promptText(String msg){
-        displayMSG(msg); //Stil brugeren et spørgsmål
+        System.out.print(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         return input;
     }
 
     public static int promptNumeric(String msg){
-        displayMSG(msg); //Stil brugeren et spørgsmål
+        System.out.print(msg); //Stil brugeren et spørgsmål
         String input = scan.nextLine();
         int number;
         try {
             number = Integer.parseInt(input);
         } catch (NumberFormatException e){
-            displayMSG("Please type a number: ");
+            System.out.print("Please type a number: ");
             number = promptNumeric(msg);
         }
         return number;
