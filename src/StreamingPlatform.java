@@ -276,7 +276,6 @@ public class StreamingPlatform {
         ArrayList<String> playersAsText = new ArrayList<>();
         for (User u : users) {
             playersAsText.add(u.toString());
-            System.out.println(u.toString());
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
