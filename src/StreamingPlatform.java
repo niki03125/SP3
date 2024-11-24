@@ -54,36 +54,51 @@ public class StreamingPlatform {
         String password = TextUI.promptText("Please enter password: ");
         int birthdayYear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
         if (birthdayYear < 1900 || birthdayYear > Year.now().getValue()) {
-            throw new IllegalArgumentException("Birthday year must be realistic. ");
+            throw new IllegalArgumentException("Birthday year must be realistic.");
+
         }
-        String genderAnswer = TextUI.promptText("Please enter gender: \n " +
-                "You have 5 choices " +
-                "Woman (W), Male(M), Other(O), Chair (C), Kitten(K)");
-        String gender = TextUI.promptText("Woman (W), Male(M), Other(O), Chair (C), Kitten(K)").toLowerCase();
+        String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
+                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)").toUpperCase();
+
 
         switch (gender) {
-            case "W":
-                gender = "Woman";
+            case "F":
+                gender = "Female";
                 break;
             case "M":
                 gender = "Male";
                 break;
+            case "N":
+                gender = "Non-binary";
+                break;
+            case "T":
+                gender = "Transgender";
+                break;
             case "O":
                 gender = "Other";
                 break;
-            case "C":
-                gender = "Chair";
-                break;
-            case "K":
-                gender = "Kitten";
+            case "D":
+                gender = null;
                 break;
             default:
-                gender = "Other ";
+                gender = null;
         }
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);// addder ikke til userdata informationen
-        TextUI.displayMSG("You have now been registeret");
+        TextUI.displayMSG("You have now been registered");
+    }
+
+    private int birthyear(){
+        int birthyear = TextUI.promptNumeric("Please enter your birthdayYear(YYYY): ");
+        if (birthyear < Year.now().getValue()-125) {
+            TextUI.displayMSG("Birth year must be realistic.");
+            birthyear();
+        } else if (birthyear > Year.now().getValue()) {
+            TextUI.displayMSG("Birth year cannot be in the future.");
+            birthyear();
+        }
+        return birthyear;
     }
 
     public void userLogin() {
@@ -92,12 +107,12 @@ public class StreamingPlatform {
         String password = TextUI.promptText("Please enter your password");
 
         for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
-                System.out.println(username + " is logged in");
+            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
+                System.out.println(user.getUsername() + " is logged in");
                 return;
             }
         }
-        System.out.println("Login has failed. Username og password is incorrect");
+        System.out.println("Login has failed. Username or password is incorrect");
         TextUI.promptBinary("Do you want to register?");
     }
 
@@ -107,9 +122,10 @@ public class StreamingPlatform {
                 "Login = l \n" +
                 "Register = r");
 
-        if (TextUI.promptBinary("you have chosen to login") == true) {
+        boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account?");
+        if (choice) {
             userLogin();
-        } else if (TextUI.promptBinary("you have chosen to register, please press r again if you want to continue with register") == false) {
+        } else if (!choice) {
             userRegister();
         }
         // skal laves så den går til en meny med om man vil se hvilke film der er, hvilke film man har set, eller hvilke fik man har gemt
