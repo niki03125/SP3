@@ -27,4 +27,9 @@ public class Season{
         episodes.remove(episode);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                seasonID;
+    }
 }

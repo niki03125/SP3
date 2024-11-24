@@ -66,6 +66,6 @@ private int minAge;
                 "mediaName='" + mediaName + '\'' +
                 ", genre=" + genre +
                 ", IMDBScore=" + IMDBScore +
-                "}\n";
+                '}';
     }
 }

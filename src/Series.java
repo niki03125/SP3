@@ -20,4 +20,11 @@ public class Series extends Media {
         seasons.remove(season);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "Season{" +
+                "seasons=" + seasons.size() +
+                '}';
+    }
 }
