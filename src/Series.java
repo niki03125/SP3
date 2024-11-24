@@ -24,7 +24,8 @@ public class Series extends Media {
     public String toString() {
         return super.toString() + "\n" +
                 "Season{" +
-                "seasons=" + seasons.size() +
+                "seasons=" + seasons.size() + "\n" +
+                seasons.toString() +
                 '}';
     }
 }

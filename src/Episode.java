@@ -44,4 +44,11 @@ public class Episode {
         this.duration = duration;
     }
 
+    @Override
+    public String
+    toString() {
+        return "Episode{" +
+                "episodeID=" + episodeID +
+                '}';
+    }
 }
