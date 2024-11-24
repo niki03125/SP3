@@ -8,11 +8,15 @@ public class StreamingPlatform {
     private String appName;
     private ArrayList<User> users;
     private ArrayList<Media> medias;
+    private ArrayList<Movie> movies;
+    private ArrayList<Series> series;
 
     public StreamingPlatform(String appName) {
         this.appName = appName;
         this.users = new ArrayList<User>();
         this.medias = new ArrayList<Media>();
+        this.movies = new ArrayList<Movie>();
+        this.series = new ArrayList<Series>();
     }
 
     public String getAppName() {
@@ -180,7 +184,7 @@ public class StreamingPlatform {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.replace(" ", "").split(";");
-            medias.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
+            movies.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
         }
     }
 
@@ -193,7 +197,7 @@ public class StreamingPlatform {
             ArrayList<String> genres = getGenres(values[2]);
             float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
             ArrayList<Season> seasons = getSeasons(values[4]);
-            medias.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
+            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
         }
     }
 
@@ -253,12 +257,19 @@ public class StreamingPlatform {
         //Daniel
     }
 
+    private void movies(){
+        for (int i = 0; i < movies.size(); i++){
+            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
+        }
+    }
+
     public void runLoop(){
         boolean on = true;
         while (on){
             String menuChoice = menu();
             if (menuChoice.equalsIgnoreCase("M")){
                 TextUI.displayMSG("Movies - to be done");
+                movies();
             } else if (menuChoice.equalsIgnoreCase("S")) {
                 TextUI.displayMSG("Series - to be done");
             } else if (menuChoice.equalsIgnoreCase("F")) {
