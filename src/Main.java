@@ -6,6 +6,6 @@ public class Main {
 //        sp1.setup();
 //        sp1.userLoginOrRegister();
 //        sp1.runLoop();
-        GUI gui = new GUI();
+        new GUI();
     }
 }
