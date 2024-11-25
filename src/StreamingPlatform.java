@@ -12,6 +12,8 @@ public class StreamingPlatform {
     private ArrayList<Series> series;
     private User currentUser;
 
+    boolean on = true;
+
     public StreamingPlatform(String appName) {
         this.appName = appName;
         this.users = new ArrayList<User>();
@@ -265,25 +267,28 @@ public class StreamingPlatform {
     }
 
     public void runLoop(){
-        boolean on = true;
         while (on){
-            String menuChoice = menu();
-            if (menuChoice.equalsIgnoreCase("M")){
-                TextUI.displayMSG("Movies - to be done");
-                movies();
-            } else if (menuChoice.equalsIgnoreCase("S")) {
-                TextUI.displayMSG("Series - to be done");
-            }else if(menuChoice.equalsIgnoreCase("LI")){
-                TextUI.displayMSG("Lists");
-                listMenu();
-            } else if (menuChoice.equalsIgnoreCase("F")) {
-                TextUI.displayMSG("Search - to be done. Looking for method called search();");
-                search();
-            } else if (menuChoice.equalsIgnoreCase("L")) {
-                TextUI.displayMSG("Thank you for watching today.");
-                end();
-                on = false;
-            }
+            mainMenu();
+        }
+    }
+
+    public void mainMenu(){
+        String menuChoice = menu();
+        if (menuChoice.equalsIgnoreCase("M")){
+            TextUI.displayMSG("Movies - to be done");
+            movies();
+        } else if (menuChoice.equalsIgnoreCase("S")) {
+            TextUI.displayMSG("Series - to be done");
+        }else if(menuChoice.equalsIgnoreCase("LI")){
+            TextUI.displayMSG("Lists");
+            listMenu();
+        } else if (menuChoice.equalsIgnoreCase("F")) {
+            TextUI.displayMSG("Search - to be done. Looking for method called search();");
+            search();
+        } else if (menuChoice.equalsIgnoreCase("LO")) {
+            TextUI.displayMSG("Thank you for watching today.");
+            end();
+            on = false;
         }
     }
 
