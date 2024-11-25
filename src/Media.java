@@ -60,7 +60,6 @@ private int minAge;
         this.minAge = minAge;
     }
 
-
     @Override
     public String toString() {
         return "Media{" +
