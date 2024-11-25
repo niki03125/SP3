@@ -10,6 +10,7 @@ public class StreamingPlatform {
     private ArrayList<Media> medias;
     private ArrayList<Movie> movies;
     private ArrayList<Series> series;
+    private Media currentMedia;
 
     public StreamingPlatform(String appName) {
         this.appName = appName;
@@ -184,7 +185,9 @@ public class StreamingPlatform {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.replace(" ", "").split(";");
-            movies.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
+            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", ".")));
+            movies.add(tmpMovie);
+            medias.add(tmpMovie);
         }
     }
 
@@ -200,6 +203,7 @@ public class StreamingPlatform {
             series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
         }
     }
+
 
     private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
@@ -253,9 +257,28 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    private void search(){
-        //Daniel
+    private void searchByTitle(String title){
+        String input = TextUI.promptText("Search: ");
+        for (Media mediaArray : medias) {
+            if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
+                mediaAction(mediaArray);
+            }
+        }
     }
+
+    public void mediaAction(Media media)   {
+        TextUI.displayMSG("Title: " + media.getMediaName() +
+                "\nIMDBScore:" + media.getIMDBScore());
+        playMedia();
+
+
+    }
+
+    public void playMedia()   {
+        TextUI("Now watching: " + currentMedia.getMediaName());
+        currentUser.addToSeen(currentMedia.getMediaName());
+    }
+
 
     private void movies(){
         for (int i = 0; i < movies.size(); i++){
@@ -274,7 +297,7 @@ public class StreamingPlatform {
                 TextUI.displayMSG("Series - to be done");
             } else if (menuChoice.equalsIgnoreCase("F")) {
                 TextUI.displayMSG("Search - to be done. Looking for method called search();");
-                search();
+                searchByTitle();
             } else if (menuChoice.equalsIgnoreCase("L")) {
                 TextUI.displayMSG("Thank you for watching today.");
                 end();
@@ -282,6 +305,9 @@ public class StreamingPlatform {
             }
         }
     }
+
+
+
 
     public void end() {
         ArrayList<String> playersAsText = new ArrayList<>();
