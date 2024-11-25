@@ -257,13 +257,25 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    private void searchByTitle(String title){
+    public ArrayList<Media> searchByTitle(){
         String input = TextUI.promptText("Search: ");
-        for (Media mediaArray : medias) {
+
+        /*for (Media mediaArray : medias) {
             if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
                 mediaAction(mediaArray);
             }
+        }*/
+
+        ArrayList<Media> searchResults = new ArrayList<>();
+
+
+        for(int i = 0; i < medias.size(); i++){
+            if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
+                mediaAction(medias.get(i));
+                searchResults.add(medias.get(i));
+            }
         }
+        return searchResults;
     }
 
     public void mediaAction(Media media)   {
@@ -275,8 +287,9 @@ public class StreamingPlatform {
     }
 
     public void playMedia()   {
-        TextUI("Now watching: " + currentMedia.getMediaName());
-        currentUser.addToSeen(currentMedia.getMediaName());
+        TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
+        //un-comment when currentUser has been merged into main
+        //currentUser.addToSeen(currentMedia.getMediaName());
     }
 
 
