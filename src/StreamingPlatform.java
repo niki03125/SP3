@@ -162,7 +162,6 @@ public class StreamingPlatform {
         } else if (!choice) {
             userRegister();
         }
-        // skal laves så den går til en meny med om man vil se hvilke film der er, hvilke film man har set, eller hvilke fik man har gemt
 
     }
 
@@ -247,7 +246,7 @@ public class StreamingPlatform {
     }
 
     public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Search(F)", "Logout(L)"));
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
         return TextUI.promptText("Please enter what you want to do: ");
@@ -272,6 +271,8 @@ public class StreamingPlatform {
                 movies();
             } else if (menuChoice.equalsIgnoreCase("S")) {
                 TextUI.displayMSG("Series - to be done");
+            }else if(menuChoice.equalsIgnoreCase("LI")){
+                TextUI.displayMSG("List- to be done. Make a new meny to see, seenlist(); and savedlist();");
             } else if (menuChoice.equalsIgnoreCase("F")) {
                 TextUI.displayMSG("Search - to be done. Looking for method called search();");
                 search();
