@@ -40,8 +40,8 @@ public class User {
        return gender;
    }
 
-   public ArrayList<Media> getSeen() {
-        return seen;
+   public   ArrayList<Media> getSeen() {
+        return this.seen;
    }
 
    public ArrayList<Media> getSaved() {
@@ -76,4 +76,18 @@ public class User {
                + "; " + birthdayYear
                + "; " + gender;
     }
+
+    public void addToSaved(Media media){
+        saved.add(media);
+    }
+
+    public void removeFromSaved(Media media){
+       saved.remove(media);
+    }
+
+    public void addToSeen(Media media){
+       seen.add(media);
+    }
+
+
 }
