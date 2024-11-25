@@ -259,7 +259,7 @@ public class StreamingPlatform {
 
     public ArrayList<Media> searchByTitle(){
         String input = TextUI.promptText("Search: ");
-
+        //had problems with this for each loop
         /*for (Media mediaArray : medias) {
             if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
                 mediaAction(mediaArray);
