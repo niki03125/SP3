@@ -310,7 +310,11 @@ public class StreamingPlatform {
                 TextUI.displayMSG("Series - to be done");
             } else if (menuChoice.equalsIgnoreCase("F")) {
                 TextUI.displayMSG("Search - to be done. Looking for method called search();");
-                searchByTitle();
+                ArrayList<Media> searchResults = searchByTitle();
+                //TODO - Daniel
+                // create method selectFromList(searchResults)
+                // should have return type Media
+                // save this media as currentMedia
             } else if (menuChoice.equalsIgnoreCase("L")) {
                 TextUI.displayMSG("Thank you for watching today.");
                 end();
