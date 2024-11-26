@@ -106,7 +106,7 @@ public class StreamingPlatform {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
-            username();
+            username = username();
         }
         return username;
     }
