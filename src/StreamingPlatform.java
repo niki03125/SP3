@@ -291,8 +291,7 @@ public class StreamingPlatform {
 
     public void playMedia()   {
         TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
-        //un-comment when currentUser has been merged into main
-        //currentUser.addToSeen(currentMedia.getMediaName());
+        currentUser.addToSeen(currentMedia);
     }
 
 
