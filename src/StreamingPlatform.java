@@ -64,6 +64,7 @@ public class StreamingPlatform {
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
         TextUI.displayMSG("You have now been registered");
+        currentUser = user;
         end();
     }
 
@@ -269,7 +270,7 @@ public class StreamingPlatform {
     }
 
     public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
         return TextUI.promptText("Please enter what you want to do: ");
@@ -351,12 +352,29 @@ public class StreamingPlatform {
         } else if (menuChoice.equalsIgnoreCase("F")) {
             TextUI.displayMSG("Search - to be done. Looking for method called search();");
             searchByTitle();
+        } else if (menuChoice.equalsIgnoreCase("SET")) {
+            userSettings();
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
             on = false;
         }
     }
+
+    private void userSettings(){
+        TextUI.displayMSG("=====Settings=====");
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete user(D) ");
+        if (tmpChoice.equalsIgnoreCase("U")){
+            currentUser.setUsername(username());
+        } else if (tmpChoice.equalsIgnoreCase("C")) {
+            currentUser.setPassword(password());
+        } else if (tmpChoice.equalsIgnoreCase("D")) {
+            users.remove(currentUser);
+            end();
+            on = false;
+        }
+    }
+
 
     public void listMenu() {
         ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
