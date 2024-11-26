@@ -312,8 +312,16 @@ public class StreamingPlatform {
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("Movies - to be done");
             movies();
+            // choise movie();
+            // brug media action(media)
+            playMedia();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
+            //Serier();
+            //choose serie();
+            // choose season();
+            // choose episode();
+            playMedia();
         }else if(menuChoice.equalsIgnoreCase("LI")){
             TextUI.displayMSG("Lists");
             listMenu();
@@ -332,13 +340,13 @@ public class StreamingPlatform {
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if(choice.equalsIgnoreCase("SE")){
+        if(choice.equalsIgnoreCase("SE")){ //if emty, tell and go to media
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
             for(Media media : userSeenList){
             TextUI.displayMSG(media.toString());
             }
-        }else if(choice.equalsIgnoreCase("SA")){
+        }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
                 TextUI.displayMSG("Here is your savedList: ");
                 ArrayList<Media> userSavedList = currentUser.getSaved();
                 for (Media media : userSavedList){
