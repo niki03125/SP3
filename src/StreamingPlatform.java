@@ -98,29 +98,15 @@ public class StreamingPlatform {
 
     private String password() {
         String password = TextUI.promptText("Please enter password: ");
-        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
-            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
-            password = password();
-        }
+        //Later logic to make "Strong" password can be added.
         return password;
     }
-    private boolean checkUpperCase(String password){
-        char character;
-        for (int i = 0; i < password.length(); i++){
-            character = password.charAt(i);
-            if (Character.isUpperCase(character)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     private String username() {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
-            username();
+            username = username();
         }
         return username;
     }
@@ -166,7 +152,7 @@ public class StreamingPlatform {
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
         } else if (flag.equalsIgnoreCase("C")) {
-           end();
+            end();
         }
     }
 
@@ -326,16 +312,8 @@ public class StreamingPlatform {
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("Movies - to be done");
             movies();
-            // choise movie();
-            // brug media action(media)
-            playMedia();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
-            //Serier();
-            //choose serie();
-            // choose season();
-            // choose episode();
-            playMedia();
         }else if(menuChoice.equalsIgnoreCase("LI")){
             TextUI.displayMSG("Lists");
             listMenu();
@@ -354,18 +332,18 @@ public class StreamingPlatform {
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if(choice.equalsIgnoreCase("SE")){ //if emty, tell and go to media
+        if(choice.equalsIgnoreCase("SE")){
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
             for(Media media : userSeenList){
-            TextUI.displayMSG(media.toString());
+                TextUI.displayMSG(media.toString());
             }
-        }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
-                TextUI.displayMSG("Here is your savedList: ");
-                ArrayList<Media> userSavedList = currentUser.getSaved();
-                for (Media media : userSavedList){
-                    TextUI.displayMSG((media.toString()));
-                }
+        }else if(choice.equalsIgnoreCase("SA")){
+            TextUI.displayMSG("Here is your savedList: ");
+            ArrayList<Media> userSavedList = currentUser.getSaved();
+            for (Media media : userSavedList){
+                TextUI.displayMSG((media.toString()));
+            }
         }
     }
 
