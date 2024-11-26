@@ -320,7 +320,7 @@ public class StreamingPlatform {
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {
             TextUI.displayMSG("Search - to be done. Looking for method called search();");
-            search();
+            searchByTitle();
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
