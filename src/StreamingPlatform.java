@@ -268,9 +268,7 @@ public class StreamingPlatform {
                 mediaAction(mediaArray);
             }
         }*/
-
         ArrayList<Media> searchResults = new ArrayList<>();
-
 
         for(int i = 0; i < medias.size(); i++){
             if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
@@ -285,8 +283,6 @@ public class StreamingPlatform {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
         playMedia();
-
-
     }
 
     public void playMedia()   {
@@ -297,7 +293,7 @@ public class StreamingPlatform {
 
     private void movies(){
         for (int i = 0; i < movies.size(); i++){
-            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName()); // Indexing the list of movies
+            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName()); // Indexing the list of movies with their attached numbers
         }
     }
 
@@ -312,10 +308,6 @@ public class StreamingPlatform {
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("List of all movies:");
             chooseMovie();
-
-            // chooseMovie(); Valg af nr 100 -> gå ind på filmen. Vælg om jeg vil se filmen, tilføje den til saved list eller tilbage(til hovedmenu eller film?).
-            // chooseMovie(number);
-            // brug mediaAction(media);
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done"); //Serier har sæson
             //Serier();
@@ -338,10 +330,33 @@ public class StreamingPlatform {
 
     public void chooseMovie(){
         movies(); //Lists all movies
-        int choice = TextUI.promptNumeric("Please write the number of the movie to choose it.");
-        movies(choice);
-        //Save / remove movie from your watchlist or watch movie.
-        mediaAction(); //The movie starts playing because it calls playMedia(); But it should first ask if you want to save or watch.
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose.");
+        // Check if the input is valid:
+        if (choice < 1 || choice > movies.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseMovie();
+            return;
+        }
+        //Get the chosen movie and convert user input to 0-based index:
+        Movie selectedMovie = movies.get(choice - 1);
+        // Ask what user wants to do with their choice of movie:
+        String action = TextUI.promptText("You selected " + selectedMovie.getMediaName()) + "\n" +
+                "You have the following options: \n" +
+                "Watch (W), Save to your list (S), Return to main menu (R)"; // If movie has already been saved to list, the option should be "remove from list"
+        switch (action) {
+            case "W":
+                mediaAction(); //The movie starts playing because it calls playMedia();
+                break;
+            case "S":
+                //save to userlist
+                break;
+            case "R":
+                TextUI.displayMSG("Returning to main menu...");
+                break;
+            default:
+                TextUI.displayMSG("Invalid option");
+        }
+
     }
 
     public void listMenu(){
