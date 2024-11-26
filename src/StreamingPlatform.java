@@ -98,12 +98,13 @@ public class StreamingPlatform {
 
     private String password() {
         String password = TextUI.promptText("Please enter password: ");
-        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
-            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
+        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password) || !checkLowerCase(password)){
+            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter and one lowercase letter. Please try again");
             password = password();
         }
         return password;
     }
+
     private boolean checkUpperCase(String password){
         char character;
         for (int i = 0; i < password.length(); i++){
@@ -115,6 +116,16 @@ public class StreamingPlatform {
         return false;
     }
 
+    private boolean checkLowerCase(String password){
+        char character;
+        for (int i = 0; i < password.length(); i++){
+            character = password.charAt(i);
+            if (Character.isLowerCase(i)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private String username() {
         String username = TextUI.promptText("Please enter username: ");
@@ -181,7 +192,6 @@ public class StreamingPlatform {
         } else if (!choice) {
             userRegister();
         }
-
     }
 
     public void setup() {
@@ -220,7 +230,6 @@ public class StreamingPlatform {
             series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
         }
     }
-
 
     private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
