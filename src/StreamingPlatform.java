@@ -203,7 +203,9 @@ public class StreamingPlatform {
             ArrayList<String> genres = getGenres(values[2]);
             float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
             ArrayList<Season> seasons = getSeasons(values[4]);
-            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
+            Series tmpSeries = new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons);
+            series.add(tmpSeries);
+            medias.add(tmpSeries);
         }
     }
 
@@ -260,33 +262,49 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    public ArrayList<Media> searchByTitle(){
+    public void searchByTitle(){
         String input = TextUI.promptText("Search: ");
-        //had problems with this for each loop
-        /*for (Media mediaArray : medias) {
-            if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
-                mediaAction(mediaArray);
-            }
-        }*/
-
-        ArrayList<Media> searchResults = new ArrayList<>();
-
-
-        for(int i = 0; i < medias.size(); i++){
-            if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
+        for (int i = 0; i < medias.size(); i++) {
+            if (medias.get(i).getMediaName().equalsIgnoreCase(input)) {
+                currentMedia = medias.get((i));
                 mediaAction(medias.get(i));
-                searchResults.add(medias.get(i));
             }
         }
-        return searchResults;
     }
 
-    public void mediaAction(Media media)   {
+    public void mediaAction(Media media) {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
-        playMedia();
+        mediaActionMenu();
+    }
 
-
+    private void mediaActionMenu(){
+        String tmpChoice;
+        if (currentUser.getSaved().contains(currentMedia)){
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("R")) {
+                currentUser.removeFromSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        } else {
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to list(A), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("A")) {
+                currentUser.addToSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        }
     }
 
     public void playMedia()   {
@@ -295,26 +313,26 @@ public class StreamingPlatform {
     }
 
 
-    private void movies(){
-        for (int i = 0; i < movies.size(); i++){
-            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
+    private void movies() {
+        for (int i = 0; i < movies.size(); i++) {
+            TextUI.displayMSG(i + 1 + " " + movies.get(i).getMediaName());
         }
     }
 
-    public void runLoop(){
-        while (on){
+    public void runLoop() {
+        while (on) {
             mainMenu();
         }
     }
 
-    public void mainMenu(){
+    public void mainMenu() {
         String menuChoice = menu();
-        if (menuChoice.equalsIgnoreCase("M")){
+        if (menuChoice.equalsIgnoreCase("M")) {
             TextUI.displayMSG("Movies - to be done");
             movies();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
-        }else if(menuChoice.equalsIgnoreCase("LI")){
+        } else if (menuChoice.equalsIgnoreCase("LI")) {
             TextUI.displayMSG("Lists");
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {
@@ -327,21 +345,21 @@ public class StreamingPlatform {
         }
     }
 
-    public void listMenu(){
+    public void listMenu() {
         ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if(choice.equalsIgnoreCase("SE")){
+        if (choice.equalsIgnoreCase("SE")) {
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
-            for(Media media : userSeenList){
+            for (Media media : userSeenList) {
                 TextUI.displayMSG(media.toString());
             }
-        }else if(choice.equalsIgnoreCase("SA")){
+        } else if (choice.equalsIgnoreCase("SA")) {
             TextUI.displayMSG("Here is your savedList: ");
             ArrayList<Media> userSavedList = currentUser.getSaved();
-            for (Media media : userSavedList){
+            for (Media media : userSavedList) {
                 TextUI.displayMSG((media.toString()));
             }
         }
