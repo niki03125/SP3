@@ -362,7 +362,7 @@ public class StreamingPlatform {
 
     private void userSettings(){
         TextUI.displayMSG("=====Settings=====");
-        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete user(D) ");
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D) ");
         if (tmpChoice.equalsIgnoreCase("U")){
             currentUser.setUsername(username());
         } else if (tmpChoice.equalsIgnoreCase("C")) {
