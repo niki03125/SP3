@@ -65,7 +65,6 @@ public class StreamingPlatform {
         users.add(user);
         TextUI.displayMSG("You have now been registered");
         currentUser = user;
-        end();
     }
 
     private String gender() {
