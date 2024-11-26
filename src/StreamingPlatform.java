@@ -11,6 +11,9 @@ public class StreamingPlatform {
     private ArrayList<Movie> movies;
     private ArrayList<Series> series;
     private Media currentMedia;
+    private User currentUser;
+
+    boolean on = true;
 
     public StreamingPlatform(String appName) {
         this.appName = appName;
@@ -138,6 +141,7 @@ public class StreamingPlatform {
         for (User user : users) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
                 TextUI.displayMSG(user.getUsername() + " has logged in");
+                currentUser = user;
                 return;
             }
         }
@@ -148,7 +152,7 @@ public class StreamingPlatform {
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
         } else if (flag.equalsIgnoreCase("C")) {
-            end();
+           end();
         }
     }
 
@@ -163,7 +167,6 @@ public class StreamingPlatform {
         } else if (!choice) {
             userRegister();
         }
-        // skal laves så den går til en meny med om man vil se hvilke film der er, hvilke film man har set, eller hvilke fik man har gemt
 
     }
 
@@ -251,7 +254,7 @@ public class StreamingPlatform {
     }
 
     public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Search(F)", "Logout(L)"));
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
         return TextUI.promptText("Please enter what you want to do: ");
@@ -300,26 +303,48 @@ public class StreamingPlatform {
     }
 
     public void runLoop(){
-        boolean on = true;
         while (on){
-            String menuChoice = menu();
-            if (menuChoice.equalsIgnoreCase("M")){
-                TextUI.displayMSG("Movies - to be done");
-                movies();
-            } else if (menuChoice.equalsIgnoreCase("S")) {
-                TextUI.displayMSG("Series - to be done");
-            } else if (menuChoice.equalsIgnoreCase("F")) {
-                TextUI.displayMSG("Search - to be done. Looking for method called search();");
-                ArrayList<Media> searchResults = searchByTitle();
-                //TODO - Daniel
-                // create method selectFromList(searchResults)
-                // should have return type Media
-                // save this media as currentMedia
-            } else if (menuChoice.equalsIgnoreCase("L")) {
-                TextUI.displayMSG("Thank you for watching today.");
-                end();
-                on = false;
+            mainMenu();
+        }
+    }
+
+    public void mainMenu(){
+        String menuChoice = menu();
+        if (menuChoice.equalsIgnoreCase("M")){
+            TextUI.displayMSG("Movies - to be done");
+            movies();
+        } else if (menuChoice.equalsIgnoreCase("S")) {
+            TextUI.displayMSG("Series - to be done");
+        }else if(menuChoice.equalsIgnoreCase("LI")){
+            TextUI.displayMSG("Lists");
+            listMenu();
+        } else if (menuChoice.equalsIgnoreCase("F")) {
+            TextUI.displayMSG("Search - to be done. Looking for method called search();");
+            search();
+        } else if (menuChoice.equalsIgnoreCase("LO")) {
+            TextUI.displayMSG("Thank you for watching today.");
+            end();
+            on = false;
+        }
+    }
+
+    public void listMenu(){
+        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
+        TextUI.displayMSG("=====LISTMENU=====");
+        TextUI.displayMSG(String.valueOf(listMenu));
+        String choice = TextUI.promptText("Please enter what list, you want to see: ");
+        if(choice.equalsIgnoreCase("SE")){
+            TextUI.displayMSG("Here is your seenList: ");
+            ArrayList<Media> userSeenList = currentUser.getSeen();
+            for(Media media : userSeenList){
+            TextUI.displayMSG(media.toString());
             }
+        }else if(choice.equalsIgnoreCase("SA")){
+                TextUI.displayMSG("Here is your savedList: ");
+                ArrayList<Media> userSavedList = currentUser.getSaved();
+                for (Media media : userSavedList){
+                    TextUI.displayMSG((media.toString()));
+                }
         }
     }
 
@@ -334,3 +359,4 @@ public class StreamingPlatform {
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
 }
+
