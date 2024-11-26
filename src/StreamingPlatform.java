@@ -350,26 +350,57 @@ public class StreamingPlatform {
     }
 
     public void listMenu(){
-        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
+        // Create a menu where you can choose a list you want to see
+        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
+
+        // useing the promptText to user for a choise
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if(choice.equalsIgnoreCase("SE")){ //if emty, tell and go to media
+
+        //if user choose SeenList
+        if(choice.equalsIgnoreCase("SE")){
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
-            for(Media media : userSeenList){
-            TextUI.displayMSG(media.toString());
+            if(userSeenList.isEmpty()){
+                TextUI.displayMSG("Your seenList is empty");
+               listMenu();
+            }else{
+                for(Media media : userSeenList) {
+                    TextUI.displayMSG(media.toString());
+                }
             }
         }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
-                TextUI.displayMSG("Here is your savedList: ");
-                ArrayList<Media> userSavedList = currentUser.getSaved();
+            TextUI.displayMSG("Here is your savedList: ");
+            ArrayList<Media> userSavedList = currentUser.getSaved();
+            if(userSavedList.isEmpty()){
+                TextUI.displayMSG("Your savedList is empty");
+                listMenu();
+            }else{
                 for (Media media : userSavedList){
-                    TextUI.displayMSG((media.toString()));
+                TextUI.displayMSG((media.toString()));
                 }
+            }
+        }else if(choice.equalsIgnoreCase("SP")){
+            TextUI.displayMSG("Here is your specialPlayLists you made: ");
+            ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
+            if(userSpecialPlayListes.isEmpty()){
+                TextUI.displayMSG("Your specialPlayList is empty");
+                listMenu();
+            }else{// Niki kigger på onsdag (virker ikke helt med playlist)
+                int index = 1;
+                for(Media playList: userSpecialPlayListes){
+                    TextUI.displayMSG("PlayList "+ index + ": ");
+                    for(Media media: userSpecialPlayListes){
+                        TextUI.displayMSG(media.toString());
+                    }
+                    index++;
+                }
+            }
+        }else{
+            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP");
         }
     }
-
-
 
 
     public void end() {

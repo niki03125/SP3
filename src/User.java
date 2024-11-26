@@ -9,6 +9,7 @@ public class User {
     private String gender;
     private ArrayList<Media> seen;
     private ArrayList<Media> saved;
+    private ArrayList<Media> SpecialPlayLists;
     private int id;
     private static int idCount = 1;
 
@@ -48,11 +49,15 @@ public class User {
         return saved;
    }
 
+   public ArrayList<Media> getSpecialPlayLists(){
+       return SpecialPlayLists;
+   }
+
    public int getId() {
         return id;
    }
 
-   //Setter
+   //Setter Hvis man vil lave en setting feature, hvor du kan ændre alle dine oplysninger
     public void setUsername(String username) {
         this.username = username;
     }
@@ -88,6 +93,15 @@ public class User {
     public void addToSeen(Media media){
        seen.add(media);
     }
+
+    public void addToSpecialPlayLists(Media media){
+       SpecialPlayLists.add(media);
+    }
+
+    public void removeFromSpecialPlayLists(Media media){
+        SpecialPlayLists.remove(media);
+    }
+
 
 
 }
