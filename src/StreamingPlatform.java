@@ -384,13 +384,13 @@ public class StreamingPlatform {
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
             for (Media media : userSeenList) {
-                TextUI.displayMSG(media.toString());
+                TextUI.displayMSG(media.getMediaName());
             }
         } else if (choice.equalsIgnoreCase("SA")) {
             TextUI.displayMSG("Here is your savedList: ");
             ArrayList<Media> userSavedList = currentUser.getSaved();
             for (Media media : userSavedList) {
-                TextUI.displayMSG((media.toString()));
+                TextUI.displayMSG((media.getMediaName()));
             }
         }
     }
