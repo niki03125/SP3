@@ -297,7 +297,7 @@ public class StreamingPlatform {
 
     private void movies(){
         for (int i = 0; i < movies.size(); i++){
-            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
+            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName()); // Indexing the list of movies
         }
     }
 
@@ -310,18 +310,19 @@ public class StreamingPlatform {
     public void mainMenu(){
         String menuChoice = menu();
         if (menuChoice.equalsIgnoreCase("M")){
-            TextUI.displayMSG("Movies - to be done");
-            movies();
-            // choise movie();
-            // brug media action(media)
-            playMedia();
+            TextUI.displayMSG("List of all movies:");
+            chooseMovie();
+
+            // chooseMovie(); Valg af nr 100 -> gå ind på filmen. Vælg om jeg vil se filmen, tilføje den til saved list eller tilbage(til hovedmenu eller film?).
+            // chooseMovie(number);
+            // brug mediaAction(media);
         } else if (menuChoice.equalsIgnoreCase("S")) {
-            TextUI.displayMSG("Series - to be done");
+            TextUI.displayMSG("Series - to be done"); //Serier har sæson
             //Serier();
-            //choose serie();
+            //choose series();
             // choose season();
             // choose episode();
-            playMedia();
+            //playMedia();
         }else if(menuChoice.equalsIgnoreCase("LI")){
             TextUI.displayMSG("Lists");
             listMenu();
@@ -333,6 +334,14 @@ public class StreamingPlatform {
             end();
             on = false;
         }
+    }
+
+    public void chooseMovie(){
+        movies(); //Lists all movies
+        int choice = TextUI.promptNumeric("Please write the number of the movie to choose it.");
+        movies(choice);
+        //Save / remove movie from your watchlist or watch movie.
+        mediaAction(); //The movie starts playing because it calls playMedia(); But it should first ask if you want to save or watch.
     }
 
     public void listMenu(){
