@@ -98,9 +98,23 @@ public class StreamingPlatform {
 
     private String password() {
         String password = TextUI.promptText("Please enter password: ");
-        //Later logic to make "Strong" password can be added.
+        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
+            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
+            password = password();
+        }
         return password;
     }
+    private boolean checkUpperCase(String password){
+        char character;
+        for (int i = 0; i < password.length(); i++){
+            character = password.charAt(i);
+            if (Character.isUpperCase(character)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private String username() {
         String username = TextUI.promptText("Please enter username: ");
