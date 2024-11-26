@@ -10,6 +10,7 @@ public class StreamingPlatform {
     private ArrayList<Media> medias;
     private ArrayList<Movie> movies;
     private ArrayList<Series> series;
+    private Media currentMedia;
     private User currentUser;
 
     boolean on = true;
@@ -187,7 +188,9 @@ public class StreamingPlatform {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
             String[] values = s.replace(" ", "").split(";");
-            movies.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
+            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", ".")));
+            movies.add(tmpMovie);
+            medias.add(tmpMovie);
         }
     }
 
@@ -203,6 +206,7 @@ public class StreamingPlatform {
             series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
         }
     }
+
 
     private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
@@ -256,9 +260,41 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    private void search(){
-        //Daniel
+    public ArrayList<Media> searchByTitle(){
+        String input = TextUI.promptText("Search: ");
+        //had problems with this for each loop
+        /*for (Media mediaArray : medias) {
+            if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
+                mediaAction(mediaArray);
+            }
+        }*/
+
+        ArrayList<Media> searchResults = new ArrayList<>();
+
+
+        for(int i = 0; i < medias.size(); i++){
+            if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
+                mediaAction(medias.get(i));
+                searchResults.add(medias.get(i));
+            }
+        }
+        return searchResults;
     }
+
+    public void mediaAction(Media media)   {
+        TextUI.displayMSG("Title: " + media.getMediaName() +
+                "\nIMDBScore:" + media.getIMDBScore());
+        playMedia();
+
+
+    }
+
+    public void playMedia()   {
+        TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
+        //un-comment when currentUser has been merged into main
+        //currentUser.addToSeen(currentMedia.getMediaName());
+    }
+
 
     private void movies(){
         for (int i = 0; i < movies.size(); i++){
@@ -311,6 +347,9 @@ public class StreamingPlatform {
                 }
         }
     }
+
+
+
 
     public void end() {
         ArrayList<String> playersAsText = new ArrayList<>();
