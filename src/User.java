@@ -87,11 +87,11 @@ public class User {
     public void addToSaved(Media media){
            saved.add(media);
     }
-    public void addToSavedTMP(){
+    public void mediaToString(ArrayList<Media> medArr){
        ArrayList<String> addMediaArray = new ArrayList<>();
        String userFile = "data/UserMovieLists/" + this.username + "_SavedMovies.csv";
-        for (Media med : saved){
-            saved.add(med);
+        for (Media med : medArr){
+            addMediaArray.add(med.getMediaName() + " ; " + med.getIMDBScore());
         }
         FileIO.writeToCVSFileMovie(addMediaArray, userFile);
     }
@@ -102,6 +102,7 @@ public class User {
     public void addToSeen(Media media){
        seen.add(media);
     }
+
 
     public void addToSpecialPlayLists(Media media){
        specialPlayLists.add(media);

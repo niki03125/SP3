@@ -326,8 +326,8 @@ public class StreamingPlatform {
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
-                //currentUser.addToSaved(currentMedia);
-                currentUser.addToSavedTMP();
+                currentUser.addToSaved(currentMedia);
+                //currentUser.addToSavedTMP(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
             } else {
@@ -455,7 +455,9 @@ public class StreamingPlatform {
             playersAsText.add(u.toString());
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
-
+        currentUser.mediaToString(currentUser.getSaved());
+        currentUser.mediaToString(currentUser.getSeen());
+        currentUser.mediaToString(currentUser.getSpecialPlayLists());
 
     }
 }
