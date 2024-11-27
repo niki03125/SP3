@@ -56,6 +56,7 @@ public class StreamingPlatform {
     }
 
     public void userRegister() {
+
         String username = username();
         String password = password();
         int birthdayYear = birthyear();
@@ -63,6 +64,7 @@ public class StreamingPlatform {
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
+
         TextUI.displayMSG("You have now been registered");
         end();
     }
@@ -325,6 +327,7 @@ public class StreamingPlatform {
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
                 currentUser.addToSaved(currentMedia);
+                //currentUser.addToSavedTMP(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
             } else {
@@ -452,6 +455,10 @@ public class StreamingPlatform {
             playersAsText.add(u.toString());
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
+        currentUser.mediaToString(currentUser.getSaved());
+        currentUser.mediaToString(currentUser.getSeen());
+        currentUser.mediaToString(currentUser.getSpecialPlayLists());
+
     }
 }
 

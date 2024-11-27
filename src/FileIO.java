@@ -1,7 +1,6 @@
 package src;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,5 +33,15 @@ public class FileIO {
             System.out.println("Something went wrong when writing to file");
         }
 
+    }
+    public static void writeToCVSFileMovie(ArrayList<String> addToSavedMovies, String path){
+        try (FileWriter writer = new FileWriter(path))  {
+            for(String med : addToSavedMovies)   {
+                writer.write(med + "\n");
+            }
+
+        }catch (IOException e){
+            System.out.println("Something went wrong writing to file");
+        }
     }
 }
