@@ -201,8 +201,8 @@ public class StreamingPlatform {
     public void loadMovies() {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
-            String[] values = s.replace(" ", "").split(";");
-            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", ".")));
+            String[] values = s.split(";");
+            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1].trim()), getGenres(values[2].trim()), Float.parseFloat(values[3].replace(",", ".").trim()));
             movies.add(tmpMovie);
             medias.add(tmpMovie);
         }
