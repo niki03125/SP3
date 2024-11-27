@@ -98,9 +98,23 @@ public class StreamingPlatform {
 
     private String password() {
         String password = TextUI.promptText("Please enter password: ");
-        //Later logic to make "Strong" password can be added.
+        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
+            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
+            password = password();
+        }
         return password;
     }
+    private boolean checkUpperCase(String password){
+        char character;
+        for (int i = 0; i < password.length(); i++){
+            character = password.charAt(i);
+            if (Character.isUpperCase(character)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private String username() {
         String username = TextUI.promptText("Please enter username: ");
@@ -297,7 +311,9 @@ public class StreamingPlatform {
                 mediaAction(mediaArray);
             }
         }*/
+
         ArrayList<Media> searchResults = new ArrayList<>();
+
 
         for(int i = 0; i < medias.size(); i++){
             if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
@@ -312,6 +328,8 @@ public class StreamingPlatform {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
         playMedia();
+
+
     }
 
     public void playMedia()   {
@@ -389,22 +407,56 @@ public class StreamingPlatform {
     }
 
     public void listMenu(){
-        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
+
+        // Create a menu where you can choose a list you want to see
+        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
+
+        // useing the promptText to user for a choise
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if(choice.equalsIgnoreCase("SE")){ //if emty, tell and go to media
+
+        //if user choose SeenList
+        if(choice.equalsIgnoreCase("SE")){
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
-            for(Media media : userSeenList){
-            TextUI.displayMSG(media.toString());
+            if(userSeenList.isEmpty()){
+                TextUI.displayMSG("Your seenList is empty");
+               menu();
+            }else{
+                for(Media media : userSeenList) {
+                    TextUI.displayMSG(media.getMediaName());
+                }
             }
         }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
-                TextUI.displayMSG("Here is your savedList: ");
-                ArrayList<Media> userSavedList = currentUser.getSaved();
+            TextUI.displayMSG("Here is your savedList: ");
+            ArrayList<Media> userSavedList = currentUser.getSaved();
+            if(userSavedList.isEmpty()){
+                TextUI.displayMSG("Your savedList is empty");
+                menu();
+            }else{
                 for (Media media : userSavedList){
-                    TextUI.displayMSG((media.toString()));
+                TextUI.displayMSG((media.getMediaName()));
                 }
+            }
+        }else if(choice.equalsIgnoreCase("SP")){
+            TextUI.displayMSG("Here is your specialPlayLists you made: ");
+            ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
+            if(userSpecialPlayListes.isEmpty()){
+                TextUI.displayMSG("Your specialPlayList is empty");
+                menu();
+            }else{
+                int index = 1;
+                for(Media playList: userSpecialPlayListes){
+                    TextUI.displayMSG("PlayList "+ index + ": ");
+                    for(Media media: userSpecialPlayListes){
+                        TextUI.displayMSG(media.getMediaName());
+                    }
+                    index++;
+                }
+            }
+        }else{
+            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
         }
     }
 
