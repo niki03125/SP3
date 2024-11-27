@@ -450,15 +450,22 @@ public class StreamingPlatform {
 
 
     public void end() {
+        playerToText();
+        saveUserLists();
+    }
+
+    public void saveUserLists(){
+        currentUser.mediaToString(currentUser.getSaved(), "Saved");
+        currentUser.mediaToString(currentUser.getSeen(), "Seen");
+        currentUser.mediaToString(currentUser.getSpecialPlayLists(), "Special");
+    }
+
+    public void playerToText(){
         ArrayList<String> playersAsText = new ArrayList<>();
         for (User u : users) {
             playersAsText.add(u.toString());
         }
         FileIO.saveData(playersAsText, "data/userdata.csv");
-        currentUser.mediaToString(currentUser.getSaved());
-        currentUser.mediaToString(currentUser.getSeen());
-        currentUser.mediaToString(currentUser.getSpecialPlayLists());
-
     }
 }
 
