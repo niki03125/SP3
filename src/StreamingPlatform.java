@@ -276,25 +276,14 @@ public class StreamingPlatform {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    public ArrayList<Media> searchByTitle(){
+    public void searchByTitle(){
         String input = TextUI.promptText("Search: ");
-        //had problems with this for each loop
-        /*for (Media mediaArray : medias) {
-            if (mediaArray.getMediaName().equalsIgnoreCase(input)) {
-                mediaAction(mediaArray);
-            }
-        }*/
-
-        ArrayList<Media> searchResults = new ArrayList<>();
-
-
-        for(int i = 0; i < medias.size(); i++){
-            if (medias.get(i).getMediaName().equalsIgnoreCase(input)){
+        for (int i = 0; i < medias.size(); i++) {
+            if (medias.get(i).getMediaName().equalsIgnoreCase(input)) {
+                currentMedia = medias.get((i));
                 mediaAction(medias.get(i));
-                searchResults.add(medias.get(i));
             }
         }
-        return searchResults;
     }
 
     public void mediaAction(Media media)   {
