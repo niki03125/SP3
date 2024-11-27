@@ -8,7 +8,7 @@ public class User {
     private int birthdayYear;
     private String gender;
     private ArrayList<Media> seen;
-    //private ArrayList<Media> saved;
+    private ArrayList<Media> saved;
     private ArrayList<Media> specialPlayLists;
     private int id;
     private static int idCount = 1;
@@ -19,7 +19,7 @@ public class User {
         this.birthdayYear = birthdayYear;
         this.gender = gender;
         this.seen = new ArrayList<Media>();
-        //this.saved = new ArrayList<Media>();
+        this.saved = new ArrayList<Media>();
         this.specialPlayLists = new ArrayList<Media>();
         this.id = idCount++;
 
@@ -46,9 +46,9 @@ public class User {
         return this.seen;
    }
 
-   /*public ArrayList<Media> getSaved() {
+   public ArrayList<Media> getSaved() {
         return saved;
-   }*/
+   }
 
    public ArrayList<Media> getSpecialPlayLists(){
        return specialPlayLists;
@@ -85,8 +85,7 @@ public class User {
     }
 
     public void addToSaved(Media media){
-       ArrayList<Media> saved = new ArrayList<>();
-       String userFile = "data/UserMovieList.username" + "_SavedMovies.csv";
+       String userFile = "data/UserMovieList/" + username + "_SavedMovies.csv";
        saved.add(media);
        FileIO.writeToCVSFileMovie(saved, userFile);
     }
