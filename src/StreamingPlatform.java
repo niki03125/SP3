@@ -379,7 +379,7 @@ public class StreamingPlatform {
             ArrayList<Media> userSeenList = currentUser.getSeen();
             if(userSeenList.isEmpty()){
                 TextUI.displayMSG("Your seenList is empty");
-               listMenu();
+               menu();
             }else{
                 for(Media media : userSeenList) {
                     TextUI.displayMSG(media.getMediaName());
@@ -390,7 +390,7 @@ public class StreamingPlatform {
             ArrayList<Media> userSavedList = currentUser.getSaved();
             if(userSavedList.isEmpty()){
                 TextUI.displayMSG("Your savedList is empty");
-                listMenu();
+                menu();
             }else{
                 for (Media media : userSavedList){
                 TextUI.displayMSG((media.getMediaName()));
@@ -401,7 +401,7 @@ public class StreamingPlatform {
             ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
             if(userSpecialPlayListes.isEmpty()){
                 TextUI.displayMSG("Your specialPlayList is empty");
-                listMenu();
+                menu();
             }else{
                 int index = 1;
                 for(Media playList: userSpecialPlayListes){
@@ -416,8 +416,6 @@ public class StreamingPlatform {
             TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
         }
     }
-
-
 
 
     public void end() {
