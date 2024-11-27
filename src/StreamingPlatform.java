@@ -342,7 +342,7 @@ public class StreamingPlatform {
         String menuChoice = menu();
         if (menuChoice.equalsIgnoreCase("M")) {
             TextUI.displayMSG("Movies - to be done");
-            movies();
+            chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
         } else if (menuChoice.equalsIgnoreCase("LI")) {
@@ -358,6 +358,18 @@ public class StreamingPlatform {
             end();
             on = false;
         }
+    }
+
+    public void chooseMovie(){
+        movies();
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose.");
+        // Check if the input is valid:
+        if (choice < 1 || choice > movies.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseMovie();
+        }
+        //Get the chosen movie and convert user input to 0-based index:
+        mediaAction(movies.get(choice - 1));
     }
 
     private void userSettings(){
