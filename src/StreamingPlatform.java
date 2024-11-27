@@ -286,6 +286,19 @@ public class StreamingPlatform {
         }
     }
 
+    public void chooseMovie(){
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose.");
+        // Check if the input is valid:
+        if (choice < 1 || choice > movies.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseMovie();
+            return;
+        }
+        currentMedia = movies.get(choice - 1); //Get the chosen movie and convert user input to 0-based index:
+        TextUI.displayMSG("You selected: " + currentMedia.getMediaName() + "\nIMDB Score: " + currentMedia.getIMDBScore());
+        mediaActionMenu();
+    }
+
     public void mediaAction(Media media)   {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
@@ -341,11 +354,9 @@ public class StreamingPlatform {
     public void mainMenu(){
         String menuChoice = menu();
         if (menuChoice.equalsIgnoreCase("M")){
-            TextUI.displayMSG("Movies - to be done");
+            TextUI.displayMSG("Movies: ");
             movies();
-            // choise movie();
-            // brug media action(media)
-            playMedia();
+            chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
             //Serier();
