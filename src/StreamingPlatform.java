@@ -349,6 +349,20 @@ public class StreamingPlatform {
         }
     }
 
+    private void userSettings(){
+        TextUI.displayMSG("=====Settings=====");
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D) ");
+        if (tmpChoice.equalsIgnoreCase("U")){
+            currentUser.setUsername(username());
+        } else if (tmpChoice.equalsIgnoreCase("C")) {
+            currentUser.setPassword(password());
+        } else if (tmpChoice.equalsIgnoreCase("D")) {
+            users.remove(currentUser);
+            end();
+            on = false;
+        }
+    }
+
     public void listMenu(){
 
         // Create a menu where you can choose a list you want to see
@@ -402,6 +416,8 @@ public class StreamingPlatform {
             TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
         }
     }
+
+
 
 
     public void end() {
