@@ -217,7 +217,9 @@ public class StreamingPlatform {
             ArrayList<String> genres = getGenres(values[2]);
             float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
             ArrayList<Season> seasons = getSeasons(values[4]);
-            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons));
+            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons)); Series tmpSeries = new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons);
+            series.add(tmpSeries);
+            medias.add(tmpSeries);
         }
     }
 
@@ -298,11 +300,37 @@ public class StreamingPlatform {
     public void mediaAction(Media media)   {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
-        playMedia();
-
-
+        mediaActionMenu();
     }
 
+    private void mediaActionMenu(){
+        String tmpChoice;
+        if (currentUser.getSaved().contains(currentMedia)){
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("R")) {
+                currentUser.removeFromSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        } else {
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to list(A), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("A")) {
+                currentUser.addToSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        }
+    }
     public void playMedia()   {
         TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
         currentUser.addToSeen(currentMedia);
