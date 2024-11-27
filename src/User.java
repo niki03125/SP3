@@ -9,7 +9,7 @@ public class User {
     private String gender;
     private ArrayList<Media> seen;
     private ArrayList<Media> saved;
-    private ArrayList<Media> SpecialPlayLists;
+    private ArrayList<Media> specialPlayLists;
     private int id;
     private static int idCount = 1;
 
@@ -20,6 +20,7 @@ public class User {
         this.gender = gender;
         this.seen = new ArrayList<Media>();
         this.saved = new ArrayList<Media>();
+        this.specialPlayLists = new ArrayList<Media>();
         this.id = idCount++;
 
    }
@@ -50,7 +51,8 @@ public class User {
    }
 
    public ArrayList<Media> getSpecialPlayLists(){
-       return SpecialPlayLists;
+       return specialPlayLists;
+
    }
 
    public int getId() {
@@ -95,11 +97,11 @@ public class User {
     }
 
     public void addToSpecialPlayLists(Media media){
-       SpecialPlayLists.add(media);
+       specialPlayLists.add(media);
     }
 
     public void removeFromSpecialPlayLists(Media media){
-        SpecialPlayLists.remove(media);
+        specialPlayLists.remove(media);
     }
 
 

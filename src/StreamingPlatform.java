@@ -367,7 +367,7 @@ public class StreamingPlatform {
                listMenu();
             }else{
                 for(Media media : userSeenList) {
-                    TextUI.displayMSG(media.toString());
+                    TextUI.displayMSG(media.getMediaName());
                 }
             }
         }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
@@ -378,7 +378,7 @@ public class StreamingPlatform {
                 listMenu();
             }else{
                 for (Media media : userSavedList){
-                TextUI.displayMSG((media.toString()));
+                TextUI.displayMSG((media.getMediaName()));
                 }
             }
         }else if(choice.equalsIgnoreCase("SP")){
@@ -392,13 +392,13 @@ public class StreamingPlatform {
                 for(Media playList: userSpecialPlayListes){
                     TextUI.displayMSG("PlayList "+ index + ": ");
                     for(Media media: userSpecialPlayListes){
-                        TextUI.displayMSG(media.toString());
+                        TextUI.displayMSG(media.getMediaName());
                     }
                     index++;
                 }
             }
         }else{
-            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP");
+            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
         }
     }
 
