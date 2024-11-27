@@ -350,6 +350,7 @@ public class StreamingPlatform {
     }
 
     public void listMenu(){
+
         // Create a menu where you can choose a list you want to see
         ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
         TextUI.displayMSG("=====LISTMENU=====");
