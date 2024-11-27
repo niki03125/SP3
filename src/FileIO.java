@@ -34,11 +34,10 @@ public class FileIO {
         }
 
     }
-    public static void writeToCVSFileMovie(ArrayList<Media> addToSavedMovies, String path){
-        try {
-            FileWriter writer = new FileWriter(path);
-            for(Media med : addToSavedMovies)   {
-                writer.append(med + "\n");
+    public static void writeToCVSFileMovie(ArrayList<String> addToSavedMovies, String path){
+        try (FileWriter writer = new FileWriter(path))  {
+            for(String med : addToSavedMovies)   {
+                writer.write(med + "\n");
             }
 
         }catch (IOException e){

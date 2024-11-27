@@ -85,11 +85,16 @@ public class User {
     }
 
     public void addToSaved(Media media){
-       String userFile = "data/UserMovieList/" + username + "_SavedMovies.csv";
-       saved.add(media);
-       FileIO.writeToCVSFileMovie(saved, userFile);
+           saved.add(media);
     }
-
+    public void addToSavedTMP(){
+       ArrayList<String> addMediaArray = new ArrayList<>();
+       String userFile = "data/UserMovieLists/" + this.username + "_SavedMovies.csv";
+        for (Media med : saved){
+            saved.add(med);
+        }
+        FileIO.writeToCVSFileMovie(addMediaArray, userFile);
+    }
     public void removeFromSaved(Media media){
        //saved.remove(media);
     }

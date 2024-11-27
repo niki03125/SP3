@@ -326,7 +326,8 @@ public class StreamingPlatform {
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
-                currentUser.addToSaved(currentMedia);
+                //currentUser.addToSaved(currentMedia);
+                currentUser.addToSavedTMP();
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
             } else {
