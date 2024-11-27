@@ -253,6 +253,35 @@ public class StreamingPlatform {
         return res;
     }
 
+    private void mediaActionMenu(){
+        String tmpChoice;
+        if (currentUser.getSaved().contains(currentMedia)){
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("R")) {
+                currentUser.removeFromSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        } else {
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to list(A), Main menu(M) ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("A")) {
+                currentUser.addToSaved(currentMedia);
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu();
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        }
+    }
+
     public String menu(){
         ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
@@ -345,7 +374,7 @@ public class StreamingPlatform {
                 "Watch (W), Save to your list (S), Return to main menu (R)"; // If movie has already been saved to list, the option should be "remove from list"
         switch (action) {
             case "W":
-                mediaAction(); //The movie starts playing because it calls playMedia();
+                mediaAction(selectedMovie); //The movie starts playing because it calls playMedia();
                 break;
             case "S":
                 //save to userlist
