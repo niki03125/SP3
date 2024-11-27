@@ -299,6 +299,24 @@ public class StreamingPlatform {
         mediaActionMenu();
     }
 
+    public void chooseSeries(){
+        int choice = TextUI.promptNumeric("Please write the number of the series you want to choose.");
+        // Check if the input is valid:
+        if (choice < 1 || choice > series.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseSeries();
+            return;
+        }
+        currentMedia = series.get(choice - 1); //Get the chosen movie and convert user input to 0-based index:
+        TextUI.displayMSG("You selected: " + currentMedia.getMediaName() +
+                "\n IMDB Score: " + currentMedia.getIMDBScore());
+        //        "\n Seasons: " + currentMedia.seasons());     Her vil jeg kalde sæsonerne og dernæst give mulighed for at vælge episoder:
+        // String chooseSeason = TextUI.promptText("You have the following options: Choose Season (write the number),  Main menu(M) ");
+        //String chooseEpisode = TextUI.promptText("You have the following options: Choose episode (write the number),  Main menu(M) ");
+
+        mediaActionMenu();
+    }
+
     public void mediaAction(Media media)   {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
@@ -345,6 +363,12 @@ public class StreamingPlatform {
         }
     }
 
+    private void series(){
+        for (int i = 0; i < series.size(); i++){
+            TextUI.displayMSG(i+1 + " " + series.get(i).getMediaName());
+        }
+    }
+
     public void runLoop(){
         while (on){
             mainMenu();
@@ -358,7 +382,9 @@ public class StreamingPlatform {
             movies();
             chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
-            TextUI.displayMSG("Series - to be done");
+            TextUI.displayMSG("Series: ");
+            series();
+            chooseSeries();
             //Serier();
             //choose serie();
             // choose season();
