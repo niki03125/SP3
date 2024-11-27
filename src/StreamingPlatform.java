@@ -387,7 +387,7 @@ public class StreamingPlatform {
             if(userSpecialPlayListes.isEmpty()){
                 TextUI.displayMSG("Your specialPlayList is empty");
                 listMenu();
-            }else{// Niki kigger på onsdag (virker ikke helt med playlist)
+            }else{
                 int index = 1;
                 for(Media playList: userSpecialPlayListes){
                     TextUI.displayMSG("PlayList "+ index + ": ");
