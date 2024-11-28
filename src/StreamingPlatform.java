@@ -106,6 +106,7 @@ public class StreamingPlatform {
         }
         return password;
     }
+
     private boolean checkUpperCase(String password){
         char character;
         for (int i = 0; i < password.length(); i++){
@@ -117,12 +118,11 @@ public class StreamingPlatform {
         return false;
     }
 
-
     private String username() {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
-            username();
+            username = username();
         }
         return username;
     }
@@ -174,8 +174,8 @@ public class StreamingPlatform {
 
     public void userLoginOrRegister() {
         TextUI.displayMSG("Welcome to our WBBTServices \n" +
-                "Login = l \n" +
-                "Register = r");
+                "Login = (L) \n" +
+                "Register = (R)");
 
         boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account? ");
         if (choice) {
@@ -183,13 +183,14 @@ public class StreamingPlatform {
         } else if (!choice) {
             userRegister();
         }
-
     }
 
     public void setup() {
         loadUsers();
         loadMovies();
         loadSeries();
+        userLoginOrRegister();
+        runLoop();
     }
 
     public void loadUsers() {
@@ -224,7 +225,6 @@ public class StreamingPlatform {
             medias.add(tmpSeries);
         }
     }
-
 
     private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
@@ -272,7 +272,7 @@ public class StreamingPlatform {
     }
 
     public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
         return TextUI.promptText("Please enter what you want to do: ");
@@ -289,7 +289,7 @@ public class StreamingPlatform {
     }
 
     public void chooseMovie(){
-        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose.");
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose: ");
         // Check if the input is valid:
         if (choice < 1 || choice > movies.size()) {
             TextUI.displayMSG("Invalid choice. Please select a number from the list.");
@@ -336,11 +336,11 @@ public class StreamingPlatform {
             }
         }
     }
+
     public void playMedia()   {
         TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
         currentUser.addToSeen(currentMedia);
     }
-
 
     private void movies(){
         for (int i = 0; i < movies.size(); i++){
@@ -362,17 +362,14 @@ public class StreamingPlatform {
             chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
-            //Serier();
-            //choose serie();
-            // choose season();
-            // choose episode();
-            playMedia();
-        }else if(menuChoice.equalsIgnoreCase("LI")){
+        } else if (menuChoice.equalsIgnoreCase("LI")) {
             TextUI.displayMSG("Lists");
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {
             TextUI.displayMSG("Search - to be done. Looking for method called search();");
             searchByTitle();
+        } else if (menuChoice.equalsIgnoreCase("SET")) {
+            userSettings();
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
@@ -382,7 +379,8 @@ public class StreamingPlatform {
 
     private void userSettings(){
         TextUI.displayMSG("=====Settings=====");
-        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D) ");
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Menu (M)\n" +
+                "Enter choice: ");
         if (tmpChoice.equalsIgnoreCase("U")){
             currentUser.setUsername(username());
         } else if (tmpChoice.equalsIgnoreCase("C")) {
@@ -391,6 +389,8 @@ public class StreamingPlatform {
             users.remove(currentUser);
             end();
             on = false;
+        } else if ((tmpChoice.equalsIgnoreCase("M"))) {
+            menu();
         }
     }
 
@@ -448,7 +448,6 @@ public class StreamingPlatform {
         }
     }
 
-
     public void end() {
         playerToText();
         saveUserLists();
@@ -468,4 +467,3 @@ public class StreamingPlatform {
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
 }
-
