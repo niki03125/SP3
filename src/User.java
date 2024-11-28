@@ -90,7 +90,7 @@ public class User {
 
     public void mediaToString(ArrayList<Media> medArr, String listName){
        ArrayList<String> addMediaArray = new ArrayList<>();
-       String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
+       String userFile = "data/UserMovieLists/" + this.username + "_" + listName + ".csv";
         for (Media med : medArr){
             addMediaArray.add(med.getMediaName() + " ; " + med.getIMDBScore());
         }
@@ -110,19 +110,36 @@ public class User {
 
     public ArrayList<User> deleteUserAccount(ArrayList<User> users, User currentUser) {
             users.remove(currentUser);
-        try {
             deleteUserPlaylists(username);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        TextUI.displayMSG("Account Deleted");
+            TextUI.displayMSG("Account Deleted");
             return users;
     }
 
-    public void deleteUserPlaylists(String username) throws IOException {
+    public void deleteUserPlaylists(String username){
+       Path filePathSaved = Paths.get("data/UserMovieList/" + username + "_Saved.csv");
 
-       Path filePathSaved = Paths.get("data/UserMovieList/" + username + "_SavedMovies.csv");
-       Files.delete(filePathSaved);
+//       File file = new file ("data/userMovieList/" + this.username + "Saved.csv");
+       if (Files.exists(filePathSaved)) {
+           try {
+               System.out.println("Ding");
+               Files.delete(filePathSaved);
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       } else {
+           TextUI.displayMSG("File not found");
+           
+       }
+
+
+
+
+
+        try {
+            Files.delete(filePathSaved);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
 //        File file = new file (userFile);

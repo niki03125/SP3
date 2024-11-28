@@ -1,5 +1,6 @@
 package src;
 
+import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 
@@ -372,9 +373,9 @@ public class StreamingPlatform {
         } else if (tmpChoice.equalsIgnoreCase("C")) {
             currentUser.setPassword(password());
         } else if (tmpChoice.equalsIgnoreCase("D")) {
-            users.remove(currentUser);
-            end();
-            on = false;
+            currentUser.deleteUserAccount(users, currentUser);
+//            end();
+//            on = false;
         } else if ((tmpChoice.equalsIgnoreCase("M"))) {
             menu.mainMenu();
         }
