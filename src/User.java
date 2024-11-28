@@ -2,6 +2,9 @@ package src;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class User {
@@ -14,8 +17,6 @@ public class User {
     private ArrayList<Media> specialPlayLists;
     private int id;
     private static int idCount = 1;
-    private StreamingPlatform platForm;
-    private String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
 
    public User (String username, String password, int birthdayYear, String gender){
         this.username = username;
@@ -26,7 +27,6 @@ public class User {
         this.saved = new ArrayList<Media>();
         this.specialPlayLists = new ArrayList<Media>();
         this.id = idCount++;
-
    }
 
    //Getter
@@ -88,16 +88,17 @@ public class User {
                + "; " + gender;
     }
 
-    public void addToSaved(Media media){
-           saved.add(media);
-    }
     public void mediaToString(ArrayList<Media> medArr, String listName){
        ArrayList<String> addMediaArray = new ArrayList<>();
-       //String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
+       String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
         for (Media med : medArr){
             addMediaArray.add(med.getMediaName() + " ; " + med.getIMDBScore());
         }
         FileIO.writeToCVSFileMovie(addMediaArray, userFile);
+    }
+
+    public void addToSaved(Media media){
+        saved.add(media);
     }
     public void removeFromSaved(Media media){
        saved.remove(media);
@@ -107,25 +108,35 @@ public class User {
        seen.add(media);
     }
 
-    public void deleteUserAccount() {
-        try (platForm.getUsers().contains(getUsername()))  {
-            platForm.getUsers().remove(platForm.getCurrentUsesr());
-            TextUI.displayMSG("UserAccount Deleted");
-
+    public ArrayList<User> deleteUserAccount(ArrayList<User> users, User currentUser) {
+            users.remove(currentUser);
+        try {
+            deleteUserPlaylists(username);
         } catch (IOException e) {
-            TextUI.displayMSG("Failed to delete user account");
+            throw new RuntimeException(e);
         }
-        File file = new file (userFile);
-
-        try (file.exists())  {
-            file.delete();
-            TextUI.displayMSG("Users defined playlists deleted");
-
-        }catch (IOException e){
-            TextUI.displayMSG("Failed to delete user playlists");
-        }
+        TextUI.displayMSG("Account Deleted");
+            return users;
     }
 
+    public void deleteUserPlaylists(String username) throws IOException {
+
+       Path filePathSaved = Paths.get("data/UserMovieList/" + username + "_SavedMovies.csv");
+       Files.delete(filePathSaved);
+
+
+//        File file = new file (userFile);
+//
+//
+//        try (file.delete())  {
+//            TextUI.displayMSG("Users defined playlists deleted");
+//
+//        }catch (IOException e){
+//            TextUI.displayMSG("Failed to delete user playlists");
+//        }
+    }
+
+//    platForm.getUsers().contains(platForm.getCurrentUsesr())
 
 
     public void addToSpecialPlayLists(Media media){

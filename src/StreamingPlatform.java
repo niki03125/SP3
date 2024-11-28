@@ -25,9 +25,6 @@ public class StreamingPlatform {
         this.series = new ArrayList<Series>();
     }
 
-    public String getCurrentUsesr() {
-        return currentUser;
-    }
     public String getAppName() {
         return appName;
     }
@@ -69,9 +66,8 @@ public class StreamingPlatform {
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
-
+        currentUser = user;
         TextUI.displayMSG("You have now been registered");
-        end();
     }
 
     private String gender() {
@@ -393,7 +389,8 @@ public class StreamingPlatform {
         } else if (tmpChoice.equalsIgnoreCase("C")) {
             currentUser.setPassword(password());
         } else if (tmpChoice.equalsIgnoreCase("D")) {
-            users.remove(currentUser);
+            currentUser.deleteUserAccount(users, currentUser);
+            //users.remove(currentUser);
             end();
             on = false;
         }
