@@ -16,6 +16,7 @@ public class Login {
                 "Register = (R)");
 
         String choice = TextUI.promptText("Do you want to login to an existing account or register a new account? ");
+//        TextUI.cleanScreen();
         if (choice.equalsIgnoreCase("L")) {
             userLogin();
         } else if (choice.equalsIgnoreCase("R")) {
