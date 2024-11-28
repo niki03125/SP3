@@ -1,7 +1,5 @@
 package src;
 
-import java.io.IOException;
-import java.time.Year;
 import java.util.ArrayList;
 
 public class StreamingPlatform {
@@ -133,24 +131,6 @@ public class StreamingPlatform {
             TextUI.displayMSG("Thank you for watching today.");
             end();
             on = false;
-        }
-    }
-
-    public void userSettingsMenu(){
-        TextUI.displayMSG("=====Settings=====");
-        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
-                "Enter choice: ");
-        if (tmpChoice.equalsIgnoreCase("U")){
-            currentUser.setUsername(username());
-        } else if (tmpChoice.equalsIgnoreCase("C")) {
-            currentUser.setPassword(password());
-        } else if (tmpChoice.equalsIgnoreCase("D")) {
-            currentUser.deleteUserAccount(users, currentUser);
-
-            on = false;
-            end();
-        } else if ((tmpChoice.equalsIgnoreCase("M"))) {
-            menu.mainMenu();
         }
     }
 
