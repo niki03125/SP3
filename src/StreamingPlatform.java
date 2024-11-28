@@ -321,7 +321,6 @@ public class StreamingPlatform {
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
                 currentUser.addToSaved(currentMedia);
-                //currentUser.addToSavedTMP(currentMedia);
                 TextUI.displayMSG("You have now added: " + currentMedia.getMediaName() +" from your savedList");
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
