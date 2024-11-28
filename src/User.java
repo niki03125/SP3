@@ -1,5 +1,7 @@
 package src;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class User {
@@ -12,6 +14,8 @@ public class User {
     private ArrayList<Media> specialPlayLists;
     private int id;
     private static int idCount = 1;
+    private StreamingPlatform platForm;
+    private String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
 
    public User (String username, String password, int birthdayYear, String gender){
         this.username = username;
@@ -89,7 +93,7 @@ public class User {
     }
     public void mediaToString(ArrayList<Media> medArr, String listName){
        ArrayList<String> addMediaArray = new ArrayList<>();
-       String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
+       //String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
         for (Media med : medArr){
             addMediaArray.add(med.getMediaName() + " ; " + med.getIMDBScore());
         }
@@ -102,6 +106,26 @@ public class User {
     public void addToSeen(Media media){
        seen.add(media);
     }
+
+    public void deleteUserAccount() {
+        try (platForm.getUsers().contains(getUsername()))  {
+            platForm.getUsers().remove(platForm.getCurrentUsesr());
+            TextUI.displayMSG("UserAccount Deleted");
+
+        } catch (IOException e) {
+            TextUI.displayMSG("Failed to delete user account");
+        }
+        File file = new file (userFile);
+
+        try (file.exists())  {
+            file.delete();
+            TextUI.displayMSG("Users defined playlists deleted");
+
+        }catch (IOException e){
+            TextUI.displayMSG("Failed to delete user playlists");
+        }
+    }
+
 
 
     public void addToSpecialPlayLists(Media media){

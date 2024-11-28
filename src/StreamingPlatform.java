@@ -1,5 +1,7 @@
 package src;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,9 @@ public class StreamingPlatform {
         this.series = new ArrayList<Series>();
     }
 
+    public String getCurrentUsesr() {
+        return currentUser;
+    }
     public String getAppName() {
         return appName;
     }
