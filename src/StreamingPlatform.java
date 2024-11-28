@@ -72,7 +72,7 @@ public class StreamingPlatform {
         end();
     }
 
-    private String gender() {
+    public String gender() {
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
                 "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
                 "\nGender: ").toUpperCase();
@@ -101,7 +101,7 @@ public class StreamingPlatform {
         return gender;
     }
 
-    private String password() {
+    public String password() {
         String password = TextUI.promptText("Please enter password: ");
         if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
             TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
@@ -110,7 +110,7 @@ public class StreamingPlatform {
         return password;
     }
 
-    private boolean checkUpperCase(String password){
+    public boolean checkUpperCase(String password){
         char character;
         for (int i = 0; i < password.length(); i++){
             character = password.charAt(i);
@@ -121,7 +121,7 @@ public class StreamingPlatform {
         return false;
     }
 
-    private String username() {
+    public String username() {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
@@ -130,7 +130,7 @@ public class StreamingPlatform {
         return username;
     }
 
-    private boolean checkForDuplicateUser(String username) {
+    public boolean checkForDuplicateUser(String username) {
         boolean isDuplicate = false;
         for (User u : users) {
             if (u.getUsername().equalsIgnoreCase(username)) {
@@ -140,7 +140,7 @@ public class StreamingPlatform {
         return isDuplicate;
     }
 
-    private int birthyear() {
+    public int birthyear() {
         int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
         if (birthyear < Year.now().getValue() - 125) {
             TextUI.displayMSG("Birth year must be realistic.");
@@ -180,10 +180,10 @@ public class StreamingPlatform {
                 "Login = (L) \n" +
                 "Register = (R)");
 
-        boolean choice = TextUI.promptBinary("Do you want to login to an existing account or register a new account? ");
-        if (choice) {
+        String choice = TextUI.promptText("Do you want to login to an existing account or register a new account? ");
+        if (choice.equalsIgnoreCase("L")) {
             userLogin();
-        } else if (!choice) {
+        } else if (choice.equalsIgnoreCase("R")) {
             userRegister();
         }
     }
@@ -229,7 +229,7 @@ public class StreamingPlatform {
         }
     }
 
-    private ArrayList<Season> getSeasons(String value) {
+    public ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
         String[] tmp = value.split(",");
         for (int i = 0; i < tmp.length; i++) {
@@ -239,7 +239,7 @@ public class StreamingPlatform {
         return seasons;
     }
 
-    private ArrayList<Episode> getEpisodes(int value) {
+    public ArrayList<Episode> getEpisodes(int value) {
         ArrayList<Episode> episodes = new ArrayList<>();
         for (int i = 0; i < value; i++) {
             episodes.add(new Episode(i + 1));
@@ -247,7 +247,7 @@ public class StreamingPlatform {
         return episodes;
     }
 
-    private ArrayList<String> getGenres(String value) {
+    public ArrayList<String> getGenres(String value) {
         ArrayList<String> res = new ArrayList<>();
         String[] tmp = value.split(",");
         for (String s : tmp) {
@@ -256,7 +256,7 @@ public class StreamingPlatform {
         return res;
     }
 
-    private ArrayList<Integer> getStartAndEndYear(String value) {
+    public ArrayList<Integer> getStartAndEndYear(String value) {
         ArrayList<Integer> res = new ArrayList<>();
         if (value.contains("-")) {
             String[] tmp = value.split("-");
@@ -293,7 +293,7 @@ public class StreamingPlatform {
         mediaActionMenu();
     }
 
-    private void mediaActionMenu(){
+    public void mediaActionMenu(){
         String tmpChoice;
         if (currentUser.getSaved().contains(currentMedia)){
             tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
@@ -328,7 +328,7 @@ public class StreamingPlatform {
         currentUser.addToSeen(currentMedia);
     }
 
-    private void movies(){
+    public void movies(){
         for (int i = 0; i < movies.size(); i++){
             TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
         }
@@ -363,7 +363,7 @@ public class StreamingPlatform {
         }
     }
 
-    private void userSettingsMenu(){
+    public void userSettingsMenu(){
         TextUI.displayMSG("=====Settings=====");
         String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
                 "Enter choice: ");
