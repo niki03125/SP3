@@ -2,7 +2,6 @@ package src;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class StreamingPlatform {
     private String appName;
@@ -12,6 +11,8 @@ public class StreamingPlatform {
     private ArrayList<Series> series;
     private Media currentMedia;
     private User currentUser;
+    private Menu menu;
+    private Search search;
 
     boolean on = true;
 
@@ -21,6 +22,8 @@ public class StreamingPlatform {
         this.medias = new ArrayList<Media>();
         this.movies = new ArrayList<Movie>();
         this.series = new ArrayList<Series>();
+        this.menu = new Menu();
+        this.search = new Search();
     }
 
     public String getAppName() {
@@ -271,23 +274,6 @@ public class StreamingPlatform {
         return res;
     }
 
-    public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
-        TextUI.displayMSG("=====MENU=====");
-        TextUI.displayMSG(String.valueOf(menu));
-        return TextUI.promptText("Please enter what you want to do: ");
-    }
-
-    public void searchByTitle(){
-        String input = TextUI.promptText("Search: ");
-        for (int i = 0; i < medias.size(); i++) {
-            if (medias.get(i).getMediaName().equalsIgnoreCase(input)) {
-                currentMedia = medias.get((i));
-                mediaAction(medias.get(i));
-            }
-        }
-    }
-
     public void chooseMovie(){
         int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose: ");
         // Check if the input is valid:
@@ -355,7 +341,7 @@ public class StreamingPlatform {
     }
 
     public void mainMenu(){
-        String menuChoice = menu();
+        String menuChoice = menu.mainMenu();
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("Movies: ");
             movies();
@@ -364,12 +350,12 @@ public class StreamingPlatform {
             TextUI.displayMSG("Series - to be done");
         } else if (menuChoice.equalsIgnoreCase("LI")) {
             TextUI.displayMSG("Lists");
-            listMenu();
+            menu.listMenu(currentUser);
         } else if (menuChoice.equalsIgnoreCase("F")) {
-            TextUI.displayMSG("Search - to be done. Looking for method called search();");
-            searchByTitle();
+            currentMedia = search.searchByTitle(medias);
+            mediaAction(currentMedia);
         } else if (menuChoice.equalsIgnoreCase("SET")) {
-            userSettings();
+            userSettingsMenu();
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
@@ -377,9 +363,9 @@ public class StreamingPlatform {
         }
     }
 
-    private void userSettings(){
+    private void userSettingsMenu(){
         TextUI.displayMSG("=====Settings=====");
-        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Menu (M)\n" +
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
                 "Enter choice: ");
         if (tmpChoice.equalsIgnoreCase("U")){
             currentUser.setUsername(username());
@@ -390,61 +376,7 @@ public class StreamingPlatform {
             end();
             on = false;
         } else if ((tmpChoice.equalsIgnoreCase("M"))) {
-            menu();
-        }
-    }
-
-    public void listMenu(){
-
-        // Create a menu where you can choose a list you want to see
-        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
-        TextUI.displayMSG("=====LISTMENU=====");
-        TextUI.displayMSG(String.valueOf(listMenu));
-
-        // useing the promptText to user for a choise
-        String choice = TextUI.promptText("Please enter what list, you want to see: ");
-
-        //if user choose SeenList
-        if(choice.equalsIgnoreCase("SE")){
-            TextUI.displayMSG("Here is your seenList: ");
-            ArrayList<Media> userSeenList = currentUser.getSeen();
-            if(userSeenList.isEmpty()){
-                TextUI.displayMSG("Your seenList is empty");
-               menu();
-            }else{
-                for(Media media : userSeenList) {
-                    TextUI.displayMSG(media.getMediaName());
-                }
-            }
-        }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
-            TextUI.displayMSG("Here is your savedList: ");
-            ArrayList<Media> userSavedList = currentUser.getSaved();
-            if(userSavedList.isEmpty()){
-                TextUI.displayMSG("Your savedList is empty");
-                menu();
-            }else{
-                for (Media media : userSavedList){
-                TextUI.displayMSG((media.getMediaName()));
-                }
-            }
-        }else if(choice.equalsIgnoreCase("SP")){
-            TextUI.displayMSG("Here is your specialPlayLists you made: ");
-            ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
-            if(userSpecialPlayListes.isEmpty()){
-                TextUI.displayMSG("Your specialPlayList is empty");
-                menu();
-            }else{
-                int index = 1;
-                for(Media playList: userSpecialPlayListes){
-                    TextUI.displayMSG("PlayList "+ index + ": ");
-                    for(Media media: userSpecialPlayListes){
-                        TextUI.displayMSG(media.getMediaName());
-                    }
-                    index++;
-                }
-            }
-        }else{
-            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
+            menu.mainMenu();
         }
     }
 
