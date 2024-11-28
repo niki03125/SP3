@@ -1,11 +1,6 @@
 package src;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import java.time.Year;
 import java.util.ArrayList;
 
 public class User {
@@ -28,8 +23,8 @@ public class User {
         this.saved = new ArrayList<Media>();
         this.specialPlayLists = new ArrayList<Media>();
         this.id = idCount++;
-   }
 
+   }
    //Getter
    public String getUsername(){
        return username;
@@ -89,17 +84,16 @@ public class User {
                + "; " + gender;
     }
 
+    public void addToSaved(Media media){
+           saved.add(media);
+    }
     public void mediaToString(ArrayList<Media> medArr, String listName){
        ArrayList<String> addMediaArray = new ArrayList<>();
-       String userFile = "data/UserMovieLists/" + this.username + "_" + listName + ".csv";
+       String userFile = "data/UserMovieLists/" + this.username  + listName + ".csv";
         for (Media med : medArr){
             addMediaArray.add(med.getMediaName() + " ; " + med.getIMDBScore());
         }
         FileIO.writeToCVSFileMovie(addMediaArray, userFile);
-    }
-
-    public void addToSaved(Media media){
-        saved.add(media);
     }
     public void removeFromSaved(Media media){
        saved.remove(media);
@@ -108,28 +102,6 @@ public class User {
     public void addToSeen(Media media){
        seen.add(media);
     }
-
-    public ArrayList<User> deleteUserAccount(ArrayList<User> users, User currentUser) {
-            users.remove(currentUser);
-            deleteUserPlaylists(username);
-            TextUI.displayMSG("Account Deleted");
-            return users;
-    }
-    //held og lykke med at få den til at virke <3
-    public void deleteUserPlaylists(String username){
-        File filePathSaved = new File ("data/UserMovieLists/" + this.username + "_Saved.csv");
-        if (filePathSaved.exists()) {
-           try {
-               Files.delete(filePathSaved.toPath());
-           } catch (IOException e) {
-               throw new RuntimeException(e);
-           }
-       } else {
-           TextUI.displayMSG("File not found. Path: " + filePathSaved);
-       }
-    }
-
-//    platForm.getUsers().contains(platForm.getCurrentUsesr())
 
 
     public void addToSpecialPlayLists(Media media){
