@@ -13,6 +13,7 @@ public class StreamingPlatform {
     private User currentUser;
     private Menu menu;
     private Search search;
+    private Load load;
 
     boolean on = true;
 
@@ -24,6 +25,7 @@ public class StreamingPlatform {
         this.series = new ArrayList<Series>();
         this.menu = new Menu();
         this.search = new Search();
+        this.load = new Load(users);
     }
 
     public String getAppName() {
@@ -193,20 +195,14 @@ public class StreamingPlatform {
     }
 
     public void setup() {
-        loadUsers();
+        load.loadUsers();
         loadMovies();
         loadSeries();
         userLoginOrRegister();
         runLoop();
     }
 
-    public void loadUsers() {
-        ArrayList<String> data = FileIO.readData("data/userdata.csv");
-        for (String s : data) {
-            String[] values = s.split(";");
-            users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
-        }
-    }
+
 
     public void loadMovies() {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
