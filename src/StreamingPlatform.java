@@ -14,6 +14,7 @@ public class StreamingPlatform {
     private Menu menu;
     private Search search;
     private Load load;
+    private Login login;
 
     boolean on = true;
 
@@ -23,9 +24,10 @@ public class StreamingPlatform {
         this.medias = new ArrayList<Media>();
         this.movies = new ArrayList<Movie>();
         this.series = new ArrayList<Series>();
-        this.menu = new Menu();
+        this.menu = new Menu(users);
         this.search = new Search();
         this.load = new Load(users, movies, medias, series);
+        this.login = new Login(users);
     }
 
     public String getAppName() {
@@ -60,21 +62,7 @@ public class StreamingPlatform {
         medias.remove(media);
     }
 
-    public void userRegister() {
-
-        String username = username();
-        String password = password();
-        int birthdayYear = birthyear();
-        String gender = gender();
-
-        User user = new User(username, password, birthdayYear, gender);
-        users.add(user);
-        currentUser = user;
-        TextUI.displayMSG("You have now been registered");
-
-    }
-
-    public String gender() {
+    public static String gender() {
         String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
                 "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
                 "\nGender: ").toUpperCase();
@@ -103,7 +91,7 @@ public class StreamingPlatform {
         return gender;
     }
 
-    public String password() {
+    public static String password() {
         String password = TextUI.promptText("Please enter password: ");
         if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
             TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
@@ -112,7 +100,7 @@ public class StreamingPlatform {
         return password;
     }
 
-    public boolean checkUpperCase(String password){
+    public static boolean checkUpperCase(String password){
         char character;
         for (int i = 0; i < password.length(); i++){
             character = password.charAt(i);
@@ -123,16 +111,16 @@ public class StreamingPlatform {
         return false;
     }
 
-    public String username() {
+    public static String username(ArrayList<User> users) {
         String username = TextUI.promptText("Please enter username: ");
-        if (checkForDuplicateUser(username)) {
+        if (checkForDuplicateUser(username, users)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
-            username = username();
+            username = username(users);
         }
         return username;
     }
 
-    public boolean checkForDuplicateUser(String username) {
+    public static boolean checkForDuplicateUser(String username, ArrayList<User> users) {
         boolean isDuplicate = false;
         for (User u : users) {
             if (u.getUsername().equalsIgnoreCase(username)) {
@@ -142,7 +130,7 @@ public class StreamingPlatform {
         return isDuplicate;
     }
 
-    public int birthyear() {
+    public static int birthyear() {
         int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
         if (birthyear < Year.now().getValue() - 125) {
             TextUI.displayMSG("Birth year must be realistic.");
@@ -154,51 +142,11 @@ public class StreamingPlatform {
         return birthyear;
     }
 
-    public void userLogin() {
-        TextUI.displayMSG("You have chosen to login");
-        String username = TextUI.promptText("Please enter your username: ");
-        String password = TextUI.promptText("Please enter your password: ");
-
-        for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
-                TextUI.displayMSG(user.getUsername() + " has logged in");
-                currentUser = user;
-                return;
-            }
-        }
-        TextUI.displayMSG("Login has failed. Username or password is incorrect");
-        String flag = TextUI.promptText("Do you want to login(L) or register(R)? ");
-        if (flag.equalsIgnoreCase("L")) {
-            userLogin();
-        } else if (flag.equalsIgnoreCase("R")) {
-            userRegister();
-        } else {
-            TextUI.displayMSG("Invalid option");
-            userLoginOrRegister();
-        }
-    }
-
-    public void userLoginOrRegister() {
-        TextUI.displayMSG("Welcome to our WBBTServices \n" +
-                "Login = (L) \n" +
-                "Register = (R)");
-
-        String choice = TextUI.promptText("Do you want to login to an existing account or register a new account? ");
-        if (choice.equalsIgnoreCase("L")) {
-            userLogin();
-        } else if (choice.equalsIgnoreCase("R")) {
-            userRegister();
-        } else {
-            TextUI.displayMSG("Invalid option. Redirecting to start menu");
-            userLoginOrRegister();
-        }
-    }
-
     public void setup() {
         load.loadUsers();
         load.loadMovies();
         load.loadSeries();
-        userLoginOrRegister();
+        currentUser = login.userLoginOrRegister();
         runLoop();
     }
 
@@ -291,7 +239,7 @@ public class StreamingPlatform {
             currentMedia = search.searchByTitle(medias);
             mediaAction(currentMedia);
         } else if (menuChoice.equalsIgnoreCase("SET")) {
-            userSettingsMenu();
+            menu.userSettingsMenu(currentUser);
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
@@ -299,26 +247,10 @@ public class StreamingPlatform {
         }
     }
 
-    public void userSettingsMenu(){
-        TextUI.displayMSG("=====Settings=====");
-        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
-                "Enter choice: ");
-        if (tmpChoice.equalsIgnoreCase("U")){
-            currentUser.setUsername(username());
-        } else if (tmpChoice.equalsIgnoreCase("C")) {
-            currentUser.setPassword(password());
-        } else if (tmpChoice.equalsIgnoreCase("D")) {
-            users.remove(currentUser);
-            end();
-            on = false;
-        } else if ((tmpChoice.equalsIgnoreCase("M"))) {
-            menu.mainMenu();
-        }
-    }
-
     public void end() {
         usersToText();
         saveUserLists();
+        on = false;
     }
 
     public void saveUserLists(){
@@ -328,10 +260,10 @@ public class StreamingPlatform {
     }
 
     public void usersToText(){
-        ArrayList<String> userssAsText = new ArrayList<>();
+        ArrayList<String> usersAsText = new ArrayList<>();
         for (User u : users) {
-            userssAsText.add(u.toString());
+            usersAsText.add(u.toString());
         }
-        FileIO.saveData(userssAsText, "data/userdata.csv");
+        FileIO.saveData(usersAsText, "data/userdata.csv");
     }
 }
