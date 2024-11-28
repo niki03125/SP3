@@ -1,6 +1,5 @@
 package src;
 
-import java.time.Year;
 import java.util.ArrayList;
 
 public class StreamingPlatform {
@@ -28,118 +27,6 @@ public class StreamingPlatform {
         this.search = new Search();
         this.load = new Load(users, movies, medias, series);
         this.login = new Login(users);
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public ArrayList<Media> getMedias() {
-        return medias;
-    }
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-    }
-
-    public void addMedia(Media media) {
-        medias.add(media);
-    }
-
-    public void removeMedia(Media media) {
-        medias.remove(media);
-    }
-
-    public static String gender() {
-        String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
-                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
-                "\nGender: ").toUpperCase();
-        switch (gender) {
-            case "F":
-                gender = "Female";
-                break;
-            case "M":
-                gender = "Male";
-                break;
-            case "N":
-                gender = "Non-binary";
-                break;
-            case "T":
-                gender = "Transgender";
-                break;
-            case "O":
-                gender = "Other";
-                break;
-            case "D":
-                gender = null;
-                break;
-            default:
-                gender = null;
-        }
-        return gender;
-    }
-
-    public static String password() {
-        String password = TextUI.promptText("Please enter password: ");
-        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
-            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
-            password = password();
-        }
-        return password;
-    }
-
-    public static boolean checkUpperCase(String password){
-        char character;
-        for (int i = 0; i < password.length(); i++){
-            character = password.charAt(i);
-            if (Character.isUpperCase(character)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static String username(ArrayList<User> users) {
-        String username = TextUI.promptText("Please enter username: ");
-        if (checkForDuplicateUser(username, users)) {
-            TextUI.displayMSG("The username is already taken, please chose another one.");
-            username = username(users);
-        }
-        return username;
-    }
-
-    public static boolean checkForDuplicateUser(String username, ArrayList<User> users) {
-        boolean isDuplicate = false;
-        for (User u : users) {
-            if (u.getUsername().equalsIgnoreCase(username)) {
-                isDuplicate = true;
-            }
-        }
-        return isDuplicate;
-    }
-
-    public static int birthyear() {
-        int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
-        if (birthyear < Year.now().getValue() - 125) {
-            TextUI.displayMSG("Birth year must be realistic.");
-            birthyear();
-        } else if (birthyear > Year.now().getValue()) {
-            TextUI.displayMSG("Birth year cannot be in the future.");
-            birthyear();
-        }
-        return birthyear;
     }
 
     public void setup() {

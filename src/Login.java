@@ -52,10 +52,10 @@ public class Login {
     }
 
     public void userRegister() {
-        String username = StreamingPlatform.username(users);
-        String password = StreamingPlatform.password();
-        int birthdayYear = StreamingPlatform.birthyear();
-        String gender = StreamingPlatform.gender();
+        String username = User.username(users);
+        String password = User.password();
+        int birthdayYear = User.birthyear();
+        String gender = User.gender();
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
