@@ -165,13 +165,14 @@ public class StreamingPlatform {
             }
         }
         TextUI.displayMSG("Login has failed. Username or password is incorrect");
-        String flag = TextUI.promptText("Do you want to login(L), register(R) or cancel(C)? ");
+        String flag = TextUI.promptText("Do you want to login(L) or register(R)? ");
         if (flag.equalsIgnoreCase("L")) {
             userLogin();
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
-        } else if (flag.equalsIgnoreCase("C")) {
-           end();
+        } else {
+            TextUI.displayMSG("Invalid option");
+            userLoginOrRegister();
         }
     }
 
@@ -381,7 +382,7 @@ public class StreamingPlatform {
     }
 
     public void end() {
-        playerToText();
+        usersToText();
         saveUserLists();
     }
 
@@ -391,11 +392,11 @@ public class StreamingPlatform {
         currentUser.mediaToString(currentUser.getSpecialPlayLists(), "Special");
     }
 
-    public void playerToText(){
-        ArrayList<String> playersAsText = new ArrayList<>();
+    public void usersToText(){
+        ArrayList<String> userssAsText = new ArrayList<>();
         for (User u : users) {
-            playersAsText.add(u.toString());
+            userssAsText.add(u.toString());
         }
-        FileIO.saveData(playersAsText, "data/userdata.csv");
+        FileIO.saveData(userssAsText, "data/userdata.csv");
     }
 }
