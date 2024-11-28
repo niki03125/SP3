@@ -15,7 +15,7 @@ public class Menu {
         this.login = new Login(users);
     }
 
-    public String mainMenu(){
+    public String mainMenuOptions(){
         ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
@@ -86,7 +86,7 @@ public class Menu {
             users.remove(currentUser);
             login.userLoginOrRegister();
         } else if ((tmpChoice.equalsIgnoreCase("M"))) {
-            mainMenu();
+            mainMenuOptions();
         }
     }
 }

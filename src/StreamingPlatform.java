@@ -114,7 +114,7 @@ public class StreamingPlatform {
     }
 
     public void mainMenu(){
-        String menuChoice = menu.mainMenu();
+        String menuChoice = menu.mainMenuOptions();
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("Movies: ");
             movies();
