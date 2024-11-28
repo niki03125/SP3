@@ -28,7 +28,6 @@ public class Menu {
             ArrayList<Media> userSeenList = currentUser.getSeen();
             if(userSeenList.isEmpty()){
                 TextUI.displayMSG("Your seenList is empty");
-                mainMenu();
             }else{
                 for(Media media : userSeenList) {
                     TextUI.displayMSG(media.getMediaName());
@@ -39,7 +38,6 @@ public class Menu {
             ArrayList<Media> userSavedList = currentUser.getSaved();
             if(userSavedList.isEmpty()){
                 TextUI.displayMSG("Your savedList is empty");
-                mainMenu();
             }else{
                 for (Media media : userSavedList){
                     TextUI.displayMSG((media.getMediaName()));
@@ -50,7 +48,6 @@ public class Menu {
             ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
             if(userSpecialPlayListes.isEmpty()){
                 TextUI.displayMSG("Your specialPlayList is empty");
-                mainMenu();
             }else{
                 int index = 1;
                 for(Media playList: userSpecialPlayListes){
