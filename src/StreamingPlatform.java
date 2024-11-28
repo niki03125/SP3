@@ -14,6 +14,8 @@ public class StreamingPlatform {
     private User currentUser;
     private Menu menu;
     private Search search;
+    private Load load;
+    private Login login;
 
     boolean on = true;
 
@@ -23,256 +25,18 @@ public class StreamingPlatform {
         this.medias = new ArrayList<Media>();
         this.movies = new ArrayList<Movie>();
         this.series = new ArrayList<Series>();
-        this.menu = new Menu();
+        this.menu = new Menu(users);
         this.search = new Search();
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public ArrayList<Media> getMedias() {
-        return medias;
-    }
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-    }
-
-    public void addMedia(Media media) {
-        medias.add(media);
-    }
-
-    public void removeMedia(Media media) {
-        medias.remove(media);
-    }
-
-    public void userRegister() {
-
-        String username = username();
-        String password = password();
-        int birthdayYear = birthyear();
-        String gender = gender();
-
-        User user = new User(username, password, birthdayYear, gender);
-        users.add(user);
-        currentUser = user;
-        TextUI.displayMSG("You have now been registered");
-
-    }
-
-    public String gender() {
-        String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
-                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
-                "\nGender: ").toUpperCase();
-        switch (gender) {
-            case "F":
-                gender = "Female";
-                break;
-            case "M":
-                gender = "Male";
-                break;
-            case "N":
-                gender = "Non-binary";
-                break;
-            case "T":
-                gender = "Transgender";
-                break;
-            case "O":
-                gender = "Other";
-                break;
-            case "D":
-                gender = null;
-                break;
-            default:
-                gender = null;
-        }
-        return gender;
-    }
-
-    public String password() {
-        String password = TextUI.promptText("Please enter password: ");
-        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
-            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
-            password = password();
-        }
-        return password;
-    }
-
-    public boolean checkUpperCase(String password){
-        char character;
-        for (int i = 0; i < password.length(); i++){
-            character = password.charAt(i);
-            if (Character.isUpperCase(character)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public String username() {
-        String username = TextUI.promptText("Please enter username: ");
-        if (checkForDuplicateUser(username)) {
-            TextUI.displayMSG("The username is already taken, please chose another one.");
-            username = username();
-        }
-        return username;
-    }
-
-    public boolean checkForDuplicateUser(String username) {
-        boolean isDuplicate = false;
-        for (User u : users) {
-            if (u.getUsername().equalsIgnoreCase(username)) {
-                isDuplicate = true;
-            }
-        }
-        return isDuplicate;
-    }
-
-    public int birthyear() {
-        int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
-        if (birthyear < Year.now().getValue() - 125) {
-            TextUI.displayMSG("Birth year must be realistic.");
-            birthyear();
-        } else if (birthyear > Year.now().getValue()) {
-            TextUI.displayMSG("Birth year cannot be in the future.");
-            birthyear();
-        }
-        return birthyear;
-    }
-
-    public void userLogin() {
-        TextUI.displayMSG("You have chosen to login");
-        String username = TextUI.promptText("Please enter your username: ");
-        String password = TextUI.promptText("Please enter your password: ");
-
-        for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
-                TextUI.displayMSG(user.getUsername() + " has logged in");
-                currentUser = user;
-                return;
-            }
-        }
-        TextUI.displayMSG("Login has failed. Username or password is incorrect");
-        String flag = TextUI.promptText("Do you want to login(L), register(R) or cancel(C)? ");
-        if (flag.equalsIgnoreCase("L")) {
-            userLogin();
-        } else if (flag.equalsIgnoreCase("R")) {
-            userRegister();
-        } else if (flag.equalsIgnoreCase("C")) {
-           end();
-        }
-    }
-
-    public void userLoginOrRegister() {
-        TextUI.displayMSG("Welcome to our WBBTServices \n" +
-                "Login = (L) \n" +
-                "Register = (R)");
-
-        String choice = TextUI.promptText("Do you want to login to an existing account or register a new account? ");
-        if (choice.equalsIgnoreCase("L")) {
-            userLogin();
-        } else if (choice.equalsIgnoreCase("R")) {
-            userRegister();
-        }
+        this.load = new Load(users, movies, medias, series);
+        this.login = new Login(users);
     }
 
     public void setup() {
-        loadUsers();
-        loadMovies();
-        loadSeries();
-        userLoginOrRegister();
+        load.loadUsers();
+        load.loadMovies();
+        load.loadSeries();
+        currentUser = login.userLoginOrRegister();
         runLoop();
-    }
-
-    public void loadUsers() {
-        ArrayList<String> data = FileIO.readData("data/userdata.csv");
-        for (String s : data) {
-            String[] values = s.split(";");
-            users.add(new User(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim()), values[3].trim()));
-        }
-    }
-
-    public void loadMovies() {
-        ArrayList<String> data = FileIO.readData("data/movie.txt");
-        for (String s : data) {
-            String[] values = s.split(";");
-            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1].trim()), getGenres(values[2].trim()), Float.parseFloat(values[3].replace(",", ".").trim()));
-            movies.add(tmpMovie);
-            medias.add(tmpMovie);
-        }
-    }
-
-    public void loadSeries() {
-        ArrayList<String> data = FileIO.readData("data/series.txt");
-        for (String s : data) {
-            String[] values = s.replace(" ", "").split(";");
-            String seriesName = values[0];
-            ArrayList<Integer> runYears = getStartAndEndYear(values[1]);
-            ArrayList<String> genres = getGenres(values[2]);
-            float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
-            ArrayList<Season> seasons = getSeasons(values[4]);
-            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons)); Series tmpSeries = new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons);
-            series.add(tmpSeries);
-            medias.add(tmpSeries);
-        }
-    }
-
-    public ArrayList<Season> getSeasons(String value) {
-        ArrayList<Season> seasons = new ArrayList<>();
-        String[] tmp = value.split(",");
-        for (int i = 0; i < tmp.length; i++) {
-            String[] s = tmp[i].split("-");
-            seasons.add(new Season(i + 1, getEpisodes(Integer.parseInt(s[1]))));
-        }
-        return seasons;
-    }
-
-    public ArrayList<Episode> getEpisodes(int value) {
-        ArrayList<Episode> episodes = new ArrayList<>();
-        for (int i = 0; i < value; i++) {
-            episodes.add(new Episode(i + 1));
-        }
-        return episodes;
-    }
-
-    public ArrayList<String> getGenres(String value) {
-        ArrayList<String> res = new ArrayList<>();
-        String[] tmp = value.split(",");
-        for (String s : tmp) {
-            res.add(s);
-        }
-        return res;
-    }
-
-    public ArrayList<Integer> getStartAndEndYear(String value) {
-        ArrayList<Integer> res = new ArrayList<>();
-        if (value.contains("-")) {
-            String[] tmp = value.split("-");
-            if (tmp.equals(1)) {
-                res.add(Integer.parseInt(tmp[0]));
-                res.add(Integer.parseInt(tmp[1]));
-            } else {
-                res.add(Integer.parseInt(tmp[0]));
-                res.add(Year.now().getValue());
-            }
-        } else {            //Start and end year is the same
-            res.add(Integer.parseInt(value));
-            res.add(Integer.parseInt(value));
-        }
-        return res;
     }
 
     public void chooseMovie(){
@@ -297,26 +61,34 @@ public class StreamingPlatform {
     public void mediaActionMenu(){
         String tmpChoice;
         if (currentUser.getSaved().contains(currentMedia)){
-            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from savedList(R), Main menu(M), Remove from specialPlayList(S)");
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("R")) {
                 currentUser.removeFromSaved(currentMedia);
+                TextUI.displayMSG("You have now removed: " + currentMedia.getMediaName() +" from your savedList");
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
+            } else if (tmpChoice.equalsIgnoreCase("S")) {
+                currentUser.removeFromSpecialPlayLists(currentMedia);
+                TextUI.displayMSG("You have now removed: " + currentMedia.getMediaName() +" from your specialPlayList");
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
             }
         } else {
-            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to list(A), Main menu(M) ");
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to savedList(A), Main menu(M), Add to specialPlayList(S)\n" +
+                    "Please enter your choice: ");
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
                 currentUser.addToSaved(currentMedia);
-                //currentUser.addToSavedTMP(currentMedia);
+                TextUI.displayMSG("You have now added: " + currentMedia.getMediaName() +" from your savedList");
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
+            } else if (tmpChoice.equalsIgnoreCase("S")) {
+                currentUser.addToSpecialPlayLists(currentMedia);
+                TextUI.displayMSG("You have now added: " + currentMedia.getMediaName() +" to your specialPlayList");
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
@@ -356,7 +128,7 @@ public class StreamingPlatform {
             currentMedia = search.searchByTitle(medias);
             mediaAction(currentMedia);
         } else if (menuChoice.equalsIgnoreCase("SET")) {
-            userSettingsMenu();
+            menu.userSettingsMenu(currentUser);
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
@@ -383,8 +155,9 @@ public class StreamingPlatform {
     }
 
     public void end() {
-        playerToText();
+        usersToText();
         saveUserLists();
+        on = false;
     }
 
     public void saveUserLists(){
@@ -393,11 +166,11 @@ public class StreamingPlatform {
         currentUser.mediaToString(currentUser.getSpecialPlayLists(), "Special");
     }
 
-    public void playerToText(){
-        ArrayList<String> playersAsText = new ArrayList<>();
+    public void usersToText(){
+        ArrayList<String> usersAsText = new ArrayList<>();
         for (User u : users) {
-            playersAsText.add(u.toString());
+            usersAsText.add(u.toString());
         }
-        FileIO.saveData(playersAsText, "data/userdata.csv");
+        FileIO.saveData(usersAsText, "data/userdata.csv");
     }
 }
