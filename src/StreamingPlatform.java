@@ -14,6 +14,7 @@ public class StreamingPlatform {
     private Search search;
     private Load load;
     private Login login;
+    private Save save;
 
     boolean on = true;
 
@@ -27,6 +28,7 @@ public class StreamingPlatform {
         this.search = new Search();
         this.load = new Load(users, movies, medias, series);
         this.login = new Login(users);
+        this.save = new Save(users);
     }
 
     public void setup() {
@@ -130,27 +132,12 @@ public class StreamingPlatform {
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
-            on = false;
         }
     }
 
     public void end() {
-        usersToText();
-        saveUserLists();
+        save.usersToText();
+        save.saveUserLists(currentUser);
         on = false;
-    }
-
-    public void saveUserLists(){
-        currentUser.mediaToString(currentUser.getSaved(), "Saved");
-        currentUser.mediaToString(currentUser.getSeen(), "Seen");
-        currentUser.mediaToString(currentUser.getSpecialPlayLists(), "Special");
-    }
-
-    public void usersToText(){
-        ArrayList<String> usersAsText = new ArrayList<>();
-        for (User u : users) {
-            usersAsText.add(u.toString());
-        }
-        FileIO.saveData(usersAsText, "data/userdata.csv");
     }
 }
