@@ -15,7 +15,7 @@ public class Menu {
     public void listMenu(User currentUser){
 
         // Create a menu where you can choose a list you want to see
-        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
+        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP) "));
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
 
@@ -63,6 +63,7 @@ public class Menu {
             }
         }else{
             TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
+            listMenu(currentUser);
         }
     }
 }
