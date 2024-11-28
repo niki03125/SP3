@@ -296,26 +296,30 @@ public class StreamingPlatform {
     public void mediaActionMenu(){
         String tmpChoice;
         if (currentUser.getSaved().contains(currentMedia)){
-            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from list(R), Main menu(M) ");
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from savedList(RSA), Main menu(M), Removed from SpecialPlayList(RSP)");
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
-            } else if (tmpChoice.equalsIgnoreCase("R")) {
+            } else if (tmpChoice.equalsIgnoreCase("RSA")) {
                 currentUser.removeFromSaved(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
+            }else if(tmpChoice.equalsIgnoreCase("RSP")){
+                currentUser.removeFromSpecialPlayLists(currentMedia);
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
             }
         } else {
-            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to list(A), Main menu(M) ");
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to savedList(ASA), Main menu(M), Add to SpecialPlayList(ASP)");
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
-            } else if (tmpChoice.equalsIgnoreCase("A")) {
+            } else if (tmpChoice.equalsIgnoreCase("ASA")) {
                 currentUser.addToSaved(currentMedia);
                 //currentUser.addToSavedTMP(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
+            }else if (tmpChoice.equalsIgnoreCase("ASP")){
+                currentUser.addToSpecialPlayLists(currentMedia);
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
