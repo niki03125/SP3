@@ -316,7 +316,7 @@ public class StreamingPlatform {
                 mediaActionMenu();
             }
         } else {
-            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to savedList(A), Main menu(M), Add to specialPlayList(S)");
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to savedList(A), Main menu(M), Add to specialPlayList(S) ");
             if (tmpChoice.equalsIgnoreCase("P")){
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
