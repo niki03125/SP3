@@ -26,6 +26,132 @@ public class StreamingPlatform {
         this.search = new Search();
     }
 
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public ArrayList<Media> getMedias() {
+        return medias;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    public void addMedia(Media media) {
+        medias.add(media);
+    }
+
+    public void removeMedia(Media media) {
+        medias.remove(media);
+    }
+
+    public void userRegister() {
+
+        String username = username();
+        String password = password();
+        int birthdayYear = birthyear();
+        String gender = gender();
+
+        User user = new User(username, password, birthdayYear, gender);
+        users.add(user);
+        currentUser = user;
+        TextUI.displayMSG("You have now been registered");
+
+    }
+
+    public String gender() {
+        String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
+                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
+                "\nGender: ").toUpperCase();
+        switch (gender) {
+            case "F":
+                gender = "Female";
+                break;
+            case "M":
+                gender = "Male";
+                break;
+            case "N":
+                gender = "Non-binary";
+                break;
+            case "T":
+                gender = "Transgender";
+                break;
+            case "O":
+                gender = "Other";
+                break;
+            case "D":
+                gender = null;
+                break;
+            default:
+                gender = null;
+        }
+        return gender;
+    }
+
+    public String password() {
+        String password = TextUI.promptText("Please enter password: ");
+        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
+            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
+            password = password();
+        }
+        return password;
+    }
+
+    public boolean checkUpperCase(String password){
+        char character;
+        for (int i = 0; i < password.length(); i++){
+            character = password.charAt(i);
+            if (Character.isUpperCase(character)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String username() {
+        String username = TextUI.promptText("Please enter username: ");
+        if (checkForDuplicateUser(username)) {
+            TextUI.displayMSG("The username is already taken, please chose another one.");
+            username = username();
+        }
+        return username;
+    }
+
+    public boolean checkForDuplicateUser(String username) {
+        boolean isDuplicate = false;
+        for (User u : users) {
+            if (u.getUsername().equalsIgnoreCase(username)) {
+                isDuplicate = true;
+            }
+        }
+        return isDuplicate;
+    }
+
+    public int birthyear() {
+        int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
+        if (birthyear < Year.now().getValue() - 125) {
+            TextUI.displayMSG("Birth year must be realistic.");
+            birthyear();
+        } else if (birthyear > Year.now().getValue()) {
+            TextUI.displayMSG("Birth year cannot be in the future.");
+            birthyear();
+        }
+        return birthyear;
+    }
+
     public void userLogin() {
         TextUI.displayMSG("You have chosen to login");
         String username = TextUI.promptText("Please enter your username: ");
@@ -180,7 +306,7 @@ public class StreamingPlatform {
             } else if (tmpChoice.equalsIgnoreCase("R")) {
                 currentUser.removeFromSaved(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
-                mainMenuOptions();
+                mainMenu();
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
@@ -193,7 +319,7 @@ public class StreamingPlatform {
                 currentUser.addToSaved(currentMedia);
                 //currentUser.addToSavedTMP(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
-                mainMenuOptions();
+                mainMenu();
             } else {
                 TextUI.displayMSG("Invalid choice. Please try again");
                 mediaActionMenu();
@@ -214,11 +340,11 @@ public class StreamingPlatform {
 
     public void runLoop(){
         while (on){
-            mainMenuOptions();
+            mainMenu();
         }
     }
 
-    public void mainMenuOptions(){
+    public void mainMenu(){
         String menuChoice = menu.mainMenu();
         if (menuChoice.equalsIgnoreCase("M")){
             TextUI.displayMSG("Movies: ");
@@ -277,98 +403,5 @@ public class StreamingPlatform {
         FileIO.saveData(playersAsText, "data/userdata.csv");
     }
 
-    public User userRegister() {
-
-        String username = username();
-        String password = password();
-        int birthdayYear = birthyear();
-        String gender = gender();
-
-        User user = new User(username, password, birthdayYear, gender);
-        users.add(user);
-        currentUser = user;
-
-        TextUI.displayMSG("You have now been registered");
-        return currentUser;
-    }
-
-    public String username() {
-        String username = TextUI.promptText("Please enter username: ");
-        if (checkForDuplicateUser(username)) {
-            TextUI.displayMSG("The username is already taken, please chose another one.");
-            username = username();
-        }
-        return username;
-    }
-
-    public boolean checkForDuplicateUser(String username) {
-        boolean isDuplicate = false;
-        for (User u : users) {
-            if (u.getUsername().equalsIgnoreCase(username)) {
-                isDuplicate = true;
-            }
-        }
-        return isDuplicate;
-    }
-
-    public String password() {
-        String password = TextUI.promptText("Please enter password: ");
-        if (password.length() < 6 || !password.matches(".*[0-9].*") || !checkUpperCase(password)){
-            TextUI.displayMSG("Password must be at least 6 character, contain a number and one capital letter. Please try again");
-            password = password();
-        }
-        return password;
-    }
-
-    public boolean checkUpperCase(String password){
-        char character;
-        for (int i = 0; i < password.length(); i++){
-            character = password.charAt(i);
-            if (Character.isUpperCase(character)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int birthyear() {
-        int birthyear = TextUI.promptNumeric("Please enter birth year(YYYY): ");
-        if (birthyear < Year.now().getValue() - 125) {
-            TextUI.displayMSG("Birth year must be realistic.");
-            birthyear();
-        } else if (birthyear > Year.now().getValue()) {
-            TextUI.displayMSG("Birth year cannot be in the future.");
-            birthyear();
-        }
-        return birthyear;
-    }
-
-    public String gender() {
-        String gender = TextUI.promptText("Please enter gender, You have 5 choices:" +
-                "\nFemale (F), Male(M), Non-binary(N), Transgender(T), Other(O), Prefer not to say(D)" +
-                "\nGender: ").toUpperCase();
-        switch (gender) {
-            case "F":
-                gender = "Female";
-                break;
-            case "M":
-                gender = "Male";
-                break;
-            case "N":
-                gender = "Non-binary";
-                break;
-            case "T":
-                gender = "Transgender";
-                break;
-            case "O":
-                gender = "Other";
-                break;
-            case "D":
-                gender = null;
-                break;
-            default:
-                gender = null;
-        }
-        return gender;
-    }
+   
 }
