@@ -24,7 +24,6 @@ public class User {
         this.id = idCount++;
 
    }
-
    //Getter
    public String getUsername(){
        return username;
