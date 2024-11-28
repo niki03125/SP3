@@ -122,7 +122,6 @@ public class StreamingPlatform {
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
         } else if (menuChoice.equalsIgnoreCase("LI")) {
-            TextUI.displayMSG("Lists");
             menu.listMenu(currentUser);
         } else if (menuChoice.equalsIgnoreCase("F")) {
             currentMedia = search.searchByTitle(medias);
