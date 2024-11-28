@@ -185,7 +185,7 @@ public class StreamingPlatform {
         if (choice.equalsIgnoreCase("L")) {
             userLogin();
         } else if (choice.equalsIgnoreCase("R")) {
-            currentUser = userRegister();
+            userRegister();
         } else {
             TextUI.displayMSG("Invalid option. Redirecting to start menu");
             userLoginOrRegister();
