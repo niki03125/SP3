@@ -374,8 +374,9 @@ public class StreamingPlatform {
             currentUser.setPassword(password());
         } else if (tmpChoice.equalsIgnoreCase("D")) {
             currentUser.deleteUserAccount(users, currentUser);
-//            end();
-//            on = false;
+
+            on = false;
+            end();
         } else if ((tmpChoice.equalsIgnoreCase("M"))) {
             menu.mainMenu();
         }

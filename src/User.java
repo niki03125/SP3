@@ -29,6 +29,8 @@ public class User {
         this.id = idCount++;
    }
 
+
+
    //Getter
    public String getUsername(){
        return username;
@@ -116,41 +118,16 @@ public class User {
     }
 
     public void deleteUserPlaylists(String username){
-       Path filePathSaved = Paths.get("data/UserMovieList/" + username + "_Saved.csv");
-
-//       File file = new file ("data/userMovieList/" + this.username + "Saved.csv");
-       if (Files.exists(filePathSaved)) {
+        File filePathSaved = new File ("data/UserMovieLists/" + this.username + "_Saved.csv");
+        if (filePathSaved.exists()) {
            try {
-               System.out.println("Ding");
-               Files.delete(filePathSaved);
+               Files.delete(filePathSaved.toPath());
            } catch (IOException e) {
                throw new RuntimeException(e);
            }
        } else {
-           TextUI.displayMSG("File not found");
-           
+           TextUI.displayMSG("File not found. Path: " + filePathSaved);
        }
-
-
-
-
-
-        try {
-            Files.delete(filePathSaved);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-//        File file = new file (userFile);
-//
-//
-//        try (file.delete())  {
-//            TextUI.displayMSG("Users defined playlists deleted");
-//
-//        }catch (IOException e){
-//            TextUI.displayMSG("Failed to delete user playlists");
-//        }
     }
 
 //    platForm.getUsers().contains(platForm.getCurrentUsesr())
