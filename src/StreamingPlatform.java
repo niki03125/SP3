@@ -39,13 +39,14 @@ public class StreamingPlatform {
             }
         }
         TextUI.displayMSG("Login has failed. Username or password is incorrect");
-        String flag = TextUI.promptText("Do you want to login(L), register(R) or cancel(C)? ");
+        String flag = TextUI.promptText("Do you want to login(L) or register(R)? ");
         if (flag.equalsIgnoreCase("L")) {
             userLogin();
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
-        } else if (flag.equalsIgnoreCase("C")) {
-           end();
+        } else {
+            TextUI.displayMSG("Invalid option");
+            userLoginOrRegister();
         }
     }
 
@@ -59,7 +60,9 @@ public class StreamingPlatform {
             userLogin();
         } else if (choice.equalsIgnoreCase("R")) {
             currentUser = userRegister();
-
+        } else {
+            TextUI.displayMSG("Invalid option. Redirecting to start menu");
+            userLoginOrRegister();
         }
     }
 
