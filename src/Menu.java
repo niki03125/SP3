@@ -3,7 +3,17 @@ package src;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static src.StreamingPlatform.password;
+import static src.StreamingPlatform.username;
+
 public class Menu {
+    private ArrayList<User> users;
+    private Login login;
+
+    public Menu(ArrayList<User> users) {
+        this.users = users;
+        this.login = new Login(users);
+    }
 
     public String mainMenu(){
         ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
@@ -61,6 +71,22 @@ public class Menu {
         }else{
             TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
             listMenu(currentUser);
+        }
+    }
+
+    public void userSettingsMenu(User currentUser){
+        TextUI.displayMSG("=====Settings=====");
+        String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
+                "Enter choice: ");
+        if (tmpChoice.equalsIgnoreCase("U")){
+            currentUser.setUsername(username(users));
+        } else if (tmpChoice.equalsIgnoreCase("C")) {
+            currentUser.setPassword(password());
+        } else if (tmpChoice.equalsIgnoreCase("D")) {
+            users.remove(currentUser);
+            login.userLoginOrRegister();
+        } else if ((tmpChoice.equalsIgnoreCase("M"))) {
+            mainMenu();
         }
     }
 }
