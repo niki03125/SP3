@@ -56,6 +56,7 @@ public class StreamingPlatform {
     }
 
     public void userRegister() {
+
         String username = username();
         String password = password();
         int birthdayYear = birthyear();
@@ -63,8 +64,9 @@ public class StreamingPlatform {
 
         User user = new User(username, password, birthdayYear, gender);
         users.add(user);
+
         TextUI.displayMSG("You have now been registered");
-        currentUser = user;
+        end();
     }
 
     private String gender() {
@@ -104,7 +106,6 @@ public class StreamingPlatform {
         }
         return password;
     }
-
     private boolean checkUpperCase(String password){
         char character;
         for (int i = 0; i < password.length(); i++){
@@ -121,7 +122,7 @@ public class StreamingPlatform {
         String username = TextUI.promptText("Please enter username: ");
         if (checkForDuplicateUser(username)) {
             TextUI.displayMSG("The username is already taken, please chose another one.");
-            username = username();
+            username();
         }
         return username;
     }
@@ -167,7 +168,7 @@ public class StreamingPlatform {
         } else if (flag.equalsIgnoreCase("R")) {
             userRegister();
         } else if (flag.equalsIgnoreCase("C")) {
-            end();
+           end();
         }
     }
 
@@ -182,6 +183,7 @@ public class StreamingPlatform {
         } else if (!choice) {
             userRegister();
         }
+
     }
 
     public void setup() {
@@ -201,8 +203,8 @@ public class StreamingPlatform {
     public void loadMovies() {
         ArrayList<String> data = FileIO.readData("data/movie.txt");
         for (String s : data) {
-            String[] values = s.replace(" ", "").split(";");
-            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", ".")));
+            String[] values = s.split(";");
+            Movie tmpMovie = new Movie(values[0], Integer.parseInt(values[1].trim()), getGenres(values[2].trim()), Float.parseFloat(values[3].replace(",", ".").trim()));
             movies.add(tmpMovie);
             medias.add(tmpMovie);
         }
@@ -217,11 +219,12 @@ public class StreamingPlatform {
             ArrayList<String> genres = getGenres(values[2]);
             float IMDBScore = Float.parseFloat(values[3].replace(",", "."));
             ArrayList<Season> seasons = getSeasons(values[4]);
-            Series tmpSeries = new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons);
+            series.add(new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons)); Series tmpSeries = new Series(seriesName, runYears.get(0), runYears.get(1), genres, IMDBScore, seasons);
             series.add(tmpSeries);
             medias.add(tmpSeries);
         }
     }
+
 
     private ArrayList<Season> getSeasons(String value) {
         ArrayList<Season> seasons = new ArrayList<>();
@@ -269,7 +272,7 @@ public class StreamingPlatform {
     }
 
     public String menu(){
-        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Settings(SET)", "Logout(LO)"));
+        ArrayList<String> menu = new ArrayList<>(Arrays.asList("Movies(M)", "Series(S)", "Lists(LI)", "Search(F)", "Logout(LO)"));
         TextUI.displayMSG("=====MENU=====");
         TextUI.displayMSG(String.valueOf(menu));
         return TextUI.promptText("Please enter what you want to do: ");
@@ -285,7 +288,20 @@ public class StreamingPlatform {
         }
     }
 
-    public void mediaAction(Media media) {
+    public void chooseMovie(){
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose.");
+        // Check if the input is valid:
+        if (choice < 1 || choice > movies.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseMovie();
+            return;
+        }
+        currentMedia = movies.get(choice - 1); //Get the chosen movie and convert user input to 0-based index:
+        TextUI.displayMSG("You selected: " + currentMedia.getMediaName() + "\nIMDB Score: " + currentMedia.getIMDBScore());
+        mediaActionMenu();
+    }
+
+    public void mediaAction(Media media)   {
         TextUI.displayMSG("Title: " + media.getMediaName() +
                 "\nIMDBScore:" + media.getIMDBScore());
         mediaActionMenu();
@@ -311,6 +327,7 @@ public class StreamingPlatform {
                 playMedia();
             } else if (tmpChoice.equalsIgnoreCase("A")) {
                 currentUser.addToSaved(currentMedia);
+                //currentUser.addToSavedTMP(currentMedia);
             } else if (tmpChoice.equalsIgnoreCase("M")) {
                 mainMenu();
             } else {
@@ -319,40 +336,43 @@ public class StreamingPlatform {
             }
         }
     }
-
     public void playMedia()   {
         TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
         currentUser.addToSeen(currentMedia);
     }
 
 
-    private void movies() {
-        for (int i = 0; i < movies.size(); i++) {
-            TextUI.displayMSG(i + 1 + " " + movies.get(i).getMediaName());
+    private void movies(){
+        for (int i = 0; i < movies.size(); i++){
+            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
         }
     }
 
-    public void runLoop() {
-        while (on) {
+    public void runLoop(){
+        while (on){
             mainMenu();
         }
     }
 
-    public void mainMenu() {
+    public void mainMenu(){
         String menuChoice = menu();
-        if (menuChoice.equalsIgnoreCase("M")) {
-            TextUI.displayMSG("Movies - to be done");
+        if (menuChoice.equalsIgnoreCase("M")){
+            TextUI.displayMSG("Movies: ");
+            movies();
             chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
             TextUI.displayMSG("Series - to be done");
-        } else if (menuChoice.equalsIgnoreCase("LI")) {
+            //Serier();
+            //choose serie();
+            // choose season();
+            // choose episode();
+            playMedia();
+        }else if(menuChoice.equalsIgnoreCase("LI")){
             TextUI.displayMSG("Lists");
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {
             TextUI.displayMSG("Search - to be done. Looking for method called search();");
             searchByTitle();
-        } else if (menuChoice.equalsIgnoreCase("SET")) {
-            userSettings();
         } else if (menuChoice.equalsIgnoreCase("LO")) {
             TextUI.displayMSG("Thank you for watching today.");
             end();
@@ -386,31 +406,73 @@ public class StreamingPlatform {
         }
     }
 
+    public void listMenu(){
 
-    public void listMenu() {
-        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)"));
+        // Create a menu where you can choose a list you want to see
+        ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP)"));
         TextUI.displayMSG("=====LISTMENU=====");
         TextUI.displayMSG(String.valueOf(listMenu));
+
+        // useing the promptText to user for a choise
         String choice = TextUI.promptText("Please enter what list, you want to see: ");
-        if (choice.equalsIgnoreCase("SE")) {
+
+        //if user choose SeenList
+        if(choice.equalsIgnoreCase("SE")){
             TextUI.displayMSG("Here is your seenList: ");
             ArrayList<Media> userSeenList = currentUser.getSeen();
-            for (Media media : userSeenList) {
-                TextUI.displayMSG(media.getMediaName());
+            if(userSeenList.isEmpty()){
+                TextUI.displayMSG("Your seenList is empty");
+               menu();
+            }else{
+                for(Media media : userSeenList) {
+                    TextUI.displayMSG(media.getMediaName());
+                }
             }
-        } else if (choice.equalsIgnoreCase("SA")) {
+        }else if(choice.equalsIgnoreCase("SA")){ // if emty, tell and go to media
             TextUI.displayMSG("Here is your savedList: ");
             ArrayList<Media> userSavedList = currentUser.getSaved();
-            for (Media media : userSavedList) {
+            if(userSavedList.isEmpty()){
+                TextUI.displayMSG("Your savedList is empty");
+                menu();
+            }else{
+                for (Media media : userSavedList){
                 TextUI.displayMSG((media.getMediaName()));
+                }
             }
+        }else if(choice.equalsIgnoreCase("SP")){
+            TextUI.displayMSG("Here is your specialPlayLists you made: ");
+            ArrayList<Media> userSpecialPlayListes = currentUser.getSpecialPlayLists();
+            if(userSpecialPlayListes.isEmpty()){
+                TextUI.displayMSG("Your specialPlayList is empty");
+                menu();
+            }else{
+                int index = 1;
+                for(Media playList: userSpecialPlayListes){
+                    TextUI.displayMSG("PlayList "+ index + ": ");
+                    for(Media media: userSpecialPlayListes){
+                        TextUI.displayMSG(media.getMediaName());
+                    }
+                    index++;
+                }
+            }
+        }else{
+            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
         }
     }
 
 
-
-
     public void end() {
+        playerToText();
+        saveUserLists();
+    }
+
+    public void saveUserLists(){
+        currentUser.mediaToString(currentUser.getSaved(), "Saved");
+        currentUser.mediaToString(currentUser.getSeen(), "Seen");
+        currentUser.mediaToString(currentUser.getSpecialPlayLists(), "Special");
+    }
+
+    public void playerToText(){
         ArrayList<String> playersAsText = new ArrayList<>();
         for (User u : users) {
             playersAsText.add(u.toString());
