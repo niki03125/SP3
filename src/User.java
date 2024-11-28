@@ -116,7 +116,7 @@ public class User {
             TextUI.displayMSG("Account Deleted");
             return users;
     }
-
+    //held og lykke med at få den til at virke <3
     public void deleteUserPlaylists(String username){
         File filePathSaved = new File ("data/UserMovieLists/" + this.username + "_Saved.csv");
         if (filePathSaved.exists()) {
