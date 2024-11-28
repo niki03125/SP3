@@ -31,9 +31,9 @@ public class TextUI {
 
     public static boolean promptBinary(String msg){
         String input = promptText(msg);
-        if(input.equalsIgnoreCase("l")){
+        if(input.equalsIgnoreCase("Y")){
             return true;
-        }else if(input.equalsIgnoreCase("r")){
+        }else if(input.equalsIgnoreCase("N")){
             return false;
         } else {
             return promptBinary(msg);
