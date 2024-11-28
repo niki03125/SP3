@@ -3,8 +3,8 @@ package src;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static src.StreamingPlatform.password;
-import static src.StreamingPlatform.username;
+import static src.User.password;
+import static src.User.username;
 
 public class Menu {
     private ArrayList<User> users;
