@@ -12,7 +12,8 @@ public class Login {
 
     public User userLoginOrRegister() {
         logo();
-        TextUI.displayMSG("Welcome to our WBBT Services \n" +
+        TextUI.displayMSG("" +
+                "Welcome to our WBBT Services \n" +
                 "Login = (L) \n" +
                 "Register = (R)");
 
