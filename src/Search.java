@@ -3,8 +3,6 @@ package src;
 import java.util.ArrayList;
 
 public class Search {
-    Search(){
-    }
     public Media searchByTitle(ArrayList<Media> medias){
         String input = TextUI.promptText("Search: ");
         Media currentMedia = null;

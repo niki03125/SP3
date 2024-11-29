@@ -52,7 +52,6 @@ public class User {
 
    public ArrayList<Media> getSpecialPlayLists(){
        return specialPlayLists;
-
    }
 
    public int getId() {
@@ -102,7 +101,6 @@ public class User {
     public void addToSeen(Media media){
        seen.add(media);
     }
-
 
     public void addToSpecialPlayLists(Media media){
        specialPlayLists.add(media);

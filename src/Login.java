@@ -63,4 +63,8 @@ public class Login {
         currentUser = user;
         TextUI.displayMSG("You have now been registered");
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
 }
