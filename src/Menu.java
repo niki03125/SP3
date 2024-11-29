@@ -165,7 +165,7 @@ public class Menu {
             movies();
             chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
-            TextUI.displayMSG("Series - to be done");
+            TextUI.displayMSG("Series - Coming soon");
         } else if (menuChoice.equalsIgnoreCase("LI")) {
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {

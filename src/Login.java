@@ -35,7 +35,7 @@ public class Login {
         String password = TextUI.promptText("Please enter your password: ");
 
         for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) { //the code is cheking if the username and passeword is in the file, if both is correct.
+            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {         //The code is cheking if the username and password is in the ArrayList, if both is correct.
                 TextUI.displayMSG(user.getUsername() + " has logged in");
                 currentUser = user;
                 return;
