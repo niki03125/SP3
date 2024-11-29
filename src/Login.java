@@ -11,7 +11,8 @@ public class Login {
     }
 
     public User userLoginOrRegister() {
-        TextUI.displayMSG("Welcome to our WBBTServices \n" +
+        logo();
+        TextUI.displayMSG("Welcome to our WBBT Services \n" +
                 "Login = (L) \n" +
                 "Register = (R)");
 
@@ -65,5 +66,14 @@ public class Login {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public void logo(){
+        TextUI.displayMSG("\n" +
+                "██     ██ ██████  ██████  ████████  \n" +
+                "██     ██ ██   ██ ██   ██    ██     \n" +
+                "██  █  ██ ██████  ██████     ██     \n" +
+                "██ ███ ██ ██   ██ ██   ██    ██     \n" +
+                " ███ ███  ██████  ██████     ██     \n");
     }
 }
