@@ -8,6 +8,14 @@ private int releaseYear;
 private ArrayList<String> genre;
 private float IMDBScore;
 private int minAge;
+private int duration;
+
+    public Media() {
+    }
+
+    public Media(String mediaName) {
+        this.mediaName = mediaName;
+    }
 
     public Media(String mediaName, int releaseYear, ArrayList<String> genre, float IMDBScore) {
         this.mediaName = mediaName;
@@ -22,6 +30,15 @@ private int minAge;
         this.genre = genre;
         this.IMDBScore = IMDBScore;
         this.minAge = minAge;
+    }
+
+    public Media(String mediaName, int releaseYear, ArrayList<String> genre, float IMDBScore, int minAge, int duration) {
+        this.mediaName = mediaName;
+        this.releaseYear = releaseYear;
+        this.genre = genre;
+        this.IMDBScore = IMDBScore;
+        this.minAge = minAge;
+        this.duration = duration;
     }
 
     public String getMediaName() {
