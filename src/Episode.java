@@ -1,7 +1,5 @@
 package src;
 
-import java.util.ArrayList;
-
 public class Episode extends Media{
     private int episodeID;
 
