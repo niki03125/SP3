@@ -78,7 +78,7 @@ public class Menu {
                 }
             }
         }else{
-            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
+            TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP) ");
             listMenu();
         }
     }
