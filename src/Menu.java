@@ -9,10 +9,19 @@ import static src.User.username;
 public class Menu {
     private ArrayList<User> users;
     private Login login;
+    private ArrayList<Movie> movies;
+    private ArrayList<Media> medias;
+    private User currentUser;
+    private Media currentMedia;
+    private Search search;
+    private boolean turnOff;
 
-    public Menu(ArrayList<User> users) {
+    public Menu(ArrayList<User> users, ArrayList<Movie> movies, ArrayList<Media> medias) {
         this.users = users;
         this.login = new Login(users);
+        this.movies = movies;
+        this.medias = medias;
+        this.search = new Search();
     }
 
     public String mainMenuOptions(){
@@ -22,7 +31,7 @@ public class Menu {
         return TextUI.promptText("Please enter what you want to do: ");
     }
 
-    public void listMenu(User currentUser){
+    public void listMenu(){
 
         // Create a menu where you can choose a list you want to see
         ArrayList<String> listMenu = new ArrayList<>(Arrays.asList("SavedList(SA)", "SeenList(SE)", "SpecialPlayList(SP) "));
@@ -70,11 +79,11 @@ public class Menu {
             }
         }else{
             TextUI.displayMSG("Invalid choice. Please choose a valid list( SA, SE, SP)");
-            listMenu(currentUser);
+            listMenu();
         }
     }
 
-    public void userSettingsMenu(User currentUser){
+    public void userSettingsMenu(){
         TextUI.displayMSG("=====Settings=====");
         String tmpChoice = TextUI.promptText("Change username(U), Change password(C), Delete account(D), Main menu(M)\n" +
                 "Enter choice: ");
@@ -88,5 +97,100 @@ public class Menu {
         } else if ((tmpChoice.equalsIgnoreCase("M"))) {
             mainMenuOptions();
         }
+    }
+
+
+    public void chooseMovie(){
+        int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose: ");
+        // Check if the input is valid:
+        if (choice < 1 || choice > movies.size()) {
+            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            chooseMovie();
+            return;
+        }
+        currentMedia = movies.get(choice - 1); //Get the chosen movie and convert user input to 0-based index:
+        TextUI.displayMSG("You selected: " + currentMedia.getMediaName() + "\nIMDB Score: " + currentMedia.getIMDBScore());
+        mediaActionMenu();
+    }
+
+    public void mediaAction(Media media)   {
+        TextUI.displayMSG("Title: " + media.getMediaName() +
+                "\nIMDBScore:" + media.getIMDBScore());
+        mediaActionMenu();
+    }
+
+    public void mediaActionMenu(){
+        String tmpChoice;
+        if (currentUser.getSaved().contains(currentMedia)){
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Remove from savedList(R), Main menu(M), Remove from specialPlayList(S)");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("R")) {
+                currentUser.removeFromSaved(currentMedia);
+                TextUI.displayMSG("You have now removed: " + currentMedia.getMediaName() +" from your savedList");
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu(currentUser);
+            } else if (tmpChoice.equalsIgnoreCase("S")) {
+                currentUser.removeFromSpecialPlayLists(currentMedia);
+                TextUI.displayMSG("You have now removed: " + currentMedia.getMediaName() +" from your specialPlayList");
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        } else {
+            tmpChoice = TextUI.promptText("You have the following options: Play(P), Add to savedList(A), Main menu(M), Add to specialPlayList(S)\n" +
+                    "Please enter your choice: ");
+            if (tmpChoice.equalsIgnoreCase("P")){
+                playMedia();
+            } else if (tmpChoice.equalsIgnoreCase("A")) {
+                currentUser.addToSaved(currentMedia);
+                TextUI.displayMSG("You have now added: " + currentMedia.getMediaName() +" from your savedList");
+            } else if (tmpChoice.equalsIgnoreCase("M")) {
+                mainMenu(currentUser);
+            } else if (tmpChoice.equalsIgnoreCase("S")) {
+                currentUser.addToSpecialPlayLists(currentMedia);
+                TextUI.displayMSG("You have now added: " + currentMedia.getMediaName() +" to your specialPlayList");
+            } else {
+                TextUI.displayMSG("Invalid choice. Please try again");
+                mediaActionMenu();
+            }
+        }
+    }
+
+    public void mainMenu(User currentUser){
+        String menuChoice = mainMenuOptions();
+        this.currentUser = currentUser;
+        if (menuChoice.equalsIgnoreCase("M")){
+            TextUI.displayMSG("Movies: ");
+            movies();
+            chooseMovie();
+        } else if (menuChoice.equalsIgnoreCase("S")) {
+            TextUI.displayMSG("Series - to be done");
+        } else if (menuChoice.equalsIgnoreCase("LI")) {
+            listMenu();
+        } else if (menuChoice.equalsIgnoreCase("F")) {
+            currentMedia = search.searchByTitle(medias);
+            mediaAction(currentMedia);
+        } else if (menuChoice.equalsIgnoreCase("SET")) {
+            userSettingsMenu();
+        } else if (menuChoice.equalsIgnoreCase("LO")) {
+            TextUI.displayMSG("Thank you for watching today.");
+            turnOff = true;
+        }
+    }
+
+    public void movies(){
+        for (int i = 0; i < movies.size(); i++){
+            TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
+        }
+    }
+
+    public void playMedia()   {
+        TextUI.displayMSG("Now watching: " + currentMedia.getMediaName());
+        currentUser.addToSeen(currentMedia);
+    }
+
+    public boolean isTurnOff() {
+        return turnOff;
     }
 }

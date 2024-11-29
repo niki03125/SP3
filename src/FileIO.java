@@ -32,8 +32,8 @@ public class FileIO {
         } catch (IOException e) {
             System.out.println("Something went wrong when writing to file");
         }
-
     }
+
     public static void writeToCVSFileMovie(ArrayList<String> addToSavedMovies, String path){
         try (FileWriter writer = new FileWriter(path))  {
             for(String med : addToSavedMovies)   {
