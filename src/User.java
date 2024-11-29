@@ -99,7 +99,9 @@ public class User {
     }
 
     public void addToSeen(Media media){
-       seen.add(media);
+       if (!seen.contains(media)){
+           seen.add(media);
+       }
     }
 
     public void addToSpecialPlayLists(Media media){
