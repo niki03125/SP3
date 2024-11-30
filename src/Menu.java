@@ -10,16 +10,18 @@ public class Menu {
     private ArrayList<User> users;
     private Login login;
     private ArrayList<Movie> movies;
+    private ArrayList<Series> series;
     private ArrayList<Media> medias;
     private User currentUser;
     private Media currentMedia;
     private Search search;
     private boolean turnOff;
 
-    public Menu(ArrayList<User> users, ArrayList<Movie> movies, ArrayList<Media> medias) {
+    public Menu(ArrayList<User> users, ArrayList<Movie> movies, ArrayList<Series> series, ArrayList<Media> medias) {
         this.users = users;
         this.login = new Login(users);
         this.movies = movies;
+        this.series = series;
         this.medias = medias;
         this.search = new Search();
     }
@@ -104,13 +106,28 @@ public class Menu {
         int choice = TextUI.promptNumeric("Please write the number of the movie you want to choose: ");
         // Check if the input is valid:
         if (choice < 1 || choice > movies.size()) {
-            TextUI.displayMSG("Invalid choice. Please select a number from the list.");
+            movies();
+            TextUI.displayMSG("\nInvalid choice. Please select a number from the list.");
             chooseMovie();
             return;
         }
         currentMedia = movies.get(choice - 1); //Get the chosen movie and convert user input to 0-based index:
         TextUI.displayMSG("You selected: " + currentMedia.getMediaName() + "\nIMDB Score: " + currentMedia.getIMDBScore());
         mediaActionMenu();
+    }
+
+    public void chooseSeries(){
+        int choice = TextUI.promptNumeric("Please write the number of the series you want to choose: ");
+        try{
+            currentMedia = series.get(choice - 1);
+            TextUI.displayMSG("You selected: " + currentMedia.getMediaName() + "\nIMDB Score: " + currentMedia.getIMDBScore());
+            mediaActionMenu();
+
+        }catch (IndexOutOfBoundsException e){
+            series();
+            TextUI.displayMSG("\nInvalid choice. Please select a number from the list.");
+            chooseSeries();
+        }
     }
 
     public void mediaAction(Media media)   {
@@ -165,7 +182,9 @@ public class Menu {
             movies();
             chooseMovie();
         } else if (menuChoice.equalsIgnoreCase("S")) {
-            TextUI.displayMSG("Series - Coming soon");
+            TextUI.displayMSG("Series: ");
+            series();
+            chooseSeries();
         } else if (menuChoice.equalsIgnoreCase("LI")) {
             listMenu();
         } else if (menuChoice.equalsIgnoreCase("F")) {
@@ -182,6 +201,12 @@ public class Menu {
     public void movies(){
         for (int i = 0; i < movies.size(); i++){
             TextUI.displayMSG(i+1 + " " + movies.get(i).getMediaName());
+        }
+    }
+
+    public void series(){
+        for (int i = 0; i < series.size(); i++){
+            TextUI.displayMSG(i+1 + " " + series.get(i).getMediaName());
         }
     }
 

@@ -22,7 +22,7 @@ public class StreamingPlatform {
         this.medias = new ArrayList<Media>();
         this.movies = new ArrayList<Movie>();
         this.series = new ArrayList<Series>();
-        this.menu = new Menu(users, movies, medias);
+        this.menu = new Menu(users, movies, series,medias);
         this.load = new Load(users, movies, medias, series);
         this.login = new Login(users);
         this.save = new Save(users);
